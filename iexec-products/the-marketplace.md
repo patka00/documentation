@@ -21,7 +21,7 @@ From the Dapp store, you can select your dapp and will be redirected to the mark
 
 From the marketplace, all existing dapps, published in the Dapp Store, are available in the select menu. It is also possible to fill in any existing dapp address and your custom arguments in the dedicated textboxes.
 
-![](.gitbook/assets/buy_sell.png)
+![](../.gitbook/assets/buy_sell.png)
 
 Visit the iExec Marketplace \([https://market.iex.ec](https://market.iex.ec)\)
 

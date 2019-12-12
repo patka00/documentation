@@ -23,7 +23,7 @@ This is ultimately a Performance/Security/cost trade-off: you still have the cho
 
 In their “home” chain, consortiums will deploy the iExec stack of smart contracts, and will be able to use it in their isolated context and without public gas transaction cost or fixed gas. They will also be able to add custom permission access rights according to their consortium policy. Several permissions levels can be setup: - Who can read the state of the blockchain, - Who can interact with existing smart contract on the blockchain, - Who can create new smart contract on chain. See more details on permissioning setup [here](https://wiki.parity.io/Permissioning).
 
-iExec off-the-shelf smart contracts provide on-chain live and auditable resource registries \(dataset, application, servers\) inside the consortium. In addition, you gain an off-chain auditability feature between parties thanks to the PoCo \([https://docs.iex.ec/poco.html](key-concepts/proof-of-contribution.md#protocol)\) and iExec Middleware: Schedulers and Workers. That means that all logged transactions can then be used between parties to establish audit reports or even payment according to their respective usage.
+iExec off-the-shelf smart contracts provide on-chain live and auditable resource registries \(dataset, application, servers\) inside the consortium. In addition, you gain an off-chain auditability feature between parties thanks to the PoCo \([https://docs.iex.ec/poco.html](../key-concepts/proof-of-contribution.md#protocol)\) and iExec Middleware: Schedulers and Workers. That means that all logged transactions can then be used between parties to establish audit reports or even payment according to their respective usage.
 
 This is the first step towards automation. The next step can be to also add automatic payment thanks to the RLC token. This is where the introduction of bridges can enable to transfer an asset into the consortium chain and then use it as a payment commodity. Consortium parties will deposit and withdraw between mainnet and their home consortium chain, the amount they wanted to use. We can see the mainnet as a cold chain and their consortium chain as hot chain. Hot Chain with no public security \(like Proof Of Work\) but providing more efficient and fast services. Taking the analogy of cold wallet, hot or burner wallets but here for “cold chain” ,hot chain…
 
@@ -154,9 +154,5 @@ You can see a full deployment script for the poa-network bridge stack on PoA cha
 
 We are planning to merge soon a new feature that will allow adding a whitelisting feature as described here.
 
-{% page-ref page="help/contact-us.md" %}
-
-
-
-
+{% page-ref page="../help/contact-us.md" %}
 

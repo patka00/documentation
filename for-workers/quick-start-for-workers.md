@@ -35,7 +35,7 @@ A VM is ready to make you join the public workerpool.
 
 **Download the VM**
 
-[https://download.iex.ec/iExec-Public-Worker.ova](https://download.iex.ec/iExec-Public-Worker.ova)   
+[https://download.iex.ec/iExec-Public-Worker.ova](https://download.iex.ec/iExec-Public-Worker.ova)  
 \(mirror: [https://drive.google.com/file/d/1Q655sygSbqCffmwi8G12leMzbRQLOI9x/](https://drive.google.com/file/d/1Q655sygSbqCffmwi8G12leMzbRQLOI9x/)\)
 
 Install Virtual Box
@@ -50,11 +50,11 @@ Top up some ETH & RLC and make a RLC deposit to your iExec account
 
 **Launch the VM**
 
-![Launch the VM](.gitbook/assets/worker_vm_import.png)
+![Launch the VM](../.gitbook/assets/worker_vm_import.png)
 
 To import the VM, just click on iexec-worker.ova file. You will see the “Import Virtual Appliance” window. If you only have 4GB of RAM, please change the RAM to 2,048MB in this window. Delete the previous version if you had installed any in the past. Click on the ‘Import’ button.
 
-![](.gitbook/assets/worker_vm_start.png)
+![](../.gitbook/assets/worker_vm_start.png)
 
 Double click on ‘iExec-Worker’ \(or click on ‘start’\).
 
@@ -157,7 +157,7 @@ Regarding the volumes mounted with the -v option in the docker run command, they
 
 When available, click on the “Join Worker Pool” button on the top left of the dashboard page and follow instructions.
 
-![Join-Workerpool script](.gitbook/assets/joinwp.png)
+![Join-Workerpool script](../.gitbook/assets/joinwp.png)
 
 **Supported OS**
 
@@ -228,7 +228,7 @@ As a worker you need SGX-compatible hardware if you want to perform TEE-based co
 
 An unofficial list of SGX enabled CPU is available [here](https://github.com/ayeks/SGX-hardware). Basically if your computer was built after 2016 it should be good. In addition to an SGX-compatible CPU you also need to make sure the BIOS of your machine support the SGX extension. Most mainstream brand of computer \(Dell, HP,…\) do. If the SGX option is available in your BIOS then you need to enable it.
 
-![](.gitbook/assets/bios1.jpeg)
+![](../.gitbook/assets/bios1.jpeg)
 
 The next step is to install the drivers from Intel for the SGX extension. This can be done in one command line using the following script \(on Ubuntu\):
 
@@ -237,6 +237,4 @@ The next step is to install the drivers from Intel for the SGX extension. This c
 ```
 
 That’s it! Now you can register at your scheduler as an SGX compatible worker, and you’ll soon receive requests for SGX jobs.
-
-
 

@@ -45,7 +45,7 @@ Within the iExec network, providers of computing power are called ‘Workers’.
 
 Your machine executes computational tasks in exchange for a reward in RLC tokens. Workers can be individuals or companies. Anyone owning computing resources can make them available by joining a “worker pool” and renting computing power to the network. Any machine, from an individual laptop to a large-scale data center, can join a worker pool.
 
-Head to the [How to become a worker](quick-start-for-workers.md#start-a-worker) section to learn how to deploy your worker software.
+Head to the [How to become a worker](for-workers/quick-start-for-workers.md#start-a-worker) section to learn how to deploy your worker software.
 
 Worker pools are made up of multiple individual machines. They are led by a Pool manager, a lead entity that organizes the workload and signals how many tasks it is able to process and at which price.
 
@@ -53,7 +53,7 @@ Worker pools are made up of multiple individual machines. They are led by a Pool
 
 Pool manager, while not doing the actual computation, receive a fee for the management of the worker pool. Pool manager compete to attract workers to their worker pool by providing efficient management and guaranteeing earnings for workers.
 
-Head to the [How to Become a pool manager](workerpool-manager.md) section to learn how to deploy your worker pool service.
+Head to the [How to Become a pool manager](for-workers/workerpool-manager.md) section to learn how to deploy your worker pool service.
 
 You may also check out the list of worker pool currently available on the iExec Marketplace in the [Pools Catalog](https://pools.iex.ec).
 
@@ -62,3 +62,4 @@ You may also check out the list of worker pool currently available on the iExec 
 Data providers that own valuable datasets can make them available for use by applications through the iExec Data Store.
 
 iExec pay per task model empowers Intel SGX and IBM Datashield to offer new opportunities of creating highly-secure applications that respect data privacy and ownership.
+

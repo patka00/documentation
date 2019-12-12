@@ -8,10 +8,10 @@ If you haven’t already, you will need to create an Ethereum wallet:
 * Create a wallet following MEW’s instructions
 
 {% hint style="warning" %}
-Remember your password. You will need it later. ****Back up your wallet properly.
+Remember your password. You will need it later. _\*\*_Back up your wallet properly.
 {% endhint %}
 
-![](../.gitbook/assets/mew_createwallet.png)
+![](../../.gitbook/assets/mew_createwallet.png)
 
 * Download your Keystore file, **keep it safe and secret**.
 * To Import the wallet using the Keystore file, you will need to open the downloaded wallet file with any text editor and copy its content.
@@ -54,7 +54,7 @@ The iExec SDK provides all features needed to manage one or multiple wallets.
 > * **Encrypted wallet** : By default, all the wallet are encrypted in the keystore and protected by a user password.
 > * **Import wallet** : You can import \(recreate a local wallet file\) from a private key.
 > * **Using aliases** : the option --wallet-file allows to use custom filename for your wallet, to ease the management of multiple wallets.
-
+>
 > ```text
 > cp ~/.ethereum/keystore/UTC--2019-04-23T08-34-59.991000000Z--7E82621Ea3B9BB78d62e32E88cf97f4B855C36D4 my_custom_wallet_filename
 > iexec wallet show --wallet-file my_custom_wallet_filename

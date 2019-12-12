@@ -124,7 +124,3 @@ docker-compose down
 
 Please note that once the scheduler is turned off, the workers will not work anymore.
 
-
-
-
-

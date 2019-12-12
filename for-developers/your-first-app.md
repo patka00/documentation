@@ -8,15 +8,15 @@ description: >-
 
 In the **task as a service** model, each time a task is launched through the iExec network, Developers set the price of their app. Requesters pay on a pay-per-task basis.And you can then withdraw your funds at anytime to your own wallet.
 
-### Set up your app
+## Set up your app
 
-#### Why using Docker containers?
+### Why using Docker containers?
 
 A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.Docker Engine is the most widely used container engine. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.Docker is very convenient because it simplifies the deployment process, while ensuring consistency and repeatability in builds. Different people at different times will therefore build the same binary and obtain the same application behavior.Another feature of Docker is the possibility of creating new layers that build on top of existing images. These existing images could be yours, or images proposed by the community.
 
 [https://docs.docker.com/storage/storagedriver/\#images-and-layers](https://docs.docker.com/storage/storagedriver/#images-and-layers)
 
-#### Build & test your Docker image
+### Build & test your Docker image
 
 We suppose your wallet is already created and charged with ETH to deploy your dapp and with RLC for testing.
 
@@ -43,13 +43,13 @@ Use absolute path to define ${DIR\_IN} and ${DIR\_OUT} and not a relative path.
 
 A list of applications with their Docker images can be found at [https://github.com/iExecBlockchainComputing/iexec-apps](https://github.com/iExecBlockchainComputing/iexec-apps)
 
-#### Deterministic result
+### Deterministic result
 
 iExec allows requesters to ask for a result with a predefined level of trust.For the PoCo to run smoothly and verify that different workers return the same result, some determinism is needed at some point in the execution.Since it is not always easy \(or even possible\) to have exactly the same output of a job \(for example, compute 3D rendering images on 2 different machines may produce 2 slightly different images\).The PoCo will look for determinism of a file called **determinism.iexec**.This file **has to be created by the dapp and must be deterministic**.It can contain anything but the multiple runs of the job should produce exactly the same determinism.iexec file.If not, the PoCo will not find a consensus.
 
 **Example:**Considering a application to blur faces on pictures,the content of the determinism.iexec file could simply be the coordinates of the faces in the pictures.The output of the execution \(images with blur faces\) may not be exactly the same, but the determinism.iexec file will be.blur-face: [https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/blur-face](https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/blur-face)find-face: [https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/find-face](https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/find-face)
 
-#### How to manage datasets
+### How to manage datasets
 
 If the applications manages dataset, the dataset is downloaded at the initialization of the task
 
@@ -68,7 +68,7 @@ Run and test locally your application with the following command
 docker run -e IEXEC_DATASET_FILENAME="nsfw_model.zip" -v `pwd`/iexec_in/:/iexec_in -v `pwd`/iexec_out:/iexec_out iexechub/nsfw_prediction:1.0 https://www.w3schools.com/w3css/img_lights.jpg
 ```
 
-#### Put your image in Dockerhub
+### Put your image in Dockerhub
 
 You must push your image to a public repository at DockerHub. Before the execution of the task, iExec worker will pull the image from public repository.
 
@@ -81,7 +81,7 @@ docker tag iexechub/nilearn iexechub/nilearn:1.0
 docker push iexechub/nilearn:1.0
 ```
 
-#### Deploy your app
+### Deploy your app
 
 Once the application is available on Docker, you have to register your application on the blockchain and really create your decentralized and autonomous application, **a dapp**
 
@@ -137,7 +137,7 @@ Please enter your password to unlock your wallet [hidden]
 ✔ Deployed new app at address 0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
 ```
 
-#### Publish app order
+### Publish app order
 
 Now the application registration is completed, let’s publish an order to propose the application to the market
 
@@ -219,7 +219,7 @@ Check out [http://explorer.iex.ec](http://explorer.iex.ec/)
 
 Go to the [Quick start](https://docs.iex.ec/quickstart.html) section to learn how to test your dapp .
 
-#### Variables available at the runtime
+### Variables available at the runtime
 
 When a worker triggers the computation of a task, a few variables are available to the application that is running. They can be used by the application.
 
@@ -248,7 +248,7 @@ Some additional variables are available regarding the Bag Of Task, in order for 
 | IEXEC\_BOT\_FIRST\_INDEX | Index of the first task in the BoT. |
 | IEXEC\_BOT\_TASK\_INDEX | Index of the current task that is being processed. |
 
-### Provide a dataset
+## Provide a dataset
 
 In this section we will show you how you can propose a dataset or any valuable data over iExec infrastructure.In the **task-as-a-service** model, each time a task is launched through the iExec network,The dataset providers set the price of their datasets. Requesters pay on a pay-per-task basis.And you can then withdraw your funds at anytime to your own wallet.
 
@@ -259,7 +259,7 @@ Whitelisting and ordering Dataset owner will manage:
 > * make restriction for computing resources
 > * set up a cutting-edge pricing management
 
-#### Deploy your dataset
+### Deploy your dataset
 
 Zip your dataset, or model.
 
@@ -293,7 +293,7 @@ Please enter your password to unlock your wallet [hidden]
 ✔ Deployed new dataset at address 0xCb781f3106E25E2A9408C4B89C47034877223D12
 ```
 
-#### Publish a dataset order
+### Publish a dataset order
 
 * Create an order template
 
@@ -372,7 +372,7 @@ sign:               0xad835e8b86ccb9b44d3704fd64166da648927adf9dc88e96931de38803
 
 Now the dataset is available.
 
-### Dataset encryption
+## Dataset encryption
 
 As a dataset provider, you might want to protect your dataset with encryption in order to monetize it. Any encrypted dataset will be decrypted on worker resources with a dataset secret key retrieved from the Secret Management Service. This dataset secret key need to be created and push by the dataset owner. At this point, the decrypted dataset will be ready to be used by the app.
 

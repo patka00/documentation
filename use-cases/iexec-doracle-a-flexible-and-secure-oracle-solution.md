@@ -184,6 +184,5 @@ public onlyOwner
 }
 ```
 
-[Next ](https://docs.iex.ec/resources.html)[ Previous](https://docs.iex.ec/consortiumdeployment.html)  
-
+[Next ](https://docs.iex.ec/resources.html)[ Previous](https://docs.iex.ec/consortiumdeployment.html)
 

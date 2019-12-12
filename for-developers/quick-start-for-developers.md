@@ -8,7 +8,7 @@ description: >-
 
 ## Using the iExec SDK
 
-The [iExec SDK](../iexec-sdk.md) is a CLI \(Command Line Interface\) tool providing all the commands to interact with the iExec network. As an introduction, go to the [**Quick start** ](quick-start-for-developers.md)section to learn how to manage a task execution. For more details, go to [iExec SDK github page](https://github.com/iExecBlockchainComputing/iexec-sdk/) to read its full documentation.
+The [iExec SDK](../iexec-products/iexec-sdk.md) is a CLI \(Command Line Interface\) tool providing all the commands to interact with the iExec network. As an introduction, go to the [**Quick start** ](quick-start-for-developers.md)section to learn how to manage a task execution. For more details, go to [iExec SDK github page](https://github.com/iExecBlockchainComputing/iexec-sdk/) to read its full documentation.
 
 In order to transact between multiple parties within iExec, an Ethereum wallet is required. First, you will need to create your Ethereum wallet and credit it with Ethereum tokens \(ETH\), before running the application. While iExec is in its development phase, we allow transactions on Ethereum’s Kovan Network. Sometimes referred to as test network, it uses Kovan ETH tokens that hold no real value and are used solely for testing purposes.
 
@@ -456,7 +456,7 @@ You can choose to get an encrypted result depending on the privacy of your task 
 iexec tee generate-beneficiary-keys
 ```
 
- **Push your keys to the SMS**
+**Push your keys to the SMS**
 
 Please check your ‘chain.json’ file contains an entry "sms": "[https://kovan-pool.iex.ec:443](https://kovan-pool.iex.ec/)"
 
@@ -474,8 +474,6 @@ market.iex.ec: Advanced parameters &gt; Beneficiary &gt; Private SDK: iexec.json
 iexec task show <0xtask> --download
 iexec tee decrypt-results <encryptedResultsPath>
 ```
-
-
 
 **For technical support, contact us:**
 

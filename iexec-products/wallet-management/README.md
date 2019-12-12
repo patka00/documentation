@@ -14,9 +14,5 @@ Si vous êtes worker il faut utiliser la page Wallet with SDK
 
 {% page-ref page="wallet-with-sdk.md" %}
 
-
-
 Requester niveau 0 - Wallet with UI
-
-
 

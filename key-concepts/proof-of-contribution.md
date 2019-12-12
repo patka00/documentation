@@ -53,7 +53,7 @@ The [nominal workflow](https://github.com/iExecBlockchainComputing/iexec-doc/raw
 
 Below are the details of the implementations:
 
-0. **Deal**
+1. **Deal**
 
 > [A deal is sealed by the Clerk. ](proof-of-contribution.md#brokering)This marks the beginning of the execution. An event is created to notify the worker pool’s scheduler.
 >
@@ -65,13 +65,13 @@ Below are the details of the implementations:
 >
 > `bytes32 taskid = keccak256(abi.encodePacked(_dealid, idx));`
 
-2. **Authorization signature**
+1. **Authorization signature**
 
 > The scheduler designates workers that participate to this task. The scheduler’s Ethereum wallet signs a message containing the worker’s Ethereum address, the taskid, and \(optional\) the Ethereum address of the workers enclave. If the worker doesn’t use an enclave, this field must be filled with `address(0)`.
 >
 > This Ethereum signature \(authorization\) is sent to the worker through an off-chain channel implemented by the middleware.
 
-3. **Task computation**
+1. **Task computation**
 
 > Once the authorization is received and verified, the worker computes the requested tasks. Results from this execution are placed in the `/iexec_out` folder. The following values are then computed:
 >
@@ -79,7 +79,7 @@ Below are the details of the implementations:
 > * _bytes32 hash_: the hash of the _digest_, used to produce a consensus
 > * _bytes32 seal_: the salted hash of the _digest_, used to prove a worker’s knew the _digest_ value before it is published.
 >
-> `resultHash == keccak256(abi.encodePacked(        taskid, resultDigest))` `resultSeal == keccak256(abi.encodePacked(worker, taskid, resultDigest))`
+> `resultHash == keccak256(abi.encodePacked( taskid, resultDigest))` `resultSeal == keccak256(abi.encodePacked(worker, taskid, resultDigest))`
 >
 > In computer science, a deterministic algorithm is an algorithm which, given a particular input, will always produce the same output. An application can override the computation of the result digest \(usually the hash of the result archive\) by providing a specific file `/iexec_out/determinism.iexec`. This is necessary to achieve consensus on non-deterministic applications.
 >
@@ -87,7 +87,7 @@ Below are the details of the implementations:
 >
 > Finally, if the requester asked for a callback, the value of this callback must be specified in `/iexec_out/callback.iexec`. Otherwize, the digest will be sent through the callback.
 
-4. **Contribution**
+1. **Contribution**
 
 > Once the execution has been performed, the worker pushes its contribution using the `contribute` method. The contribution contains:
 >
@@ -106,15 +106,15 @@ Below are the details of the implementations:
 >
 >   The signature computed by the scheduler at step 2.
 
-5. **Consensus**
+1. **Consensus**
 
 > During the contribution, the consensus is updated and verified. Contributions are possible until the consensus is reached, at which point the contributions are closed. We then enter a 2h reveal phase.
 
-6. **Reveal**
+1. **Reveal**
 
 > During the reveal phase, workers that have contributed to the consensus must call the `reveal` method with the `resultDigest`. This verifies that the `resultHash` and `resultSeal` they provided are valid. Failure to reveal is equivalent to a bad contribution, and results in a loss of stake and reputation.
 
-7. **Finalize**
+1. **Finalize**
 
 > Once all contributions have been revealed, or at the end of the reveal period if some \(but not all\) reveals are missing, the scheduler must call the `finalize` method. This finalizes the task, rewards good contribution and punishes bad ones. This must be called before the end of the consensus timer.
 
@@ -276,15 +276,15 @@ As discussed earlier, iExec introduces the offchain signature of orders as a new
 ```text
 struct AppOrder
 {
-	address app;
-	uint256 appprice;
-	uint256 volume;
-	uint256 tag;
-	address datasetrestrict;
-	address workerpoolrestrict;
-	address requesterrestrict;
-	bytes32 salt;
-	signature sign;
+    address app;
+    uint256 appprice;
+    uint256 volume;
+    uint256 tag;
+    address datasetrestrict;
+    address workerpoolrestrict;
+    address requesterrestrict;
+    bytes32 salt;
+    signature sign;
 }
 ```
 
@@ -303,15 +303,15 @@ struct AppOrder
 ```text
 struct DatasetOrder
 {
-	address dataset;
-	uint256 datasetprice;
-	uint256 volume;
-	uint256 tag;
-	address apprestrict;
-	address workerpoolrestrict;
-	address requesterrestrict;
-	bytes32 salt;
-	signature sign;
+    address dataset;
+    uint256 datasetprice;
+    uint256 volume;
+    uint256 tag;
+    address apprestrict;
+    address workerpoolrestrict;
+    address requesterrestrict;
+    bytes32 salt;
+    signature sign;
 }
 ```
 
@@ -330,17 +330,17 @@ struct DatasetOrder
 ```text
 struct WorkerpoolOrder
 {
-	address workerpool;
-	uint256 workerpoolprice;
-	uint256 volume;
-	uint256 tag;
-	uint256 category;
-	uint256 trust;
-	address apprestrict;
-	address datasetrestrict;
-	address requesterrestrict;
-	bytes32 salt;
-	signature sign;
+    address workerpool;
+    uint256 workerpoolprice;
+    uint256 volume;
+    uint256 tag;
+    uint256 category;
+    uint256 trust;
+    address apprestrict;
+    address datasetrestrict;
+    address requesterrestrict;
+    bytes32 salt;
+    signature sign;
 }
 ```
 
@@ -361,22 +361,22 @@ struct WorkerpoolOrder
 ```text
 struct RequestOrder
 {
-	address app;
-	uint256 appmaxprice;
-	address dataset;
-	uint256 datasetmaxprice;
-	address workerpool;
-	uint256 workerpoolmaxprice;
-	address requester;
-	uint256 volume;
-	uint256 tag;
-	uint256 category;
-	uint256 trust;
-	address beneficiary;
-	address callback;
-	string  params;
-	bytes32 salt;
-	signature sign;
+    address app;
+    uint256 appmaxprice;
+    address dataset;
+    uint256 datasetmaxprice;
+    address workerpool;
+    uint256 workerpoolmaxprice;
+    address requester;
+    uint256 volume;
+    uint256 tag;
+    uint256 category;
+    uint256 trust;
+    address beneficiary;
+    address callback;
+    string  params;
+    bytes32 salt;
+    signature sign;
 }
 ```
 

@@ -11,21 +11,21 @@
 
 ## For Workers
 
-* [Quick Worker Start](quick-start-for-workers.md)
-* [Manage a Pool of Workers](workerpool-manager.md)
+* [Quick Worker Start](for-workers/quick-start-for-workers.md)
+* [Manage a Pool of Workers](for-workers/workerpool-manager.md)
 
 ## iExec Products
 
-* [Wallet Management](wallet-management/README.md)
-  * [Wallet with SDK](wallet-management/wallet-with-sdk.md)
-* [Dapp Store](dapp-store.md)
-* [Data Store](data-store.md)
-* [Workerpool Store](worker-pools.md)
-* [Marketplace](the-marketplace.md)
-* [Explorer](task-explorer.md)
-* [SDK](iexec-sdk.md)
-* [iExec Stack Versions](current-version.md)
-* [iExec for Enterprise](iexec-for-enterprise.md)
+* [Wallet Management](iexec-products/wallet-management/README.md)
+  * [Wallet with SDK](iexec-products/wallet-management/wallet-with-sdk.md)
+* [Dapp Store](iexec-products/dapp-store.md)
+* [Data Store](iexec-products/data-store.md)
+* [Workerpool Store](iexec-products/worker-pools.md)
+* [Marketplace](iexec-products/the-marketplace.md)
+* [Explorer](iexec-products/task-explorer.md)
+* [SDK](iexec-products/iexec-sdk.md)
+* [iExec Stack Versions](iexec-products/current-version.md)
+* [iExec for Enterprise](iexec-products/iexec-for-enterprise.md)
 
 ## Use Cases
 
@@ -40,3 +40,4 @@
 ## Help
 
 * [Contact Us](help/contact-us.md)
+
