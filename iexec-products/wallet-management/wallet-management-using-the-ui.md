@@ -18,26 +18,9 @@ To help you decide, more details on each of these wallets can be found below.
 
 [MetaMask](https://metamask.io/) is a bridge that allows you to interact with decentralized services directly from your browser, using a plugin. 
 
-{% hint style="warning" %}
-**If you want to use the sidechain,  you will need to manually add the network within Metamask**
-{% endhint %}
-
-![](../../.gitbook/assets/networks.png)
-
-**Network Name:** iExec Sidechain
-
-**RPC URLC:** https://bellecour.iex.ec
-
-**ChainID:** 134
-
-**Symbol:** xRLC
-
-**Block explorer:** https://blockscout-bellecour.iex.ec
-
 ### **Portis**
 
 iExec is now also compatible with the[ **Portis** ](https://www.portis.io/)wallet. With Portis wallet, instead of dealing with your own private key, you can log in with just an email address and password.  
-  
 
 
 {% hint style="warning" %}
@@ -124,12 +107,29 @@ To use the iExec Sidechain, you will need to transfer some RLC tokens from mainn
 Click Send to iExec Sidechain to transfer some RLC from your wallet to iExec Sidechain.
 
 {% hint style="warning" %}
-**Remember**:
-
+**Remember**:   
 **1 xRLC on iExec Sidechain has the same value than 1 RLC on Ethereum Mainnet.**
 {% endhint %}
 
-### Sidechain to Ethereum Mainnet
+### Configure Metamask to use iExec Sidechain
+
+{% hint style="warning" %}
+**If you want to use the sidechain,  you will need to manually add the network within Metamask**
+{% endhint %}
+
+![](../../.gitbook/assets/networks.png)
+
+**Network Name:** iExec Sidechain
+
+**RPC URLC:** https://bellecour.iex.ec
+
+**ChainID:** 134
+
+**Symbol:** xRLC
+
+**Block explorer:** https://blockscout-bellecour.iex.ec
+
+### Sidechain to Ethereum Mainnet
 
 Use **Send to Ethereum Mainnet** to transfer some xRLC from your wallet to Ethereum Mainnet. Remember:
 
