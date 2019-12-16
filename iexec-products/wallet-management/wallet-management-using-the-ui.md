@@ -102,20 +102,15 @@ Click **Get RLC** to refill your wallet with RLC. Remember that you will need to
 
 ## Using the iExec Sidechain
 
-To use the iExec Sidechain, you will need to transfer some RLC tokens from mainnet to the sidechain.
+### Configure your wallet to use iExec Sidechain
 
-Click Send to iExec Sidechain to transfer some RLC from your wallet to iExec Sidechain.
+#### With Portis
 
-{% hint style="warning" %}
-**Remember**:   
-**1 xRLC on iExec Sidechain has the same value than 1 RLC on Ethereum Mainnet.**
-{% endhint %}
+No need to configure anything, your wallet is ready to connect to iExec Sidechain.
 
-### Configure Metamask to use iExec Sidechain
+#### Whith MetaMask
 
-{% hint style="warning" %}
-**If you want to use the sidechain,  you will need to manually add the network within Metamask**
-{% endhint %}
+You will need to manually add the network within Metamask.
 
 ![](../../.gitbook/assets/networks.png)
 
@@ -129,10 +124,34 @@ Click Send to iExec Sidechain to transfer some RLC from your wallet to iExec Sid
 
 **Block explorer:** https://blockscout-bellecour.iex.ec
 
-### Sidechain to Ethereum Mainnet
+### Transfer your RLC from Mainnet to iExec Sidechain
 
-Use **Send to Ethereum Mainnet** to transfer some xRLC from your wallet to Ethereum Mainnet. Remember:
+To use the iExec Sidechain, you will need to transfer some RLC tokens from mainnet to the sidechain.
 
-* **1 RLC** on Ethereum Mainnet has the same value than **1 xRLC** on iExec Sidechain.
-* You can then transfer RLC from Ethereum Mainnet back to iExec Sidechain.  
+First switch network to **Ethereum Mainnet**.
 
+Click **Send to iExec Sidechain** to transfer some RLC from your wallet to iExec Sidechain.
+
+{% hint style="warning" %}
+**Remember**:   
+**1 xRLC on iExec Sidechain has the same value than 1 RLC on Ethereum Mainnet.**
+{% endhint %}
+
+### Use iExec on iExec Sidechain
+
+First switch network to **iExec Sidechain**.
+
+The RLC you sent from Mainnet are now xRLC in your Sidechain wallet.
+
+Deposit some xRLC fom your wallet to your account, you are now ready to use iExec platform on the Sidechain!
+
+### Transfer your xRLC from Sidechain back to Ethereum Mainnet
+
+First switch network to **iExec Sidechain**.
+
+Use **Send to Ethereum Mainnet** to transfer some xRLC from your wallet to Ethereum Mainnet.
+
+{% hint style="warning" %}
+**Remember**:
+**1 RLC on Ethereum Mainnet has the same value than 1 xRLC on iExec Sidechain.**
+{% endhint %}
