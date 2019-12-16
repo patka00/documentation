@@ -4,11 +4,9 @@ description: Welcome to your Wallet Manager UI
 
 # Wallet with UI
 
-
-
 ## Wallet Manager
 
-### Choose a Wallet to connect to iExec 
+### Choose a wallet to connect to iExec 
 
 You will need a wallet to be able to connect and access iExec services**.**
 
