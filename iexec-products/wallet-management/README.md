@@ -6,9 +6,9 @@ description: >-
 
 # Wallet Management
 
-{% page-ref page="wallet-with-ui.md" %}
+{% page-ref page="wallet-management-using-the-ui.md" %}
 
 
 
-{% page-ref page="wallet-with-sdk.md" %}
+{% page-ref page="wallet-management-using-the-sdk.md" %}
 

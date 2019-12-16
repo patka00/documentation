@@ -1,4 +1,4 @@
-# Wallet with SDK
+# Wallet Management using the SDK
 
 ## Create your Wallet
 
