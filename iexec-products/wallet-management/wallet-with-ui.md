@@ -4,8 +4,6 @@ description: Welcome to your Wallet Manager UI
 
 # Wallet with UI
 
-
-
 ## Wallet Manager
 
 ### Choose a Wallet to connect to iExec 
