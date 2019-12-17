@@ -8,7 +8,5 @@ description: >-
 
 {% page-ref page="wallet-management-using-the-ui.md" %}
 
-
-
 {% page-ref page="wallet-management-using-the-sdk.md" %}
 
