@@ -8,7 +8,7 @@ If you haven’t already, you will need to create an Ethereum wallet:
 * Create a wallet following MEW’s instructions
 
 {% hint style="warning" %}
-Remember your password. You will need it later. _\*\*_Back up your wallet properly.
+Remember your password. You will need it later. \_\*\*\_Back up your wallet properly.
 {% endhint %}
 
 ![](../../.gitbook/assets/mew_createwallet.png)
