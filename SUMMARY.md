@@ -40,5 +40,6 @@
 
 ## Help
 
+* [Assets](help/assets.md)
 * [Contact Us](help/contact-us.md)
 
