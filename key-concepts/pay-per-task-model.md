@@ -1,4 +1,4 @@
-### Pay-per-Task model
+# Pay per task model
 
 We are introducing a new method for pricing and we have defined several task categories that describe the execution boundaries. We’ll setup a test infrastructure so that application developers can evaluate the category of their submissions. Conversely, worker pools will be able to benchmark their infrastructures against the reference machine.
 
@@ -13,3 +13,4 @@ In the future, we’ll redefine the categories, and provide more advanced tools 
 | 2 – M | 1 hour |
 | 3 – L | 3 hour |
 | 4 – XL | 10 hour |
+

@@ -6,7 +6,7 @@
 
 * [Quick Dev Start](for-developers/quick-start-for-developers.md)
 * [Your First App](for-developers/your-first-app.md)
-* [Target Consumers](for-developers/target-Consumers.md)
+* [Target Consumers](for-developers/target-consumers.md)
 * [Your First Confidential Application](for-developers/sgx-enabled-application.md)
 
 ## For Workers
