@@ -4,7 +4,7 @@ description: >-
   use of cloud resources through iExec.
 ---
 
-# Who are my clients
+# Target Consumers
 
 iExec allows requesters \(individuals and enterprises\) to access affordable, secure and scalable cloud resources.
 
@@ -27,8 +27,4 @@ iExec allows requesters \(individuals and enterprises\) to access affordable, se
 > Requesters browses available cloud resources and triggers an execution in just a few clicks.
 >
 > They can then monitor and audit all the orders they have triggered since each activity log is recorded on the blockchain.
-
-
-
-
 

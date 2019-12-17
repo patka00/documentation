@@ -1,481 +1,228 @@
 ---
 description: >-
-  iExec, being blockchain-based, allows you to manage your computing
-  transactions in a secure and decentralized environment.
+  In this tutorial we will show you how you can create decentralized applpication over the
+  iExec infrastructure.
 ---
 
-# Quick Dev Start
+# Quick start
 
-## Using the iExec SDK
+iExec enables decentralized app deployment and monetization on the blockchain.
 
-The [iExec SDK](../iexec-products/sdk.md) is a CLI \(Command Line Interface\) tool providing all the commands to interact with the iExec network. As an introduction, go to the [**Quick start** ](quick-start-for-developers.md)section to learn how to manage a task execution. For more details, go to [iExec SDK github page](https://github.com/iExecBlockchainComputing/iexec-sdk/) to read its full documentation.
+In this tutorial we will use the iExec SDK command line to deploy an iExec app on a test blockchain.
 
-In order to transact between multiple parties within iExec, an Ethereum wallet is required. First, you will need to create your Ethereum wallet and credit it with Ethereum tokens \(ETH\), before running the application. While iExec is in its development phase, we allow transactions on Ethereum’s Kovan Network. Sometimes referred to as test network, it uses Kovan ETH tokens that hold no real value and are used solely for testing purposes.
+**Tutorial Steps :**
+- [Create your identity on the blockchain](#Create-your-identity-on-the-blockchain)
+- [Initialize your iExec project](#Initialize-your-iExec-project)
+- [Deploy your application on iExec](#Deploy-your-application-on-iExec)
+- [Publish your application on iExec marketplace](#Publish-your-application-on-iExec-marketplace)
+- [Request an execution of your application](#Request-an-execution-of-your-application)
+- [What's next?](#Whats-next)
 
-### SDK Installation
+**prerequisite:**
+- [Nodejs >=v8.0.0](https://nodejs.org)
+- [Github](https://github.com) or [Gitter](https://gitter.im) account
+- A browser with [MetaMask plugin](https://metamask.io)
 
-Prerequisites:
+[More-resources](#More-resources)
 
-* npm
-* zip
+## Create your identity on the blockchain
 
-```text
-sudo npm -g -i install iexec
+On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and address address.
+What you own on the blockchain is associeted to your address.
+
+Let's setup your wallet.
+
+Install the iExec SDK cli (requires Nodejs)
 ```
-
-* Now you need to create configuration files
-
-```text
-iexec init
-
-ℹ Here is your main config "iexec.json":
-description: My iExec ressource description, must be at least 150 chars long in order to pass the validation checks. Describe your application, dataset or workerpool to your users
-license:     MIT
-author:      ?
-social:
-  website: ?
-  github:  ?
-logo:        logo.png
-
-ℹ Here is your chain config "chain.json":
-default: kovan
-chains:
-  dev:
-    host: http://localhost:8545
-    sms:  http://localhost:5000
-    id:   17
-    hub:  0x60E25C038D70A15364DAc11A042DB1dD7A2cccBC
-  ropsten:
-    host: https://ropsten.infura.io/v3/f3e0664e01504f5ab2b4360853ce0dc7
-    id:   3
-  rinkeby:
-    host: https://rinkeby.infura.io/v3/f3e0664e01504f5ab2b4360853ce0dc7
-    id:   4
-  kovan:
-    host: https://kovan.infura.io/v3/f3e0664e01504f5ab2b4360853ce0dc7
-    id:   42
-  mainnet:
-    host: https://mainnet.infura.io/v3/f3e0664e01504f5ab2b4360853ce0dc7
-    id:   1
-
-ℹ Creating your wallet file
-? Please choose a password for wallet encryption [input is hidden]
-? Please confirm your password [hidden]
-ℹ Your wallet address is 0x10C3580A88E3B7400e4B8D0F046CD66D21482C24 wallet file saved in "/root/.ethereum/keystore/UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24" you must backup this file safely :
-
-address: 10c3580a88e3b7400e4b8d0f046cd66d21482c24
-id:      2ae0905e-e102-452f-927b-349eafc9cd87
-version: 3
-Crypto:
-  cipher:       aes-128-ctr
-  cipherparams:
-    iv: 5117269c592c935eeb7367507732ef56
-  ciphertext:   08d2b7f8790f167ed9e4179dc3b03952a95fa196d3e5a6ea79274063ad14b817
-  kdf:          scrypt
-  kdfparams:
-    salt:  4d9a74104f0822927ae81e41702a1d56a6d770c57b11aadcec3bdd9beb972eeb
-    n:     131072
-    dklen: 32
-    p:     1
-    r:     8
-  mac:          96eaa6a86d0ab1a42fb3578f0e98f59be6861294c971c1e481e4bbded85adf67
-
-⚠ You must backup your wallet file in a safe place!
-✔ iExec project is ready
+npm i -g iexec
 ```
-
-The SDK stores the encrypted wallet in ‘~/ethereum/keystore’ directory.
-
-Note
-
-* You can manage multiple wallets with **–wallet-file** and **–wallet-address** options. Example : iexec wallet show –wallet-file user\_wallet
-* You can import an existing wallet with “**iexec wallet import**” command
-
-Check your wallet balance with
-
-```text
-iexec wallet show
-? Using wallet UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24
-Please enter your password to unlock your wallet [hidden]
-ℹ Wallet file:
-publicKey: 0x785f93e1bf8f9657d6cd63f2bd6c8189ece95ceec4772afdbbb81da995ba9a963fb4ebe0633c8925fe99d351580ccbeb2d3d74bfdef6c4072387a4c3729f7dd9
-address:   0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
-
-ℹ using chain [kovan]
-✔ Wallet kovan balances [42]:
-ETH:  0
-nRLC: 0
+Create a new Wallet file
 ```
-
-* Get ETH:
-
-> a small amount of ether cryptocurrency \(ETH\) is necessary to interact with the ethereum blockchain.
-
-```text
-iexec wallet getETH
+iexec wallet create
 ```
+You will be asked to choose a password to protect your wallet, don't forget it there is no way to recover it.
+The SDK creates a wallet file that contains a random generated private key encryped by the chosen password and the associated address.
+Make sure to backup the wallet file in a safe place and write down your address.
 
-{% hint style="info" %}
-**Alternative method**  
-Post your your public ethereum address in [https://gitter.im/kovan-testnet/faucet](https://gitter.im/kovan-testnet/faucet)You will receive a small amount of ETH in few minutes.
-{% endhint %}
+## Initialize your iExec project
 
-* Get RLC:
-
-> RLC can be used to reward the computing resources.
-
-```text
-iexec wallet getRLC
-ℹ using chain [kovan]
-? Using wallet UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24
-Please enter your password to unlock your wallet [hidden]
-✔ Faucets responses:
-- faucet.iex.ec :
-ok:      true
-message: Successfully requested 200 nRLC. Your position in the waiting list is 1/10
+Create a new folder for your iexec project and initilize the project.
 ```
-
-Check the wallet is now charged with ETH and RLC
-
-```text
-iexec wallet show
-? Using wallet UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24
-Please enter your password to unlock your wallet [hidden]
-
-ℹ Wallet file:
-publicKey: 0x785f93e1bf8f9657d6cd63f2bd6c8189ece95ceec4772afdbbb81da995ba9a963fb4ebe0633c8925fe99d351580ccbeb2d3d74bfdef6c4072387a4c3729f7dd9
-address:   0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
-
-ℹ using chain [kovan]
-✔ Wallet kovan balances [42]:
-ETH:  0.1
-nRLC: 200
+mkdir iexec-project
+cd iexec-project
+iexec init --skip-wallet
 ```
+The iExec SDK will create the minimum configuration files:
+- `iexec.json` contains the project configuration
+- `chains.json` contains the blockchain connection configuration
+- we use `--skip-wallet` to skip wallet creation as we already created it
 
-### The Pay-per-Task model
+You can now connect to the blockchain.
+In the following steps we will use the Kovan testnet, Kovan is an Ethereum blockchain operated for test purpose only.
+Check your wallet content on Kovan:
+```
+iexec wallet show --chain kovan
+```
+For now your wallet is empty.
+Go to a Kovan Faucet to ask some test ETH:
+- [faucet.kovan.network](https://faucet.kovan.network/) (you will need a github account).
+- [kovan-testnet/faucet - Gitter](https://gitter.im/kovan-testnet/faucet) (you will need to login to gitter).
 
-We are introducing a new method for pricing and we have defined several task categories that describe the execution boundaries.We’ll setup a test infrastructure so that application developers can evaluate the category of their submissions. Conversely, worker pools will be able to benchmark their infrastructures against the reference machine.
+You can now check you wallet is no more empty:
+```
+iexec wallet show --chain kovan
+```
+The ETH in your wallet will allow you to pay for the blockchain transaction fees. Every time you writes on the blockchain (ie: you make a transaction) a small amount of ETH is taken from your wallet to pay the peoples operating the blockchain.
 
-In the future, we’ll refine the categories, and provide more advanced tools for helping developers to maximize the usage of the infrastructure
 
-**Categories Description**
+## Deploy your application on iExec
 
-| **Category** | **Maximum Elapsed Time** |
+Initialize a new application.
+```
+iexec app init
+```
+The iExec SDK writes the minimum app configuration in `iexec.json`
+
+| **key** | **description** |
 | :--- | :--- |
-| 0 – XS | 5 min |
-| 1 – S | 20 min |
-| 2 – M | 1 hour |
-| 3 – L | 3 hour |
-| 4 – XL | 10 hour |
+| owner | app owner ethereum address (default your wallet address) |
+| name | name of the application |
+| type | type of application ('DOCKER' for docker container) |
+| multiaddr | download uri of the application (a public docker registry)|
+| checksum | checksum of the app ('0x' + docker image digest)|
+```
+owner:     0xb6811eaB0Bd3733600A3456B54C7BEf7d4Abb182 # here is the owner address (your wallet address)
+name:      VanityEth # here is the name of the application
+type:      DOCKER # here is the type of application (docker container)
+multiaddr: registry.hub.docker.com/iexechub/vanityeth:1.1.1 # here is the address of the app (where the code is)
+checksum:  0x00f51494d7a42a3c1c43464d9f09e06b2a99968e3b978f6cd11ab3410b7bcd14 # here is the checksum of the app
+```
+The default app points to the public docker image [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)
 
-### Task execution
+You can deploy this application on iExec, it will run out of the box.
+Where you are confident with iExec concept, you can read [Your First App](../your-first-app.md) and learn how to setup your own app on iExec.
 
-Let’s execute the vanitygen application, a command-line vanity ethereum address generator starting with a given pattern. The address can be found in [https://explorer.iex.ec/kovan](https://explorer.iex.ec/kovan) application deployed tab.
-
-* Deposit RLC on your account
-
-Now you have to charge your account. Your wallet, for security purpose, is never directly connected to the market, you have to charge your account to allow deal’s smart contract to lock fund engaged to pay the task.
-
-```text
-iexec account deposit 40
-ℹ using chain [kovan]
-? Using wallet UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24
-Please enter your password to unlock your wallet [hidden]
-✔ deposited 40 nRLC to your iExec account
+You will now deploy your app on iExec, this will be your first transaction on the blockchain:
+```
+iexec app deploy --chain kovan
+```
+Your can check your deployed apps with their index, let's check your first deployed app.
+```
+iexec app show 1 --chain kovan
 ```
 
-* We need to find a existing order for the application, we will use the orderhash for the task submission. The application is registered on the blockchain, and app order has to be filled to run the task.
+## Publish your application on iExec marketplace
 
-```text
- iexec orderbook app 0x4C042521b6DaD59558b0B5bE939881e98054bD34
-ℹ using chain [kovan]
-✔ Orderbook
-app orders details:
--
-  orderHash:            0xe48ac12eefdfab06486e80ab2dfdd2caef6c293de80262b8a5845d653785a396
-  app:                  0x4C042521b6DaD59558b0B5bE939881e98054bD34
-  price:                0
-  remaining:            999996
-  publicationTimestamp: 2019-04-24T09:24:19.037Z
+Your application is now deployed on iExec, but  make it available for others.
+iExec uses signed orders to define the terms and conditions of use for each resources.
+The terms and conditions to use an app are defined in the **apporder**.
+
+Initialize a new apporder:
+```
+iexec order init --app --chain kovan
+```
+The SDK prepares the default apporder configuration in `iexec.json`
+```
+app:                0x490dB6143aF29d968B186019B19f2E32C088d817 # your app address
+appprice:           0 # the price per run
+volume:             1000000 # number of execution allowed
+tag:                0x0000000000000000000000000000000000000000000000000000000000000000 # specific requirements (default none)
+datasetrestrict:    0x0000000000000000000000000000000000000000 # restriction on accepted dataset (default all)
+workerpoolrestrict: 0x0000000000000000000000000000000000000000 # restriction on accepted workerpool (default all)
+requesterrestrict:  0x0000000000000000000000000000000000000000 # restriction on accepted requester (ie: end user, default all)
+```
+Sign the apporder:
+```
+iexec order sign --app --chain kovan
+```
+The signed apporder is stored localy in `orders.json`
+
+Publish the apporder on iExec marketplace to share it with others.
+```
+iexec order publish --app --chain kovan
+```
+Your application is now available for everyone on iExec marketplace on the conditions you defined in apporder.
+
+You can check the published apporders for your app:
+```
+iexec orderbook app <your app address> --chain kovan
 ```
 
-Make sure apporder still remains for the application. see **remaining** field.
+## Request an execution of your application
 
-Copy the orderHash, it will be used later.
+Before starting make sure [MetaMask](https://metamask.io) is installed and configured on your browser
 
-* Find a **workerpoolorder** in the orderbook
+### Import your wallet in MetaMask
 
-The workerpoolorder corresponds to the resources you can use to run your task. Many orders are availables, selection can be based regarding your preference: price or worker pool location.
-
-```text
-iexec orderbook workerpool --category 4
-ℹ using chain [kovan]
-✔ Orderbook
-workerpool orders details:
--
-  orderHash:            0xafe84857ae390005f3d5566a4fd6c0b336ca4dd00963e8ce67dd01fc8c4089d6
-  workerpool:           0x7Cb70eB2e99Efd5Ce7ca2d6899cE81D1ed46E770
-  category:             4
-  trust:                1
-  price:                35
-  remaining:            1
-  publicationTimestamp: 2019-04-24T11:57:50.708Z
--
-  orderHash:            0x615394b1c3c6b845416ea00fa799bf7d6b42157db23a87ab1c4b52bf6b91cbf0
-  workerpool:           0x7Cb70eB2e99Efd5Ce7ca2d6899cE81D1ed46E770
-  category:             4
-  trust:                1
-  price:                36
-  remaining:            1
-  publicationTimestamp: 2019-04-24T12:00:06.977Z
--
-  orderHash:            0xf0fd940264500d16260ef42f33a914232c1362f8dee54c2f8fb87926d57655ab
-  workerpool:           0x7Cb70eB2e99Efd5Ce7ca2d6899cE81D1ed46E770
-  category:             4
-  trust:                1
-  price:                40
-  remaining:            1
-  publicationTimestamp: 2019-04-24T12:01:16.696Z
--
-  orderHash:            0xb8445c69231330642b0bf3e160257c868f935e90b38ded743194c02a21ebc038
-  workerpool:           0x7Cb70eB2e99Efd5Ce7ca2d6899cE81D1ed46E770
-  category:             4
-  trust:                1
-  price:                50
-  remaining:            1
-  publicationTimestamp: 2019-04-24T13:12:22.171Z
+Get your wallet private key with iExec SDK:
 ```
-
-Select your order and copy the related orderHash
-
-* Create a task template
-
-```text
-iexec order init --request
- ℹ using chain [kovan]
- ✔ Saved default requestorder in "iexec.json", you can edit it:
- app:                0x0000000000000000000000000000000000000000
- appmaxprice:        0
- dataset:            0x0000000000000000000000000000000000000000
- datasetmaxprice:    0
- workerpool:         0x0000000000000000000000000000000000000000
- workerpoolmaxprice: 0
- volume:             1
- category:           0
- trust:              0
- tag:                0x0000000000000000000000000000000000000000000000000000000000000000
- beneficiary:        0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
- callback:           0x0000000000000000000000000000000000000000
- params:             { "0": "--help" }
- requester:          0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
+iexec wallet show --show-private-key
 ```
+Open MetaMask plugin and click on your account picture to toggle the menu.
+Select **Import Account** and paste your private key to import your wallet
+You wallet will be added in the accounts list.
 
-Edit the task description in the iexec.json file.
+Open MetaMask plugin and select Kovan in the network dropdown.
+You should see your wallet contains some ETH on Kovan.
 
-Fill in the app address, the category, a maximum price for the workerpool order and task’s parameter.
+### Get some test RLC
 
-Limitation price exists also for dataset and app but the current example use free of charge application and no dataset.
+iExec is a decentralized marketplace for computing resources. The resources on the marketplace are available for iExec cryptocurrency called RLC. You wille need some RLC to request an execution on iExec. On Kovan testnet, you can ask test RLC for free.
 
-```text
-...
-"requestorder": {
-  "app": "0x4C042521b6DaD59558b0B5bE939881e98054bD34",
-  "appmaxprice": 0,
-  "dataset": "0x0000000000000000000000000000000000000000",
-  "datasetmaxprice": 0,
-  "workerpool": "0x0000000000000000000000000000000000000000",
-  "workerpoolmaxprice": 100,
-  "volume": 1,
-  "category": 0,
-  "trust": 0,
-  "tag": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "beneficiary": "0x10C3580A88E3B7400e4B8D0F046CD66D21482C24",
-  "callback": "0x0000000000000000000000000000000000000000",
-  "params": "{ \"0\": \"1iEx\" }",
-  "requester": "0x10C3580A88E3B7400e4B8D0F046CD66D21482C24"
-}
-```
+Go to [iExec Marketplace](https://market.iex.ec/) and click **Login**.
+Choose MetaMask as Wallet provider, to connect your wallet with iExec Marketplace.
+When connected, you access the [iExec Wallet Manager](../iexec-products/wallet-management/wallet-management-using-the-ui.md)
 
-* Create the request order
+Click **Get RLC** > **Get Kovan RLC** to get some RLC.
+![](../.gitbook/assets/get-kovan-rlc.png)
+You will receive 200 nRLC (1 nRLC = 10^(-9) RLC).
 
-```text
-iexec order sign --request
-ℹ using chain [kovan]
-? Using wallet UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24
-Please enter your password to unlock your wallet [hidden]
-✔ requestorder signed and saved in orders.json, you can share it:
-app:                0x4C042521b6DaD59558b0B5bE939881e98054bD34
-appmaxprice:        0
-dataset:            0x0000000000000000000000000000000000000000
-datasetmaxprice:    0
-workerpool:         0x0000000000000000000000000000000000000000
-workerpoolmaxprice: 0
-volume:             1
-category:           0
-trust:              0
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000
-beneficiary:        0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
-callback:           0x0000000000000000000000000000000000000000
-params:             { "0": "1iEx" }
-requester:          0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
-salt:               0x7dfe93a03528fad9707cea738da11ae36d64ee3244b85bf00f3fd7d21899ba38
-sign:               0x83b6d9cd4e1e6e7279c599852e26b821d0c8b0210f595dc14e699c432bceab6d719645b1ead98e851585187a7b6e234514008e3271b049261a61b7f71239ad081b
-```
+### Top up your iExec account
 
-Now the request order is created and it can be submitted
+The iExec platform actors deposit their RLC on their **iExec Account** to allow payments through the iExec Proof-of-Contribution (PoCo) protocol (read more about [PoCo](../key-concepts/proof-of-contribution.md)).
 
-```text
-iexec order fill --workerpool 0xf0fd940264500d16260ef42f33a914232c1362f8dee54c2f8fb87926d57655ab --app 0xe48ac12eefdfab06486e80ab2dfdd2caef6c293de80262b8a5845d653785a396
-ℹ using chain [kovan]
-ℹ Fetching apporder 0xe48ac12eefdfab06486e80ab2dfdd2caef6c293de80262b8a5845d653785a396 from iexec marketplace
-ℹ Fetching workerpoolorder 0xf0fd940264500d16260ef42f33a914232c1362f8dee54c2f8fb87926d57655ab from iexec marketplace
-? Using wallet UTC--2019-04-24T10-11-45.987000000Z--10C3580A88E3B7400e4B8D0F046CD66D21482C24
-Please enter your password to unlock your wallet [hidden]
-✔ 1 task successfully purchased with dealid 0xccb19c6792b6e9da0ea9d5af46a221e6836da93cce57cdfd8014c900b695b691
-```
+Click **Deposit RLC** and follow the steps to deposit your Kovan RLC from your wallet to your account.
+![](../.gitbook/assets/deposit-kovan-rlc.png)
+Your RLC moved from your Wallet to your Account, you can now use them to buy a computation on iExec!
 
-The command returns the dealid address.Let’s retrieve the task id
+### Buy computation on the Marketplace
 
-```text
-iexec deal show 0xccb19c6792b6e9da0ea9d5af46a221e6836da93cce57cdfd8014c900b695b691
-ℹ using chain [kovan]
-✔ Deal 0xccb19c6792b6e9da0ea9d5af46a221e6836da93cce57cdfd8014c900b695b691 details:
-app:
-  pointer: 0x4C042521b6DaD59558b0B5bE939881e98054bD34
-  owner:   0xA1162f07afC3e45Ae89D2252706eB355F6349641
-  price:   0
-dataset:
-  pointer: 0x0000000000000000000000000000000000000000
-  owner:   0x0000000000000000000000000000000000000000
-  price:   0
-workerpool:
-  pointer: 0x7Cb70eB2e99Efd5Ce7ca2d6899cE81D1ed46E770
-  owner:   0xE9E34b370B67F1285C1DCD9a631c11A20fE65Ef3
-  price:   40
-trust:                1
-category:             4
-tag:                  0x0000000000000000000000000000000000000000000000000000000000000000
-requester:            0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
-beneficiary:          0x10C3580A88E3B7400e4B8D0F046CD66D21482C24
-callback:             0x0000000000000000000000000000000000000000
-params:               { "0": "1iEx" }
-startTime:            1556115748
-botFirst:             0
-botSize:              1
-workerStake:          12
-schedulerRewardRatio: 1
+Close the iExec Wallet Manager.
+Fill the **Fill Market Order** form as follow:
+| **field** | **description** |
+| :--- | :--- |
+| Order Hash | best workerpoolorder (prefilled) |
+| Dapp Address | paste here your app address (the apporder will be automatically fetched) |
+| Work Param | here are the input params for the app (see [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth))|
+![](../.gitbook/assets/buy-kovan-computation.png)
 
-Tasks:
--
-  idx:    0
-  taskid: 0x0e617507e446658383918f2dbe14f2e65e161ac47b131eab46ecba50dfe26ae5
-```
+Click **Buy computation at market price** and complete the buy process
+- confirm the trade
+- sign your **requestorder**
+- send a transaction to create the deal on iExec
 
-* Monitor your work
+When the deal is registered, a new line is added to **My Trades**
+![](../.gitbook/assets/buy-kovan-my-trades.png)
 
-```text
- iexec task show 0x8374e2d96305a4a9b3f84e531b67e350f008b31d
-ℹ using chain [kovan]
-✔ work 0x8374e2d96305a4a9b3f84e531b67e350f008b31d status is ACTIVE, details:
-m_workerpool:          0x0061b8b1191394fa710def946368675b79db062b
-m_params:              {"cmdline":"7"}
-m_requester:           0x2e1d3f65d6d09f8aa7661e3e810d6a77a4da3869
-m_app:                 0x2f185a1e5ced207d64d9c94e39c0f060c38fc2fe
-m_dataset:             0x0000000000000000000000000000000000000000
-m_emitcost:            1
-m_uri:
-m_stdout:
-m_resultCallbackProof: 0x0000000000000000000000000000000000000000000000000000000000000000
-m_iexecHubAddress:     0x12b92a17b1ca4bb10b861386446b8b2716e58c9b
-m_callback:            0x0000000000000000000000000000000000000000
-m_status:              1
-m_marketorderIdx:      1884
-m_stderr:
-m_beneficiary:         0x0000000000000000000000000000000000000000
-m_statusName:          ACTIVE
+### Follow the execution and get the result
 
-ℹ if work is not "COMPLETED" after Thu Jan 03 2019 03:05:36 GMT+0100 (CET) you can claim the work to get a full refund using "iexec work claim"
-```
+Click on the line of your deal on **My Trades** to follow the execution in the [iExec Explorer](https://explorer.iex.ec)
+The Deal page summaries the parameters of the deal.
+The **Bag of tasks** table show all the tasks running for this deal (only one in this case)
+![](../.gitbook/assets/buy-kovan-check-deal.png)
+Click on the task to follow your task execution.
+![](../.gitbook/assets/buy-kovan-check-task.png)
+When the task status is COMPLETED you can download the result from the explorer (requires to login).
 
-until it is completed
 
-```text
-.....
-m_statusName:          COMPLETED
-```
+## What's next?
 
-* Download the result and check your result
+You now familiar with the iExec key concepts for the developpers:
+- wallet
+- account
+- app deployment
+- orders
 
-```text
-iexec task show  0xafaa1b9c1ae6b46a0d462d288d0147f84bd011a07ddd93908d37d32256804216 --watch --download
-ℹ using chain [kovan]
-? Using wallet UTC--2019-04-25T09-56-05.957000000Z--849dC529c01ddf5FFdD52F411dBD38259D83Aeec
-Please enter your password to unlock your wallet [hidden]
-ℹ Task status COMPLETED
-✔ Task 0xafaa1b9c1ae6b46a0d462d288d0147f84bd011a07ddd93908d37d32256804216 details:
-status:               3
-dealid:               0xb610ed792fa222c72e6e7482b20da3246102bb89c22f2b7f0e2dce251b91616d
-idx:                  0
-timeref:              36000
-contributionDeadline: 1556446320
-revealDeadline:       1556266372
-finalDeadline:        1556554320
-consensusValue:       0xc7f1cea6a10b0fe00966cbc01b7d5d3c728563c01df9e69d5c2e80794043b0c9
-revealCounter:        1
-winnerCounter:        1
-contributors:
-resultDigest:         0x72f4acbfdc93499509441507db54efc04d6744a924910549b7e96a207daa4b0c
-results:              https://jupiter-pool.iex.ec:443/results/0xafaa1b9c1ae6b46a0d462d288d0147f84bd011a07ddd93908d37d32256804216
-statusName:           COMPLETED
-
-ℹ downloaded task result to file /0xafaa1b9c1ae6b46a0d462d288d0147f84bd011a07ddd93908d37d32256804216.zip
-```
-
-```text
-unzip /0xafaa1b9c1ae6b46a0d462d288d0147f84bd011a07ddd93908d37d32256804216.zip
-Archive:  /0xafaa1b9c1ae6b46a0d462d288d0147f84bd011a07ddd93908d37d32256804216.zip
-inflating: stdout.txt
-```
-
-```text
-cat stdout
-```
-
-**Result encryption**
-
-You can choose to get an encrypted result depending on the privacy of your task result.
-
-* If the beneficiary of the task is set, the result will be pushed to the iExec Result Repository: - If the key of the beneficiary has been pushed to the Secret Management Service, the result will be encrypted before being pushed to the Result Repository. The beneficiary of the task will be the only one able to access and decrypt the result. - If the key of the beneficiary is missing in the Secret Management Service, the result will be pushed to the Result Repository without encryption. The beneficiary of the task will be the only one able to access the result.
-* If the beneficiary of the task is unset, the result will be pushed to IPFS without encryption.
-
-### How run a task with an encrypted result
-
-**Generate your beneficiary keys**
-
-```text
-iexec tee generate-beneficiary-keys
-```
-
-**Push your keys to the SMS**
-
-Please check your ‘chain.json’ file contains an entry "sms": "[https://kovan-pool.iex.ec:443](https://kovan-pool.iex.ec/)"
-
-```text
-iexec tee push-secret
-```
-
-**Buy computation with your beneficiary address**
-
-market.iex.ec: Advanced parameters &gt; Beneficiary &gt; Private SDK: iexec.json &gt; requestorder &gt; beneficiary &gt; 0xyourAddress
-
-**Download the result and decrypt it**
-
-```text
-iexec task show <0xtask> --download
-iexec tee decrypt-results <encryptedResultsPath>
-```
-
-**For technical support, contact us:**
-
-{% page-ref page="../help/contact-us.md" %}
-
+Continue with these articles:
+- [Learn how to build your fisrt application running on iexec](../your-first-application.md)
+- [Learn how to manage your apporder](../manage-your-apporders.md)

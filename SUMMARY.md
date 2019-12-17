@@ -6,7 +6,7 @@
 
 * [Quick Dev Start](for-developers/quick-start-for-developers.md)
 * [Your First App](for-developers/your-first-app.md)
-* [Target Consumers](for-developers/for-cloud-resource-requesters.md)
+* [Target Consumers](for-developers/target-Consumers.md)
 * [Your First Confidential Application](for-developers/sgx-enabled-application.md)
 
 ## For Workers
@@ -36,6 +36,7 @@
 
 * [Proof of Contribution](key-concepts/proof-of-contribution.md)
 * [Secure computing](key-concepts/secure-computing.md)
+* [Pay per task model](key-concepts/pay-per-task-model.md)
 * [Glossary](key-concepts/glossary.md)
 
 ## Help
