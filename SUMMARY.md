@@ -11,8 +11,8 @@
 
 ## For Workers
 
-* [Quick Worker Start](for-workers/quick-start-for-workers.md)
-* [Manage a Pool of Workers](for-workers/workerpool-manager.md)
+* [Quick Worker Start](for-workers/quick-worker-start.md)
+* [Manage a Pool of Workers](for-workers/manage-a-pool-of-workers.md)
 
 ## iExec Products
 
@@ -21,22 +21,22 @@
   * [Wallet Management using the SDK](iexec-products/wallet-management/wallet-management-using-the-sdk.md)
 * [Dapp Store](iexec-products/dapp-store.md)
 * [Data Store](iexec-products/data-store.md)
-* [Workerpool Store](iexec-products/worker-pools.md)
-* [Marketplace](iexec-products/the-marketplace.md)
-* [Explorer](iexec-products/task-explorer.md)
-* [SDK](iexec-products/iexec-sdk.md)
-* [iExec Stack Versions](iexec-products/current-version.md)
+* [Workerpool Store](iexec-products/workerpool-store.md)
+* [Marketplace](iexec-products/marketplace.md)
+* [Explorer](iexec-products/explorer.md)
+* [SDK](iexec-products/sdk.md)
+* [iExec Stack Versions](iexec-products/iexec-stack-versions.md)
 * [iExec for Enterprise](iexec-products/iexec-for-enterprise.md)
 
 ## Use Cases
 
-* [iExec D'Oracle](use-cases/iexec-doracle-a-flexible-and-secure-oracle-solution.md)
+* [iExec D'Oracle](use-cases/iexec-doracle.md)
 
 ## Key Concepts
 
 * [Proof of Contribution](key-concepts/proof-of-contribution.md)
 * [Secure computing](key-concepts/secure-computing.md)
-* [Glossary](key-concepts/technical-reports.md)
+* [Glossary](key-concepts/glossary.md)
 
 ## Help
 

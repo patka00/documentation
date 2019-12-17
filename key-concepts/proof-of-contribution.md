@@ -49,7 +49,7 @@ PoCo describes the succession of contributions that are required to achieve cons
 * [PoCo series \#1: Initial PoCo description](https://medium.com/iex-ec/about-trust-and-agents-incentives-4651c138974c)
 * [PoCo series \#3: Updated PoCo description](https://medium.com/iex-ec/poco-series-3-poco-protocole-update-a2c8f8f30126)
 
-The [nominal workflow](https://github.com/iExecBlockchainComputing/iexec-doc/raw/master/techreport/nominalworkflow-ODB.png) is also available in the [technical report section](technical-reports.md)
+The [nominal workflow](https://github.com/iExecBlockchainComputing/iexec-doc/raw/master/techreport/nominalworkflow-ODB.png) is also available in the [technical report section](glossary.md)
 
 Below are the details of the implementations:
 

@@ -8,7 +8,7 @@ description: >-
 
 ## Using the iExec SDK
 
-The [iExec SDK](../iexec-products/iexec-sdk.md) is a CLI \(Command Line Interface\) tool providing all the commands to interact with the iExec network. As an introduction, go to the [**Quick start** ](quick-start-for-developers.md)section to learn how to manage a task execution. For more details, go to [iExec SDK github page](https://github.com/iExecBlockchainComputing/iexec-sdk/) to read its full documentation.
+The [iExec SDK](../iexec-products/sdk.md) is a CLI \(Command Line Interface\) tool providing all the commands to interact with the iExec network. As an introduction, go to the [**Quick start** ](quick-start-for-developers.md)section to learn how to manage a task execution. For more details, go to [iExec SDK github page](https://github.com/iExecBlockchainComputing/iexec-sdk/) to read its full documentation.
 
 In order to transact between multiple parties within iExec, an Ethereum wallet is required. First, you will need to create your Ethereum wallet and credit it with Ethereum tokens \(ETH\), before running the application. While iExec is in its development phase, we allow transactions on Ethereum’s Kovan Network. Sometimes referred to as test network, it uses Kovan ETH tokens that hold no real value and are used solely for testing purposes.
 
