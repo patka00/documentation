@@ -1,12 +1,10 @@
 ---
 description: >-
   You will probably need to use the iExec logo in your application or website,
-  so we made it available for download in various formats:
+  so we made it available for download in various formats
 ---
 
 # Assets
-
-
 
 {% tabs %}
 {% tab title="Logo Black" %}
