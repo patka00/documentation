@@ -12,12 +12,12 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 
 **Tutorial Steps :**
 
-* [Create your identity on the blockchain](quick-start-for-developers.md#Create-your-identity-on-the-blockchain)
-* [Initialize your iExec project](quick-start-for-developers.md#Initialize-your-iExec-project)
-* [Deploy your application on iExec](quick-start-for-developers.md#Deploy-your-application-on-iExec)
-* [Publish your application on iExec marketplace](quick-start-for-developers.md#Publish-your-application-on-iExec-marketplace)
-* [Request an execution of your application](quick-start-for-developers.md#Request-an-execution-of-your-application)
-* [What's next?](quick-start-for-developers.md#Whats-next)
+* [Create your identity on the blockchain](quick-start-for-developers.md#create-your-identity-on-the-blockchain)
+* [Initialize your iExec project](quick-start-for-developers.md#initialize-your-iExec-project)
+* [Deploy your application on iExec](quick-start-for-developers.md#deploy-your-application-on-iExec)
+* [Publish your application on iExec marketplace](quick-start-for-developers.md#publish-your-application-on-iExec-marketplace)
+* [Request an execution of your application](quick-start-for-developers.md#request-an-execution-of-your-application)
+* [What's next?](quick-start-for-developers.md#whats-next)
 
 **prerequisite:**
 
@@ -25,7 +25,7 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 * [Github](https://github.com) or [Gitter](https://gitter.im) account
 * A browser with [MetaMask plugin](https://metamask.io)
 
-[More-resources](quick-start-for-developers.md#More-resources)
+[More-resources](quick-start-for-developers.md#more-resources)
 
 ## Create your identity on the blockchain
 
