@@ -8,6 +8,7 @@
 * [Your First App](for-developers/your-first-app.md)
 * [Target Consumers](for-developers/target-consumers.md)
 * [Your First Confidential Application](for-developers/sgx-enabled-application.md)
+* [Manage your apporders](for-developers/manage-your-apporders.md)
 
 ## For Workers
 
