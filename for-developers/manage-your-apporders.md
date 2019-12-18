@@ -25,3 +25,17 @@ When you are happy with your apporder sign it and publish it
 ```
 iexec order sign --app && iexec order publish --app
 ```
+
+## Remove an order from iExec Marketplace
+
+List the published orders for your app.
+```
+iexec orderbook app <your app address>
+```
+
+Copy the `orderHash` of the order you want to remove
+
+Unpublish the apporder from the iExec Marketplace
+```
+iexec order unpublish --app <orderHash>
+``` 
