@@ -256,5 +256,4 @@ You now familiar with the iExec key concepts for the developpers:
 Continue with these articles:
 
 * [Learn how to build your fisrt application running on iexec](your-first-app.md)
-* [Learn how to manage your apporder](https://github.com/iExecBlockchainComputing/documentation/tree/27d732fb88bb85c49d6ad2caf93bbe8873275940/manage-your-apporders.md)
-
+* [Learn how to manage your apporders](manage-your-apporders.md)
