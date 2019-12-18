@@ -1,7 +1,7 @@
 ---
 description: >-
   In this tutorial we will show you how you can create decentralized
-  applpication over the iExec infrastructure.
+  application over the iExec infrastructure.
 ---
 
 # Quick Dev Start
@@ -254,5 +254,5 @@ You now familiar with the iExec key concepts for the developpers:
 
 Continue with these articles:
 
-* [Learn how to build your fisrt application running on iexec](your-first-app.md)
+* [Learn how to build your fisrt application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](manage-your-apporders.md)
