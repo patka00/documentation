@@ -45,3 +45,12 @@
 * [Assets](help/assets.md)
 * [Contact Us](help/contact-us.md)
 
+## Get started
+
+* [Confidential computing](get-started/confidential-computing/README.md)
+  * [Intel SGX technology](get-started/confidential-computing/intel-sgx-technology.md)
+  * [SCONE framework](get-started/confidential-computing/scone-framework.md)
+  * [Create your first SGX app](get-started/confidential-computing/create-your-first-sgx-app.md)
+  * [SGX encrypted dataset](get-started/confidential-computing/sgx-encrypted-dataset.md)
+  * [End-to-end encryption](get-started/confidential-computing/end-to-end-encryption.md)
+
