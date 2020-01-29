@@ -11,9 +11,9 @@ In this tutorial we will prepare an iExec app based on an exiting docker image a
 **Tutorial Steps :**
 
 * Understand what is an iExec decentralized application?
-* Build an iExec app
+* Application I/O
+* Build your application
 * Test your application locally
-* Deploy your application on iExec
 * Run your application on iExec
 * What's next?
 
@@ -21,7 +21,7 @@ In this tutorial we will prepare an iExec app based on an exiting docker image a
 
 * Completed [Quick Dev Start](quick-start-for-developers.md)
 * Ethereum wallet charged with goerli ETH an RLC
-* Familiar with docker
+* docker installed
 * [Dockerhub](https://hub.docker.com/) account
 
 ## Understand what is an iExec decentralized application?
