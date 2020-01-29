@@ -50,7 +50,7 @@ Your app may use input files, all the input files specified by the requester wil
 
 Input files contain non sensitive data publicly available on the Internet. The requester may specify any number of input files in the requestorder.
 
-For each input file, the variable `IEXEC_INPUT_FILE_NAME_X` is set to the file name \(`X` is the index of the file starting with `1`\).  The total number of input files is stored in the variable.
+For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file name \(`x` is the index of the file starting with `1`\).  The total number of input files is stored in the variable.
 
 Use these variables in your application to find input files to process. \(first input file path is `/iexec_in/$IEXEC_INPUT_FILE_NAME_1`\)
 
@@ -88,18 +88,18 @@ Use these variables if your app deals with input files
       <td style="text-align:left">Total number of input files</td>
     </tr>
     <tr>
-      <td style="text-align:left">IEXEC_INPUT_FILE_NAME_X</td>
+      <td style="text-align:left">IEXEC_INPUT_FILE_NAME_x</td>
       <td style="text-align:left">string or unset</td>
       <td style="text-align:left">
-        <p>Name of the input file indexed by <code>X</code> (<code>X</code>
+        <p>Name of the input file indexed by x (<code>x</code>
         </p>
-        <p>starts with 1)</p>
+        <p>starts with <code>1</code>)</p>
       </td>
     </tr>
     <tr>
       <td style="text-align:left">IEXEC_DATASET_FILENAME</td>
       <td style="text-align:left">string or unset</td>
-      <td style="text-align:left">Name of the dataset if used</td>
+      <td style="text-align:left">Name of the dataset file if used</td>
     </tr>
   </tbody>
 </table>#### Bag of Tasks variables
@@ -130,7 +130,9 @@ result.zip
 * If your app produce output files, you must copy them in `/iexec_out/` .
 
 {% hint style="warning" %}
-Your application must always create a deterministic file named `determinism.iexec` in `/iexec_out/` 
+Your application must always create a deterministic file named `determinism.iexec` in `/iexec_out/` as a proof of execution.
+
+The `determinism.iexec`is used in the Proof of Contribution protocol to achieve a consensus on replicated tasks.
 {% endhint %}
 
 ## Build your application
@@ -138,7 +140,7 @@ Your application must always create a deterministic file named `determinism.iexe
 Create a directory for your application.
 
 ```text
-mkdir iexec-hello-world-app && iexec-hello-world-app
+mkdir iexec-hello-world-app && cd iexec-hello-world-app
 ```
 
 ### Write the application \(shell script example\)
@@ -310,9 +312,9 @@ Starting with the basic test you can simulate input files.
 For each input file:
 
 * Copy it in the local volume bound to `/iexec_in/` .
-* Add `--env IEXEC_INPUT_FILE_NAME_X=NAME` to docker run options \(`X` is the index of the file starting by 1 and `NAME` is the name of the file\)
+* Add `--env IEXEC_INPUT_FILE_NAME_x=NAME` to docker run options \(`x` is the index of the file starting by 1 and `NAME` is the name of the file\)
 
-Add `--env IEXEC_NB_INPUT_FILES=N` to docker run options \(`N` is the total number of input files\).
+Add `--env IEXEC_NB_INPUT_FILES=n` to docker run options \(`n` is the total number of input files\).
 
 Example with two inputs files:
 
