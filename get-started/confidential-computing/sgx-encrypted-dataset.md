@@ -1,2 +1,2 @@
-# SGX encrypted dataset
+# Use SGX dataset
 

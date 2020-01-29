@@ -1,4 +1,4 @@
-# Create your first SGX app
+# Create your SGX app
 
 ## Prerequisities
 

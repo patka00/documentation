@@ -14,5 +14,5 @@ In confidential computing jargon, we call "enclave" this special zone protected 
 
 ## Remote attestation
 
-As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the software is running inside an enclave while getting some details about the application being attested. In iExec's context, the provider is the **Secret Management Service \(SMS\)**. It remotely attests the enclave running on a worker before provisioning any secret. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
+As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the software is running in a SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
 
