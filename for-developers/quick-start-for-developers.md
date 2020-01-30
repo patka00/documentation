@@ -21,12 +21,12 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 
 **prerequisite:**
 
-* [Nodejs &gt;=v8.0.0](https://nodejs.org)
+* [Nodejs &gt;=v8.0.0](https://nodejs.org) installed
 * A browser with [MetaMask plugin](https://metamask.io)
 
 ## Create your identity on the blockchain
 
-On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and public address. What you own on the blockchain is associated with your address. The applications you  deploy on iExec are associated with your wallet.
+On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and public address. What you own on the blockchain is associated with your address. The applications you deploy on iExec are associated with your wallet.
 
 Let's setup your wallet.
 
@@ -44,9 +44,19 @@ iexec wallet create
 
 You will be asked to choose a password to protect your wallet, don't forget it there is no way to recover it. The SDK creates a wallet file that contains a random generated private key encrypted by the chosen password and the derived public address. Make sure to backup the wallet file in a safe place and write down your address.
 
+{% hint style="success" %}
+Your wallet is stored in the ethereum keystore, the location depends on your OS:
+
+* On Linux: ~/.ethereum/keystore
+* On Mac : ~/Library/Ethereum/keystore
+* On Windows: ~/AppData/Roaming/Ethereum/keystore
+
+Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
+{% endhint %}
+
 ## Initialize your iExec project
 
-Create a new folder for your iexec project and initialize the project.
+Create a new folder for your iexec project and initialize the project:
 
 ```text
 mkdir my-iexec-project
@@ -54,15 +64,17 @@ cd my-iexec-project
 iexec init --skip-wallet
 ```
 
-The iExec SDK will create the minimum configuration files:
+{% hint style="info" %}
+The iExec SDK creates the minimum configuration files:
 
 * `iexec.json` contains the project configuration
 * `chains.json` contains the blockchain connection configuration
 * we use `--skip-wallet` to skip wallet creation as we already created it
+{% endhint %}
 
-You can now connect to the blockchain. In the following steps we will use the Goerli testnet. Goerli is an Ethereum blockchain operated for testing purpose.
+You can now connect to the blockchain. In the following steps we will use the **Goerli testnet**. Goerli is an Ethereum blockchain operated for testing purpose.
 
-Check your wallet content on Goerli:
+Check your wallet content on Goerli
 
 ```text
 iexec wallet show --chain goerli
@@ -84,7 +96,7 @@ The ETH in your wallet will allow you to pay for the blockchain transaction fees
 
 ## Deploy your application on iExec
 
-Initialize a new application.
+Initialize a new application
 
 ```text
 iexec app init
@@ -110,7 +122,13 @@ You will now deploy your app on iExec, this will be your first transaction on th
 iexec app deploy --chain goerli
 ```
 
-Your can check your deployed apps with their index, let's check your first deployed app.
+{% hint style="success" %}
+While running `iexec app deploy --chain goerli` you sent your first transaction on the goerli blockchain.
+
+You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli` 
+{% endhint %}
+
+You can check your deployed apps with their index, let's check your first deployed app:
 
 ```text
 iexec app show 1 --chain goerli
@@ -126,7 +144,7 @@ iExec uses signed orders to define the terms and conditions of use for each reso
 The terms and conditions to use an app are defined in the **apporder**.
 {% endhint %}
 
-Initialize a new apporder:
+Initialize a new apporder
 
 ```text
 iexec order init --app --chain goerli
@@ -140,21 +158,21 @@ The SDK prepares the default apporder configuration in `iexec.json`.
 | appprice | application price per run |
 | volume | number of execution allowed each execution decrease the remaining volume |
 
-We will keep the apporder default values for now.
+{% hint style="info" %}
+You will learn more about orders management later, keep the apporder default values for now.
+{% endhint %}
 
-
-
-Sign the apporder with your wallet to make it valid on the blockchain.
+Sign the apporder with your wallet to make it valid on the blockchain
 
 ```text
 iexec order sign --app --chain goerli
 ```
 
+{% hint style="success" %}
 The signed apporder is stored locally in `orders.json`. 
+{% endhint %}
 
-
-
-Publish the apporder on iExec marketplace to share it with others.
+Publish the apporder on iExec marketplace to share it with others
 
 ```text
 iexec order publish --app --chain goerli
@@ -162,7 +180,7 @@ iexec order publish --app --chain goerli
 
 Your application is now available for everyone on iExec marketplace on the conditions defined in apporder.
 
-You can check the published apporders for your app:
+You can check the published apporders for your app
 
 ```text
 iexec orderbook app <your app address> --chain goerli
@@ -278,12 +296,13 @@ When the task status is COMPLETED you can download the result from the explorer 
 
 ## What's next?
 
-You now familiar with the iExec key concepts for the developers:
+You are now familiar with the iExec key concepts for the developers:
 
-* wallet
-* account
-* app deployment
-* orders
+* your wallet is your onchain ID and blockchain account
+* you can deploy decentralized applications on iExec
+* anyone can run tasks against RLC on iExec
+* payments are processed by the decentralized platform between iExec users accounts
+* resources governance is managed by orders
 
 Continue with these articles:
 
