@@ -16,9 +16,9 @@ Edit the apporder part in iexec.json to set the conditions to use your app
 | appprice | price to charge the requester for each execution of the app \(in nRLC\) |
 | volume | number of order created, each usage decrease this number |
 | tag | not use |
-| datasetrestrict: | restrict to use the app with a specific dataset \(1\) |
+| datasetrestrict | restrict to use the app with a specific dataset \(1\) |
 | workerpoolrestrict | restrict to run the app on a specific workerpool \(1\) |
-| requesterrestrict: | restrict the app usage to a specific requester \(1\) |
+| requesterrestrict | restrict the app usage to a specific requester \(1\) |
 
 1. the restriction is disabled by default with 0x0000000000000000000000000000000000000000
 
