@@ -354,103 +354,87 @@ replace `dockerusername` with your docker user name
 Push the image to Dockerhub.
 
 ```text
-sudo docker push iexec-hello-wolrd dockerusername/iexec-hello-world:1.0.0
+sudo docker push iexec-hello-wolrd 
 ```
 
 **Congratulation, you app is ready to be deployed on iExec!**
 
 ### Deploy your app on iExec
 
+You already learnt how to deploy the default app on iExec in the [previous tutorial](quick-start-for-developers.md).
 
+Go back to the iexec project folder created in the previous tutorial.
 
-## Disclaimer
+You will need a few configuration in `iexec.json` to deploy your app:
 
-### Deterministic result
+* Replace app **name** with your application name \(display only\)
+* Replace app **multiaddr** with your app image download URI \(should looks like `registry.hub.docker.com/dockerusername/iexec-hello-world:1.0.0`\)
+* Replace app **checksum** with your application image checksum \(see tip below\)
 
-iExec allows requesters to ask for a result with a predefined level of trust.For the PoCo to run smoothly and verify that different workers return the same result, some determinism is needed at some point in the execution.Since it is not always easy \(or even possible\) to have exactly the same output of a job \(for example, compute 3D rendering images on 2 different machines may produce 2 slightly different images\).The PoCo will look for determinism of a file called **determinism.iexec**.This file **has to be created by the dapp and must be deterministic**.It can contain anything but the multiple runs of the job should produce exactly the same determinism.iexec file.If not, the PoCo will not find a consensus.
-
-**Example:**Considering a application to blur faces on pictures,the content of the determinism.iexec file could simply be the coordinates of the faces in the pictures.The output of the execution \(images with blur faces\) may not be exactly the same, but the determinism.iexec file will be.blur-face: [https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/blur-face](https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/blur-face)find-face: [https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/find-face](https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/find-face)
-
-### 
-
-You must push your image to a public repository at DockerHub. Before the execution of the task, iExec worker will pull the image from public repository.
-
-Note
-
-Use docker tags mechanism to manage your application versioning.
+{% hint style="info" %}
+The checksum of your app is the sha256 digest of the docker image prefixed with `0x` , you can use the following command to get it.
 
 ```text
-docker tag iexechub/nilearn iexechub/nilearn:1.0
-docker push iexechub/nilearn:1.0
+docker pull dockerusername/iexec-hello-world:1.0.0 | grep "Digest: sha256:" | sed 's/.*sha256:/0x/'
 ```
+{% endhint %}
 
-### Deploy your app
-
-Once the application is available on Docker, you have to register your application on the blockchain and really create your decentralized and autonomous application, **a dapp**
-
-Set up a configuration file.
+Deploy your app on iExec
 
 ```text
-iexec init --skip-wallet
-iexec app init
+iexec app deploy --chain goerli
 ```
 
-to set up the template in iexec.json and fill information for registation: name, source, …
-
-| Parameter | Meaning |
-| :--- | :--- |
-| owner | the wallet address of the owner |
-| name | the dapp name |
-| multiaddr | docker hub address of the application |
-| checksum | “0x” + sha256 of the digest of the docker image |
-
-Get the digest sha256:
+Verify the deployed app \(name, multiaddr, checksum, owner\)
 
 ```text
-docker pull iexechub/nilearn:1.0
-1.0: Pulling from iexechub/nilearn
-Digest: sha256:f8a48dc5125fe762e3e35b9493291b8472a68782dd19d741a7e7aa062ef73dd6
-Status: Image is up to date for iexechub/nilearn:1.0
+iexec app show --chain goerli
 ```
 
-Don’t forget the prefix “0x” for the checksum.
-
-0xf8a48dc5125fe762e3e35b9493291b8472a68782dd19d741a7e7aa062ef73dd6
-
-Edit iexec.json file, set up the name, the docker address and the hash of the docker image For a docker the checksum is obtained with a docker of the image
+### Publish your application on iExec marketplace
 
 ```text
-"app": {
-  "owner": "0x47d0Ab8d36836F54FD9587e65125Bbab04958310",
-  "name": "Nilearn",
-  "type": "DOCKER",
-  "multiaddr": "registry.hub.docker.com/iexechub/nilearn:1.0",
-  "checksum": "0xf8a48dc5125fe762e3e35b9493291b8472a68782dd19d741a7e7aa062ef73dd6",
-  "mrenclave": ""
-}
+iexec order init --app --chain goerli
+iexec order sign --app --chain goerli
+iexec order publish --app --chain goerli
 ```
 
-Then deploy the app.
+**Congratulation your application is now available on iExec!**
+
+### Request an execution of your application
+
+Before going to [iExec marketplace](https://market.iex.ec), check your application address.
 
 ```text
-iexec app deploy --wallet-file developper_wallet
-ℹ using chain [kovan]
-? Using wallet developper_wallet
-Please enter your password to unlock your wallet [hidden]
-✔ Deployed new app at address 0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
+iexec app show --chain goerli
 ```
 
-### 
+{% hint style="info" %}
+If you have trouble with requesting an execution of your app, you can check [Request an execution](../for-workers/quick-worker-start.md) in the previous tutorial.
+{% endhint %}
 
-When a worker triggers the computation of a task, a few variables are available to the application that is running. They can be used by the application.
+{% hint style="warning" %}
+On iExec marketplace connect your account to **Goerli \[testnet\]** to access apps deployed on Goerli.
+{% endhint %}
 
 
 
 ## Whats next?
 
+In this tutoirial you learnt about the key concepts for deploying an app on iExec:
 
+* application inputs and outputs
+* iExec consensus file `determinism.iexec` 
+* using docker to package your app with all its dependencies
+* testing an iExec app locally
+* publishing on dockerhub
 
-
+Resources:
 
 * A list of iExec applications with their Docker images can be found at [https://github.com/iExecBlockchainComputing/iexec-apps](https://github.com/iExecBlockchainComputing/iexec-apps)
+
+Continue with these articles:
+
+* Confidential app
+* [Learn how to manage your apporders](manage-your-apporders.md)
 

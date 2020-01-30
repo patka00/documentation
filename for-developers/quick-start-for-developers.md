@@ -21,7 +21,7 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 
 **prerequisite:**
 
-* [Nodejs &gt;=v8.0.0](https://nodejs.org) installed
+* [Nodejs &gt;=v8.0.0](https://nodejs.org)
 * A browser with [MetaMask plugin](https://metamask.io)
 
 ## Create your identity on the blockchain
@@ -278,7 +278,7 @@ When the task status is COMPLETED you can download the result from the explorer 
 
 ## What's next?
 
-You are now familiar with the iExec key concepts for the developers:
+You now familiar with the iExec key concepts for the developers:
 
 * wallet
 * account
