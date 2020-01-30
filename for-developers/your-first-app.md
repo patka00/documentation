@@ -40,7 +40,7 @@ Today you can run any application as a task. This mean services are not supporte
 
 ## Application I/O
 
-This is an overview of an iExec application inptus and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some 
+This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some 
 
 ### Application args
 
