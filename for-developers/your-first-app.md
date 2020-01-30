@@ -6,7 +6,7 @@ description: >-
 
 # Your First App
 
-In this tutorial we will prepare an iExec app based on an exiting docker image and we will run it on iExec decentralized infrastructure.
+In this tutorial we will prepare an iExec app based on an existing docker image and we will run it on iExec decentralized infrastructure.
 
 **Tutorial Steps :**
 
