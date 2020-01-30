@@ -64,7 +64,7 @@ The iExec SDK will create the minimum configuration files:
 
 You can now connect to the blockchain. In the following steps we will use the **Goerli testnet**. Goerli is an Ethereum blockchain operated for testing purpose.
 
-Check your wallet content on Goerli:
+Check your wallet content on Goerli
 
 ```text
 iexec wallet show --chain goerli
@@ -86,7 +86,7 @@ The ETH in your wallet will allow you to pay for the blockchain transaction fees
 
 ## Deploy your application on iExec
 
-Initialize a new application:
+Initialize a new application
 
 ```text
 iexec app init
@@ -134,7 +134,7 @@ iExec uses signed orders to define the terms and conditions of use for each reso
 The terms and conditions to use an app are defined in the **apporder**.
 {% endhint %}
 
-Initialize a new apporder:
+Initialize a new apporder
 
 ```text
 iexec order init --app --chain goerli
@@ -152,7 +152,7 @@ The SDK prepares the default apporder configuration in `iexec.json`.
 You will learn more about orders management later, keep the apporder default values for now.
 {% endhint %}
 
-Sign the apporder with your wallet to make it valid on the blockchain.
+Sign the apporder with your wallet to make it valid on the blockchain
 
 ```text
 iexec order sign --app --chain goerli
@@ -162,7 +162,7 @@ iexec order sign --app --chain goerli
 The signed apporder is stored locally in `orders.json`. 
 {% endhint %}
 
-Publish the apporder on iExec marketplace to share it with others.
+Publish the apporder on iExec marketplace to share it with others
 
 ```text
 iexec order publish --app --chain goerli
@@ -170,7 +170,7 @@ iexec order publish --app --chain goerli
 
 Your application is now available for everyone on iExec marketplace on the conditions defined in apporder.
 
-You can check the published apporders for your app:
+You can check the published apporders for your app
 
 ```text
 iexec orderbook app <your app address> --chain goerli
