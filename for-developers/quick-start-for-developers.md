@@ -21,7 +21,7 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 
 **prerequisite:**
 
-* [Nodejs &gt;=v8.0.0](https://nodejs.org)
+* [Nodejs &gt;=v8.0.0](https://nodejs.org) installed
 * A browser with [MetaMask plugin](https://metamask.io)
 
 ## Create your identity on the blockchain
@@ -46,7 +46,7 @@ You will be asked to choose a password to protect your wallet, don't forget it t
 
 ## Initialize your iExec project
 
-Create a new folder for your iexec project and initialize the project.
+Create a new folder for your iexec project and initialize the project:
 
 ```text
 mkdir my-iexec-project
@@ -54,13 +54,15 @@ cd my-iexec-project
 iexec init --skip-wallet
 ```
 
+{% hint style="info" %}
 The iExec SDK will create the minimum configuration files:
 
 * `iexec.json` contains the project configuration
 * `chains.json` contains the blockchain connection configuration
 * we use `--skip-wallet` to skip wallet creation as we already created it
+{% endhint %}
 
-You can now connect to the blockchain. In the following steps we will use the Goerli testnet. Goerli is an Ethereum blockchain operated for testing purpose.
+You can now connect to the blockchain. In the following steps we will use the **Goerli testnet**. Goerli is an Ethereum blockchain operated for testing purpose.
 
 Check your wallet content on Goerli:
 
@@ -84,7 +86,7 @@ The ETH in your wallet will allow you to pay for the blockchain transaction fees
 
 ## Deploy your application on iExec
 
-Initialize a new application.
+Initialize a new application:
 
 ```text
 iexec app init
@@ -110,7 +112,13 @@ You will now deploy your app on iExec, this will be your first transaction on th
 iexec app deploy --chain goerli
 ```
 
-Your can check your deployed apps with their index, let's check your first deployed app.
+{% hint style="success" %}
+While running `iexec app deploy --chain goerli` you sent your first transaction on the goerli blockchain.
+
+You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli` 
+{% endhint %}
+
+You can check your deployed apps with their index, let's check your first deployed app:
 
 ```text
 iexec app show 1 --chain goerli
@@ -140,9 +148,9 @@ The SDK prepares the default apporder configuration in `iexec.json`.
 | appprice | application price per run |
 | volume | number of execution allowed each execution decrease the remaining volume |
 
-We will keep the apporder default values for now.
-
-
+{% hint style="info" %}
+You will learn more about orders management later, keep the apporder default values for now.
+{% endhint %}
 
 Sign the apporder with your wallet to make it valid on the blockchain.
 
@@ -150,9 +158,9 @@ Sign the apporder with your wallet to make it valid on the blockchain.
 iexec order sign --app --chain goerli
 ```
 
+{% hint style="info" %}
 The signed apporder is stored locally in `orders.json`. 
-
-
+{% endhint %}
 
 Publish the apporder on iExec marketplace to share it with others.
 
@@ -278,12 +286,13 @@ When the task status is COMPLETED you can download the result from the explorer 
 
 ## What's next?
 
-You now familiar with the iExec key concepts for the developers:
+You are now familiar with the iExec key concepts for the developers:
 
-* wallet
-* account
-* app deployment
-* orders
+* your wallet is your onchain ID and blockchain account
+* you can deploy decentralized applications on iExec
+* anyone can run tasks against RLC on iExec
+* payments are processed by the decentralized platform between iExec users accounts
+* resources governance is managed by orders
 
 Continue with these articles:
 
