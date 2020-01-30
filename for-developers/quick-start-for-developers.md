@@ -26,7 +26,7 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 
 ## Create your identity on the blockchain
 
-On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and public address. What you own on the blockchain is associated with your address. The applications you  deploy on iExec are associated with your wallet.
+On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and public address. What you own on the blockchain is associated with your address. The applications you deploy on iExec are associated with your wallet.
 
 Let's setup your wallet.
 
