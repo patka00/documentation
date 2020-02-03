@@ -1,8 +1,8 @@
-# Intel SGX with iExec
+# Intel® SGX with iExec
 
 ## SCONE Framework
 
-For security reasons, the system calls inside SGX enclaves behave differently. It means that, in order to run you application inside an enclave, you would need to rewrite it using Intel's [SDK](https://software.intel.com/en-us/sgx/sdk). We agree with you, this is far from being convenient. And since, at iExec, developer experience is one of our top priorities, we always seek to integrate state of the art technologies that simplify your work. Thus, we partnered with [Scontain](https://scontain.com) to lighten this migration while maintaining transparency. With SCONE you can make your application compatible with SGX without modifying the source code. You would, still, re-build it though, but this is already a huge step forward. They provide a [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of base docker images that you can use according to your requirements.
+For security reasons, the system calls inside Intel® SGX enclaves behave differently. It means that, in order to run you application inside an enclave, you would need to rewrite it using Intel's [SDK](https://software.intel.com/en-us/sgx/sdk). We agree with you, this is far from being convenient. And since, at iExec, developer experience is one of our top priorities, we always seek to integrate state of the art technologies that simplify your work. Thus, we partnered with [Scontain](https://scontain.com) to lighten this migration while maintaining transparency. With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You would, still, re-build it though, but this is already a huge step forward. They provide a [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of base docker images that you can use according to your requirements.
 
 ## Terminology
 
@@ -20,13 +20,13 @@ In addition to identifying the code, SCONE, also, takes a snapshot of the file s
 
 #### Application's fingerprint
 
-It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG seperated by a "\|". You should use this when deploying your application on the blockchain. The SMS uses this as a reference to evaluate the state of client enclaves and whether they should get secrets or not.
+It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG seperated by a "\|". You should use this when deploying your application on the Blockchain. The SMS \(see below\) uses this as a reference to evaluate the state of client enclaves and whether they should get secrets or not.
 
 ## Secret Management Service \(SMS\)
 
-With the integration of SCONE in iExec, you do not need to worry about [remote attestation](intel-sgx-technology.md#remote-attestation). We do that for you, we guarantee that the code is running inside an enclave. But that is not all, we also verify that the enclave asking for secrets is authorized to do so. Hence, we implemented a component to handle the permission management for those secrets. You guessed it, it is the SMS! The SMS queries the blockchain an determines, for each task, the required secrets and provisions them on the fly.
+With the integration of SCONE in iExec, you do not need to worry about [remote attestation](intel-sgx-technology.md#remote-attestation). We do that for you, we guarantee that the code is running inside an enclave. But that is not all, we also verify that the enclave asking for secrets is authorized to do so. Hence, we implemented a component to handle the permission management for those secrets. You guessed it, it is the SMS! The SMS queries the Blockchain an determines, for each task, the required secrets and provisions them on the fly.
 
-Unquestionably, the SMS is a critical component. That's why we run it inside and SGX enclave.
+Unquestionably, the SMS is a critical component. That's why we run it inside and Intel® SGX enclave.
 
 ## How it works?
 
@@ -34,9 +34,9 @@ Unquestionably, the SMS is a critical component. That's why we run it inside and
 For more information about SCONE, please refer to their documentation at [https://sconedocs.github.io](https://sconedocs.github.io/).
 {% endhint %}
 
-We explain the process of how to make your SGX application using iExec in details in the [next chapter](create-your-first-sgx-app.md). Here is a quick general overview:
+We explain the process of how to make your Intel® SGX application using iExec in details in the [next chapter](create-your-first-sgx-app.md). Here is a quick general overview:
 
-**SGX Application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and fingerprint.
+**Intel® SGX Application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the Blockchain with the correct image URI and fingerprint.
 
-**SGX Dataset:** To make your dataset available on iExec, you should, first, encrypt it with the SDK, and put the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by SGX, which means even us we cannot access it\). Only applications you authorize can get this key.
+**Intel® SGX Dataset:** To make your dataset available on iExec, you should, first, encrypt it with the SDK, and put the encrypted file publicly available. Deploy your dataset on the Blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by Intel® SGX, which means even us we cannot access it\). Only applications you authorize can get this key.
 

@@ -1,37 +1,159 @@
-# Create your SGX app
+# Create your "hello-world" Intel® SGX app
 
-## Prerequisities
+{% hint style="success" %}
+**Prerequisities**
 
-To start this tutorial, make sure you are already familiar with the basic concepts of [SGX](intel-sgx-technology.md) and the [SCONE](scone-framework.md#scone-framework) framework.
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
+* [Nodejs](https://nodejs.org) 8.0.0 or higher.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.0 or higher.
+* [Quick dev start](../../for-developers/quick-start-for-developers.md) tutorial.
+{% endhint %}
 
-* **Docker 17.05 or higher on the daemon and client**
+To start this tutorial, make sure you are already familiar with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework. We will be using Python as the programming language, but support of other languages is coming soon. The tutorial is divided into tow major parts:
 
-Now let's roll up our sleeves and start playing with enclaves. In this tutorial we will be using Python as the programming language, but support of other programming languages is coming soon.
+* [Prepare the application.](create-your-first-sgx-app.md#prepare-the-application)
+* [Build its docker image.](create-your-first-sgx-app.md#build-the-application)
+* [Deploy it on iExec](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
 
+Now, let's roll up our sleeves and start playing with [enclaves](intel-sgx-technology.md#enclave). 
 
+## Prepare the application:
 
-As we explained before, we use SCONE as an SGX framework.
-
-
-
-~~Our SGX framework is based on the Scone runtime, that allows us to run unmodified apps inside SGX enclaves.~~
+For simplicity sake, we provide a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) where you will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications once you are ready. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
 
 ```
-$ give me super-powers
+$ git clone https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git
+$ cd confidential-computing-tutorials/scone/hello-world-app
+```
+
+If you `tree` the content of the directory you will find this structure:
+
+```bash
+$ tree
+.
+├── Dockerfile
+├── src
+│   └── app.py
+└── utils
+    ├── protect-fs.sh
+    └── signer.py
+```
+
+Our application's source code is a python script that echos "hello world" to illustrate a simple run inside an enclave.
+
+{% code title="src/app.py" %}
+```bash
+print("Hello from inside the enclave!")
+print("It's dark over here!")
+```
+{% endcode %}
+
+{% hint style="info" %}
+The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory for the execution to work properly.
+{% endhint %}
+
+The `Dockerfile` is a ready-to-go template where you just need to add your system packages and application's dependencies in the dedicated block \(do not forget to put the correct docker entrypoint\).
+
+```bash
+################################
+
+### install apk dependencies
+RUN apk add --no-cache bash build-base gcc libgcc
+
+### uncomment and add your pip dependencies
+# RUN SCONE_MODE=sim pip install web3
+
+### or use a requirements.txt file
+# COPY ./requirements.txt /requirements.txt
+# RUN SCONE_MODE=sim pip install -r /requirements.txt
+
+### copy the code inside the image
+COPY ./src /app
+
+################################
 ```
 
 {% hint style="info" %}
- Super-powers are granted randomly so please submit an issue if you're not happy with yours.
+That should be enough for this tutorial, but if you have other specifications you can manipulate the Dockerfile and adapt it to satisfy your requirements, just be sure to copy all your files in the image before invoking the **protect-fs.sh** script \(see below\).
 {% endhint %}
 
-Once you're strong enough, save the world:
+The base docker image `iexechub/sconecuratedimages-iexec:python-3.7.3-alpine-3.10` contains a python interpreter that runs inside an enclave. When started, it will read the application's code and execute it. The question here is: **how would the enclave verify the integrity of the code?**
 
-{% code title="hello.sh" %}
+Well that's where the file `utils/protect-fs.sh` comes in place. If you inspect the content of this script, you can see that we use the famous [fspf](scone-framework.md#fspf-file-system-protection-file) feature of SCONE. We use SCONE's [CLI](https://sconedocs.github.io/SCONE_CLI/) to authenticate the file system directories that can be used by the application \(/bin, /lib...\) as well as the code itself, and take a snapshot of their state. This snapshot will be later shared with the enclave \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it is a possible attack.
+
+{% hint style="warning" %}
+It is important to carefully choose files to authenticate. It can be tricky to consider including enough files to protect the application without being more general than we should. For example if we authenticate the entire /etc directory the enclave will fail to start because the content of /etc/hosts is modified at runtime by Docker.
+{% endhint %}
+
+{% hint style="warning" %}
+That's why we do not simply authenticate "/" for example!
+{% endhint %}
+
+{% hint style="info" %}
+Please note that the base docker image is an alpine 3.10 and the version of the python interpreter is 3.7.3, make sure those versions match your requirements.
+{% endhint %}
+
+## Build the application's docker image:
+
+Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the `confidential-computing-tutorials/scone/hello-world-app/` directory and run the following command:
+
 ```bash
-# Ain't no code for that yet, sorry
-echo 'You got to trust me on this, I saved the world'
+$ docker image build -t hello-world-app .
 ```
-{% endcode %}
+
+If every thing goes well you should see this output at the end of the build:
+
+```bash
+#####################################################################
+Application's fingerprint (use this when deploying your app onchain):
+5abc9e3a43e26870b9967ef31ea5572f90f8a12873425305f4fdff9e730e09c0|d72cfe7975922ccb70b7b859970e16b0|16e7c11e75448e31c94d023e40ece7429fb17481bc62f521c8f70da9c48110a1
+#####################################################################
+```
+
+As mentioned in the output, that alphanumeric string is the [fingerprint](scone-framework.md#applications-fingerprint) of your application. It allows the verification of it's integrity.
+
+## Deploy the application on iExec
+
+We explain in details the steps to deploy an application on iExec earlier in the documentation. We will directly use those commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../../for-developers/quick-start-for-developers.md) to get a deeper understanding of them.
+
+First things first, you need a wallet, so let's start by creating one:
+
+```bash
+$ iexec wallet create
+```
+
+Create an iExec project and initialise it:
+
+```bash
+$ mkdir scone-hello-world-app
+$ cd scone-hello-world-app
+$ iexec init --skip-wallet
+```
+
+For testing purpose, we will be using Goerli Testnet as a our blockchain. You need Goerli ETH to be able to send transactions to the network. Go to their [faucet](https://goerli-faucet.slock.it/) and paste your address to get some of it.
+
+```bash
+# to show wallet address
+$ iexec wallet show --chain goerli
+```
+
+iexec app init
+
+remplir
+
+deploy
+
+show
+
+
+
+
+
+
+
+## Next step?
+
+Once you learned how to leverage your application with the power of Trusted Execution Environments through a  
 
 
 

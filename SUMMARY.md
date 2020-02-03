@@ -48,9 +48,9 @@
 ## Get started
 
 * [Confidential computing](get-started/confidential-computing/README.md)
-  * [Intel SGX technology](get-started/confidential-computing/intel-sgx-technology.md)
-  * [Intel SGX with iExec](get-started/confidential-computing/scone-framework.md)
-  * [Create your SGX app](get-started/confidential-computing/create-your-first-sgx-app.md)
+  * [Intel® SGX technology](get-started/confidential-computing/intel-sgx-technology.md)
+  * [Intel® SGX with iExec](get-started/confidential-computing/scone-framework.md)
+  * [Create your "hello-world" Intel® SGX app](get-started/confidential-computing/create-your-first-sgx-app.md)
   * [Use SGX dataset](get-started/confidential-computing/sgx-encrypted-dataset.md)
   * [End-to-end encryption with SGX](get-started/confidential-computing/end-to-end-encryption.md)
 
