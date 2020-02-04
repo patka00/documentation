@@ -2,9 +2,7 @@
 
 ## Intel® Software Guard Extension \(Intel® SGX\)
 
-[Intel® SGX](https://software.intel.com/en-us/sgx) is a technology that enables **Trusted** and **Confidential Computing**. At its core, it relies on the creation of a special zone in the memory, to which, only the CPU can have access. Neither privileged access level such as root, nor the operating system itself is capable of inspecting the content of this region.
-
-The code as well as the data inside the protected zone is totally unreadable and unalterable from the outside. Which guarantees both, non-disclosure of data and a tamper-proof execution of the code.  Those assurances are critical for a decentralized cloud where code is being executed in a remote machine not controlled by the requester. They are, also, required to prevent leakage while monetizing data sets.
+[Intel® SGX](https://software.intel.com/en-us/sgx) is a technology that enables **Trusted** and **Confidential Computing**. At its core, it relies on the creation of a special zone in the memory, to which, only the CPU can have access. Neither privileged access level such as root, nor the operating system itself is capable of inspecting the content of this region. The code as well as the data inside the protected zone is totally unreadable and unalterable from the outside. Which guarantees both, non-disclosure of data and a tamper-proof execution of the code.
 
 An application's code can be partitioned into "trusted" and "untrusted" parts where sensitive data is manipulated inside the protected area.
 
