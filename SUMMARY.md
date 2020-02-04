@@ -9,6 +9,12 @@
 * [Target Consumers](for-developers/target-consumers.md)
 * [Your First Confidential Application](for-developers/sgx-enabled-application.md)
 * [Manage your apporders](for-developers/manage-your-apporders.md)
+* [Confidential Computing](for-developers/confidential-computing/README.md)
+  * [Intel® SGX technology](for-developers/confidential-computing/intel-sgx-technology.md)
+  * [Confidential Computing with iExec](for-developers/confidential-computing/scone-framework.md)
+  * [Applications](for-developers/confidential-computing/create-your-first-sgx-app.md)
+  * [Datasets](for-developers/confidential-computing/sgx-encrypted-dataset.md)
+  * [End-to-End Encryption](for-developers/confidential-computing/end-to-end-encryption.md)
 
 ## For Workers
 
@@ -46,11 +52,4 @@
 * [Contact Us](help/contact-us.md)
 
 ## Get started
-
-* [Confidential computing](get-started/confidential-computing/README.md)
-  * [Intel® SGX technology](get-started/confidential-computing/intel-sgx-technology.md)
-  * [Intel® SGX with iExec](get-started/confidential-computing/scone-framework.md)
-  * [Create your "hello-world" Intel® SGX app](get-started/confidential-computing/create-your-first-sgx-app.md)
-  * [Datasets in confidential computing](get-started/confidential-computing/sgx-encrypted-dataset.md)
-  * [End-to-end encryption with SGX](get-started/confidential-computing/end-to-end-encryption.md)
 

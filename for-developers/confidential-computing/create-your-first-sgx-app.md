@@ -1,4 +1,4 @@
-# Create your "hello-world" Intel® SGX app
+# Applications
 
 {% hint style="success" %}
 **Prerequisities**
@@ -6,7 +6,7 @@
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.0 or higher.
-* [Quick dev start](../../for-developers/quick-start-for-developers.md) tutorial.
+* [Quick dev start](../quick-start-for-developers.md) tutorial.
 {% endhint %}
 
 To start this tutorial, make sure you are already familiar with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework. We will be using Python as the programming language, but support of other languages is coming soon. The tutorial is divided into tow major parts:
@@ -120,7 +120,7 @@ $ docker image push <username>/scone-hello-world-app:1.0.0
 
 ## Deploy the application on iExec
 
-We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../../for-developers/quick-start-for-developers.md) to get a deeper understanding of those steps.
+We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
 First things first, you need a wallet, so let's start by creating one:
 
@@ -155,6 +155,4 @@ That's it, you deployed you first SCONE app on iExec and it is ready to be invok
 ## Next step?
 
 In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. It is possible to do that using iExec, check out next chapter to see how.
-
-
 

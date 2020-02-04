@@ -1,4 +1,4 @@
-# Intel® SGX with iExec
+# Confidential Computing with iExec
 
 ## SCONE Framework
 
