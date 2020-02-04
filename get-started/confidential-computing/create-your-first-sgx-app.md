@@ -98,7 +98,7 @@ Please note that the base docker image is an alpine 3.10 and the version of the 
 Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the `confidential-computing-tutorials/scone/hello-world-app/` directory and run the following command:
 
 ```bash
-$ docker image build -t hello-world-app .
+$ docker image build -t scone-hello-world-app .
 ```
 
 If every thing goes well you should see this output at the end of the build:
@@ -112,9 +112,15 @@ Application's fingerprint (use this when deploying your app onchain):
 
 As mentioned in the output, that alphanumeric string is the [fingerprint](scone-framework.md#applications-fingerprint) of your application. It allows the verification of it's integrity.
 
+Push the obtained docker container to dockerhub so it is publicly available.
+
+```bash
+$ docker image push <username>/scone-hello-world-app:1.0.0
+```
+
 ## Deploy the application on iExec
 
-We explain in details the steps to deploy an application on iExec earlier in the documentation. We will directly use those commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../../for-developers/quick-start-for-developers.md) to get a deeper understanding of them.
+We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../../for-developers/quick-start-for-developers.md) to get a deeper understanding of those steps.
 
 First things first, you need a wallet, so let's start by creating one:
 
@@ -130,30 +136,25 @@ $ cd scone-hello-world-app
 $ iexec init --skip-wallet
 ```
 
-For testing purpose, we will be using Goerli Testnet as a our blockchain. You need Goerli ETH to be able to send transactions to the network. Go to their [faucet](https://goerli-faucet.slock.it/) and paste your address to get some of it.
+For testing purpose, we will be using the blockchain Goerli Testnet. You need Goerli ETH to be able to send transactions to the network. Go to their [faucet](https://goerli-faucet.slock.it/) and paste your address to get some of it. To get your wallet address run this command:
 
 ```bash
-# to show wallet address
 $ iexec wallet show --chain goerli
 ```
 
-iexec app init
+Init a new iExec app and fill in the fields in `iexec.json` \(name, multiaddr,...\). Put the application's fingerprint in the `mrenclave` field then run:
 
-remplir
+```bash
+$ iexec app deploy --chain goerli
+```
 
-deploy
+**TODO: Add `iexec app run` to test the app.**
 
-show
-
-
-
-
-
-
+That's it, you deployed you first SCONE app on iExec and it is ready to be invoked by tasks. See how to publish orders &lt;here&gt;.
 
 ## Next step?
 
-Once you learned how to leverage your application with the power of Trusted Execution Environments through a  
+In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. It is possible to do that using iExec, check out next chapter to see how.
 
 
 

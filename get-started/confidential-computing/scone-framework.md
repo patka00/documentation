@@ -26,7 +26,7 @@ It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG sepera
 
 With the integration of SCONE in iExec, you do not need to worry about [remote attestation](intel-sgx-technology.md#remote-attestation). We do that for you, we guarantee that the code is running inside an enclave. But that is not all, we also verify that the enclave asking for secrets is authorized to do so. Hence, we implemented a component to handle the permission management for those secrets. You guessed it, it is the SMS! The SMS queries the Blockchain an determines, for each task, the required secrets and provisions them on the fly.
 
-Unquestionably, the SMS is a critical component. That's why we run it inside and Intel® SGX enclave.
+Unquestionably, the SMS is a critical component. That's why we run it inside an [enclave](intel-sgx-technology.md#enclave).
 
 ## How it works?
 
@@ -36,7 +36,7 @@ For more information about SCONE, please refer to their documentation at [https:
 
 We explain the process of how to make your Intel® SGX application using iExec in details in the [next chapter](create-your-first-sgx-app.md). Here is a quick general overview:
 
-**Intel® SGX Application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the Blockchain with the correct image URI and fingerprint.
+**Applications:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the Blockchain with the correct image URI and fingerprint.
 
-**Intel® SGX Dataset:** To make your dataset available on iExec, you should, first, encrypt it with the SDK, and put the encrypted file publicly available. Deploy your dataset on the Blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by Intel® SGX, which means even us we cannot access it\). Only applications you authorize can get this key.
+**Datasets:** To make your dataset available on iExec, you should, first, encrypt it with the SDK, and put the encrypted file publicly available. Deploy your dataset on the Blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by Intel® SGX, which means even us we cannot access it\). Only applications you authorize can get this key.
 
