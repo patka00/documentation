@@ -14,7 +14,7 @@
   * [Confidential Computing with iExec](get-started/confidential-computing/scone-framework.md)
   * [Applications](for-developers/confidential-computing/create-your-first-sgx-app.md)
   * [Datasets](for-developers/confidential-computing/sgx-encrypted-dataset.md)
-  * [End-to-End Encryption](get-started/confidential-computing/end-to-end-encryption.md)
+  * [End-to-End Encryption](for-developers/confidential-computing/end-to-end-encryption.md)
 
 ## For Workers
 

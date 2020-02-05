@@ -47,14 +47,14 @@ Our application's source code is a python script that echos "hello world" to ill
 # print to stdout
 print("Hello from inside the enclave!")
 
-# produce a result file
-with open("/scone/result.txt", "w+") as result_file:
+# produce a result file in /scone
+with open("/scone/my-result.txt", "w+") as result_file:
     result_file.write("It's dark over here!")
 ```
 {% endcode %}
 
 {% hint style="info" %}
-The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory for the execution to work properly.
+The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory that's why we copy it inside the Dockerfile. It is called during the execution time by the worker.
 {% endhint %}
 
 The `Dockerfile` is a ready-to-go template where you just need to add your system packages and application's dependencies in the dedicated block \(do not forget to put the correct docker entrypoint\).
@@ -103,7 +103,7 @@ Please note that the base docker image is an alpine 3.10 and the version of the 
 Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command:
 
 ```bash
-$ docker image build -t scone-hello-world-app .
+$ docker image build -t <username>/scone-hello-world-app:1.0.0 .
 ```
 
 If every thing goes well you should see this output at the end of the build:

@@ -6,6 +6,7 @@
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.1 or higher.
+* [Quick dev start](../quick-start-for-developers.md) tutorial.
 * Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework.
 {% endhint %}
 
@@ -142,7 +143,7 @@ Check it by doing:
 $ iexec dataset check-secret 0x5A713b5492EEa38928772d683Ec6183959a39058 --chain goerli
 ```
 
-
+We saw in this section how to encrypt a dataset with [SCONE](scone-framework.md#scone-framework) and deploy it on iExec. We learned also how to push the encryption secret to the SMS. In the next chapter we will see how to combine both, the application and the dataset to create a complete workflow.
 
 
 

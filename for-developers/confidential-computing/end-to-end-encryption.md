@@ -1,25 +1,34 @@
 # End-to-End Encryption
 
-## Getting Super Powers
+{% hint style="success" %}
+**Prerequisities**
 
-Becoming a super hero is a fairly straight forward process:
-
-```
-$ give me super-powers
-```
-
-{% hint style="info" %}
- Super-powers are granted randomly so please submit an issue if you're not happy with yours.
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
+* [Nodejs](https://nodejs.org) 8.0.0 or higher.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.1 or higher.
+* [Quick dev start](../quick-start-for-developers.md) tutorial.
+* Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework.
+* [First part](create-your-first-sgx-app.md) of the confidential computing tutorial.
+* [Second part](sgx-encrypted-dataset.md) of the confidential computing tutorial.
 {% endhint %}
 
-Once you're strong enough, save the world:
+In the first part of this tutorial, we created a hello world application that runs securely inside an [enclave](intel-sgx-technology.md#enclave). In the second part, we deployed an encrypted dataset on iExec and pushed the secret to be stored safely in the [SMS](scone-framework.md#secret-management-service-sms).
 
-{% code title="hello.sh" %}
-```bash
-# Ain't no code for that yet, sorry
-echo 'You got to trust me on this, I saved the world'
-```
-{% endcode %}
+In this section we will see how to combine both. Our next application will read an encrypted dataset and write its content in another file.
+
+Go ahead and clone the tutorial Github repository and jump in the folder `scone/hello-world-app-with-dataset`.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
