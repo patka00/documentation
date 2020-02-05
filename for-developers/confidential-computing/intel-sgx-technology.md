@@ -8,7 +8,7 @@ An application's code can be partitioned into "trusted" and "untrusted" parts wh
 
 ## Enclave
 
-In confidential computing jargon, it is called "enclave" the special memory zone protected by the CPU. For simplicity sake, an Intel® SGX enabled application can also be referred to as "enclave".
+In confidential computing jargon, we call "enclave" this special zone protected by the CPU. For simplicity sake we can, also, refer to an Intel® SGX enabled application as "enclave".
 
 ## Remote attestation
 

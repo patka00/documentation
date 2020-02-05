@@ -52,7 +52,7 @@ $ tree
 └── iexec.json
 ```
 
-You should see two new files in the directory `iexec.json` and `chain.json`. Then, init the dataset configuration. This command will create the folders `datasets/encrypted` and `datasets/original` and create a `dataset` section in the `iexec.json` file.
+You should see two new files in the directory `iexec.json` and `chain.json`. Then, init the dataset configuration. This command will create the folders `datasets/encrypted`, `datasets/original` and `.secrets/datasets`. A new section `"dataset"` was added to the `iexec.json` file.
 
 ```text
 $ iexec dataset init --encrypted
@@ -62,7 +62,9 @@ $ tree
 ├── datasets
 │   ├── encrypted
 │   └── original
-└── iexec.json
+├── iexec.json
+└── .secrets
+    └── datasets
 ```
 
 We will create a dummy dataset that has the line `"Hello, world!"` inside `datasets/original`. Alternatively, you can put the zip file of your dataset.
