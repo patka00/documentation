@@ -5,21 +5,22 @@
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
-* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.0 or higher.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.1 or higher.
 * [Quick dev start](../quick-start-for-developers.md) tutorial.
+* Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework.
 {% endhint %}
 
-To start this tutorial, make sure you are already familiar with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework. We will be using Python as the programming language, but support of other languages is coming soon. The tutorial is divided into tow major parts:
+After understanding the fundamentals of Confidential Computing and explaining technologies behind it, it is time to roll up our sleeves and start playing with [enclaves](intel-sgx-technology.md#enclave).
 
-* [Prepare the application.](create-your-first-sgx-app.md#prepare-the-application)
-* [Build its docker image.](create-your-first-sgx-app.md#build-the-application)
-* [Deploy it on iExec](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
+In this tutorial, we will be using Python as the programming language, but support of other languages is coming soon. Three major sections are presented:
 
-Now, let's roll up our sleeves and start playing with [enclaves](intel-sgx-technology.md#enclave). 
+* [Prepare and "sconify" an application.](create-your-first-sgx-app.md#prepare-the-application)
+* [Build your application.](create-your-first-sgx-app.md#build-the-application)
+* [Deploy & test on iExec.](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
 
 ## Prepare the application:
 
-For simplicity sake, we provide a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) where you will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications once you are ready. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
+For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided where you will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications once you are ready. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
 
 ```
 $ git clone https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git
@@ -118,7 +119,7 @@ Push the obtained docker container to dockerhub so it is publicly available.
 $ docker image push <username>/scone-hello-world-app:1.0.0
 ```
 
-## Deploy the application on iExec
+## Deploy & test on iExec
 
 We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
@@ -127,6 +128,16 @@ First things first, you need a wallet, so let's start by creating one:
 ```bash
 $ iexec wallet create
 ```
+
+{% hint style="success" %}
+Your wallet is stored in the ethereum keystore, the location depends on your OS:
+
+* On Linux: ~/.ethereum/keystore
+* On Mac : ~/Library/Ethereum/keystore
+* On Windows: ~/AppData/Roaming/Ethereum/keystore
+
+Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
+{% endhint %}
 
 Create an iExec project and initialise it:
 
@@ -142,7 +153,13 @@ For testing purpose, we will be using the blockchain Goerli Testnet. You need Go
 $ iexec wallet show --chain goerli
 ```
 
-Init a new iExec app and fill in the fields in `iexec.json` \(name, multiaddr,...\). Put the application's fingerprint in the `mrenclave` field then run:
+Init a new iExec app:
+
+```bash
+$ iexec app init
+```
+
+Fill in the fields in `iexec.json` \(name, multiaddr,...\) and put the application's fingerprint in the `mrenclave` field then run:
 
 ```bash
 $ iexec app deploy --chain goerli
