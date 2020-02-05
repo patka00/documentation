@@ -142,7 +142,17 @@ Check it by doing:
 $ iexec dataset check-secret 0x5A713b5492EEa38928772d683Ec6183959a39058 --chain goerli
 ```
 
-Now we need to push the encryption key to the [SMS](scone-framework.md#secret-management-service-sms) to be available for authorized application$ 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
