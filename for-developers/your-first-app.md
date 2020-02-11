@@ -343,7 +343,7 @@ sudo docker login
 Tag you application image to push it to your dockerhub public repository.
 
 ```text
-sudo docker tag iexec-hello-wolrd dockerusername/iexec-hello-world:1.0.0
+sudo docker tag iexec-hello-world dockerusername/iexec-hello-world:1.0.0
 ```
 
 {% hint style="warning" %}
