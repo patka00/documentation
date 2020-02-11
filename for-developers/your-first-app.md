@@ -420,7 +420,7 @@ On iExec marketplace connect your account to **Goerli \[testnet\]** to access ap
 
 ## Whats next?
 
-In this tutoirial you learnt about the key concepts for deploying an app on iExec:
+In this tutorial you learnt about the key concepts for deploying an app on iExec:
 
 * application inputs and outputs
 * iExec consensus file `determinism.iexec` 
