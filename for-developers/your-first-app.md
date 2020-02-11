@@ -343,17 +343,17 @@ sudo docker login
 Tag you application image to push it to your dockerhub public repository.
 
 ```text
-sudo docker tag iexec-hello-world dockerusername/iexec-hello-world:1.0.0
+sudo docker tag iexec-hello-world <dockerusername>/iexec-hello-world:1.0.0
 ```
 
 {% hint style="warning" %}
-replace `dockerusername` with your docker user name
+replace `<dockerusername>` with your docker user name
 {% endhint %}
 
 Push the image to Dockerhub.
 
 ```text
-sudo docker push iexec-hello-world 
+sudo docker push <dockerusername>/iexec-hello-world:1.0.0
 ```
 
 **Congratulation, you app is ready to be deployed on iExec!**
@@ -374,7 +374,7 @@ You will need a few configuration in `iexec.json` to deploy your app:
 The checksum of your app is the sha256 digest of the docker image prefixed with `0x` , you can use the following command to get it.
 
 ```text
-docker pull dockerusername/iexec-hello-world:1.0.0 | grep "Digest: sha256:" | sed 's/.*sha256:/0x/'
+docker pull <dockerusername>/iexec-hello-world:1.0.0 | grep "Digest: sha256:" | sed 's/.*sha256:/0x/'
 ```
 {% endhint %}
 
