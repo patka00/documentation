@@ -353,7 +353,7 @@ replace `dockerusername` with your docker user name
 Push the image to Dockerhub.
 
 ```text
-sudo docker push iexec-hello-wolrd 
+sudo docker push iexec-hello-world 
 ```
 
 **Congratulation, you app is ready to be deployed on iExec!**
