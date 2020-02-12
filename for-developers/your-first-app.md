@@ -10,12 +10,13 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 
 **Tutorial Steps :**
 
-* Understand what is an iExec decentralized application?
-* Application I/O
-* Build your application
-* Test your application locally
-* Run your application on iExec
-* What's next?
+* [Understand what is an iExec decentralized application?](your-first-app.md#understand-what-is-an-iexec-decentralized-application)
+* [Application I/O](your-first-app.md#application-i-o)
+* [Build your app](your-first-app.md#build-your-application)
+* [Test your app locally](your-first-app.md#test-your-application-locally)
+* [Test your app on iExec](your-first-app.md#test-your-application-on-iexec)
+* [Publish your app on iExec marketplace](your-first-app.md#publish-your-app-on-iexec-marketplace)
+* [What's next?](your-first-app.md#whats-next)
 
 **prerequisite:**
 
@@ -139,7 +140,7 @@ Your application must always create a deterministic file named `determinism.iexe
 The `determinism.iexec`is used in the Proof of Contribution protocol to achieve a consensus on replicated tasks.
 {% endhint %}
 
-## Build your application
+## Build your app
 
 Create a directory for your application.
 
@@ -147,7 +148,7 @@ Create a directory for your application.
 mkdir iexec-hello-world-app && cd iexec-hello-world-app
 ```
 
-### Write the application \(shell script example\)
+### Write the app \(shell script example\)
 
 Create the app file `iexec-hello-world.sh`
 
@@ -230,7 +231,7 @@ echo "FINISH";
 `iexec-hello-world.sh` is the minimum shell application, learn more with `hackable-iexec-hello-world.sh` 
 {% endhint %}
 
-### Dockerize your application
+### Dockerize your app
 
 Create the `Dockerfile` file to describe your app docker image.
 
@@ -265,7 +266,7 @@ sudo docker build . --tag iexec-hello-world
 
 **Congratulation you built your first docker image for iExec!**
 
-## Test your application locally
+## Test your app locally
 
 ### Basic test
 
@@ -330,7 +331,7 @@ sudo docker run \
     arg1 arg2 arg3
 ```
 
-## Test your application on iExec
+## Test your app on iExec
 
 ### Push your app to Dockerhub
 
@@ -411,7 +412,7 @@ iexec task show <taskid> --download my-app-result --chain goerli  \
     && unzip my-app-result.zip -d my-app-result
 ```
 
-Congratulation your app succesfully ran on iExec!
+Congratulation your app successfully ran on iExec!
 
 ## Publish your app on iExec marketplace
 
@@ -425,10 +426,10 @@ iexec order publish --app --chain goerli
 
 ## Whats next?
 
-In this tutorial you learnt about the key concepts for deploying an app on iExec:
+In this tutorial you learnt about the key concepts for building an app on iExec:
 
-* application inputs and outputs
-* iExec consensus file `determinism.iexec` 
+* iExec app inputs and outputs
+* iExec app must produce a consensus file `determinism.iexec` 
 * using docker to package your app with all its dependencies
 * testing an iExec app locally
 * publishing on dockerhub
