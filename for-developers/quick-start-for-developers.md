@@ -95,7 +95,7 @@ iexec wallet show --chain goerli
 ```
 
 {% hint style="info" %}
-The ETH in your wallet will allow you to pay for the blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
+The ETH in your wallet will allow you to pay for the Ethereum blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
 
 [Read more about transaction fees](https://bitfalls.com/2017/12/05/ethereum-gas-and-transaction-fees-explained/)
 {% endhint %}
@@ -144,10 +144,108 @@ While running `iexec app deploy --chain goerli` you sent your first transaction 
 You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli` 
 {% endhint %}
 
-You can check your deployed apps with their index, let's check your first deployed app:
+You can check your deployed apps with their index, let's check your last deployed app:
 
 ```text
-iexec app show 1 --chain goerli
+iexec app show --chain goerli
+```
+
+## Run your application on iExec
+
+iExec enables running applications on a decentralized infrastructure against RLC \(iExec coin\).
+
+Let's get some test RLC to run your app
+
+```text
+iexec wallet getRLC --chain goerli
+```
+
+After a few moments your wallet will be credited with test RLC.
+
+You can check your wallet content
+
+```text
+iexec wallet show --chain goerli
+```
+
+Congratulation you own RLC on Goerli testnet!
+
+Next step is to topup your **iExec Account** and use your credit to run your application.
+
+{% hint style="info" %}
+Your iExec account is your compution credit managed by iExec smart contracts.
+
+When you request an execution the price for the task is locked from your account's stake then transferred to the workers contributing to the task \(read more about [Proof of Contribution](../key-concepts/proof-of-contribution.md) protocol\).
+
+At any time you can:
+
+* deposit RLC from your wallet to your iExec account
+* withdraw RLC from your iExec account to your wallet \(only stake can be withdrawed\)
+{% endhint %}
+
+Topup  your iExec account
+
+```text
+iexec account deposit 200 --chain goerli
+```
+
+You moved 200 nRLC from your wallet to your account.
+
+Check it whit the following commands
+
+```text
+iexec account show --chain goerli
+iexec wallet show --chain goerli
+```
+
+Your application is deployed, you have some RLC on your account, everything is ready to run your application!
+
+```text
+iexec app run --params "beef" --watch --chain goerli
+```
+
+{% hint style="info" %}
+`iexec app run` allows to run an application on iExec at the market price.
+
+Useful options:
+
+*  `--params <params>`  specify the app execution params
+* `--watch`  watch execution status changes
+
+Discover more option with `iexec app run --help`
+{% endhint %}
+
+{% hint style="success" %}
+Congratulation you requested the execution of [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) with the parameters `"beef"`. This should compute an Ethereum address starting with `0xbeef` .
+{% endhint %}
+
+Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\).
+
+Download your task result
+
+```text
+iexec task show <taskid> --download my-result --chain goerli
+```
+
+{% hint style="info" %}
+A task result is a zip file with tree
+
+```text
+result.zip
+  ├── iexec_out/
+  └── stdout.txt
+```
+
+* `stdout.txt` always contains the application logs.
+* `iexec_out/` content is application specific
+{% endhint %}
+
+[iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) produce an Ethereun keypair in `iexec_out/keypair.txt` . Let's discover the result of the computation.
+
+```text
+unzip my-result.zip -d my-result
+cat my-result/stdout.txt
+cat my-result/iexec_out/keypair.txt
 ```
 
 ## Publish your application on iExec marketplace

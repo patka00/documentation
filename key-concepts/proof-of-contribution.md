@@ -6,7 +6,7 @@ description: >-
 
 # Proof of Contribution
 
-The iExec platform provides a network where application provider, workers, and users can gather and work together. The fully decentralized nature of iExec implies that no single agent is trusted by default, and that those agents require incentives to contribute correctly.
+rThe iExec platform provides a network where application provider, workers, and users can gather and work together. The fully decentralized nature of iExec implies that no single agent is trusted by default, and that those agents require incentives to contribute correctly.
 
 In this context, Proof-of-Contribution \(PoCo\) is the protocol used by iExec for consensus over off-chain computing.
 
