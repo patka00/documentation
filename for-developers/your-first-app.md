@@ -142,25 +142,24 @@ The `determinism.iexec`is used in the Proof of Contribution protocol to achieve 
 
 ## Build your app
 
-Create a directory for your application.
+Create the folder tree for your application in `~/iexec-projects/`.
 
 ```text
 cd ~/iexec-projects
-mkdir iexec-hello-world-app && cd iexec-hello-world-app
+mkdir iexec-hello-world-app
+cd iexec-hello-world-app
+mkdir src
+touch Dockerfile
+touch src/iexec-hello-world.sh
 ```
 
 ### Write the app \(shell script example\)
 
-Create the app file `iexec-hello-world.sh`
-
-```bash
-touch iexec-hello-world.sh
-```
-
-**Copy the following content** in `iexec-hello-world.sh` .
+**Copy the following content** in `src/iexec-hello-world.sh` .
 
 {% tabs %}
-{% tab title="iexec-hello-word.sh" %}
+{% tab title="iexec-hello-word" %}
+{% code title="iexec-hello-word.sh" %}
 ```bash
 #!/bin/sh
 
@@ -169,9 +168,11 @@ echo "hello world" > /iexec_out/my-app-output.txt;
 echo $@$IEXEC_NB_INPUT_FILES > /iexec_out/determinism.iexec;
 
 ```
+{% endcode %}
 {% endtab %}
 
-{% tab title="hackable-iexec-hello-world.sh" %}
+{% tab title="hackable-iexec-hello-world" %}
+{% code title="iexec-hello-world.sh" %}
 ```bash
 #!/bin/sh
 
@@ -225,29 +226,26 @@ echo;
 
 echo "FINISH";
 ```
+{% endcode %}
 {% endtab %}
 {% endtabs %}
 
 {% hint style="info" %}
-`iexec-hello-world.sh` is the minimum shell application, learn more with `hackable-iexec-hello-world.sh` 
+`iexec-hello-world` is the minimum shell application, learn more with `hackable-iexec-hello-world` 
 {% endhint %}
 
 ### Dockerize your app
 
-Create the `Dockerfile` file to describe your app docker image.
-
-```text
-touch Dockerfile
-```
-
 **Copy the following content** in `Dockerfile` .
 
+{% code title="Dockerfile" %}
 ```text
 FROM alpine:latest
-COPY iexec-hello-world.sh /iexec-hello-world.sh
+COPY src/iexec-hello-world.sh /iexec-hello-world.sh
 RUN chmod +x /iexec-hello-world.sh
 ENTRYPOINT ["/iexec-hello-world.sh"]
 ```
+{% endcode %}
 
 {% hint style="info" %}
 Starting from the Alpine Linux image ensure we can use `/bin/sh`.
@@ -265,7 +263,7 @@ sudo docker build . --tag iexec-hello-world
 `docker build` produce an image id, using `--tag <name>`  option is a convenient way to name the image to reuse it in the next steps.
 {% endhint %}
 
-**Congratulation you built your first docker image for iExec!**
+Congratulation you built your first docker image for iExec!
 
 ## Test your app locally
 
@@ -364,7 +362,11 @@ sudo docker push <dockerusername>/iexec-hello-world:1.0.0
 
 You already learnt how to deploy the default app on iExec in the [previous tutorial](quick-start-for-developers.md).
 
-Go back to the iexec project folder created in the previous tutorial.
+Go back to the `iexec-project` folder.
+
+```text
+cd ~/iexec-projects/
+```
 
 You will need a few configuration in `iexec.json` to deploy your app:
 
@@ -406,7 +408,7 @@ Run your application on iExec
 iexec app run --watch --chain goerli
 ```
 
-Once the run is completed copy the taskid to download and check the result
+Once the run is completed copy the taskid from `iexec app run` output to download and check the result
 
 ```text
 iexec task show <taskid> --download my-app-result --chain goerli  \
