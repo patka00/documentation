@@ -330,9 +330,9 @@ sudo docker run \
     arg1 arg2 arg3
 ```
 
-## Run your application on iExec
+## Test your application on iExec
 
-### Put your application image on Dockerhub
+### Push your app to Dockerhub
 
 Login to your Dockerhub account.
 
@@ -390,7 +390,30 @@ Verify the deployed app \(name, multiaddr, checksum, owner\)
 iexec app show --chain goerli
 ```
 
-### Publish your application on iExec marketplace
+### Run your app on iExec
+
+Before requesting an execution make sure your account stake is charged with Goerli RLC
+
+```text
+iexec account show --chain goerli
+```
+
+Run your application on iExec
+
+```text
+iexec app run --watch --chain goerli
+```
+
+Once the run is completed copy the taskid to download and check the result
+
+```text
+iexec task show <taskid> --download my-app-result --chain goerli  \
+    && unzip my-app-result.zip -d my-app-result
+```
+
+Congratulation your app succesfully ran on iExec!
+
+## Publish your app on iExec marketplace
 
 ```text
 iexec order init --app --chain goerli
@@ -399,24 +422,6 @@ iexec order publish --app --chain goerli
 ```
 
 **Congratulation your application is now available on iExec!**
-
-### Request an execution of your application
-
-Before going to [iExec marketplace](https://market.iex.ec), check your application address.
-
-```text
-iexec app show --chain goerli
-```
-
-{% hint style="info" %}
-If you have trouble with requesting an execution of your app, you can check [Request an execution](../for-workers/quick-worker-start.md) in the previous tutorial.
-{% endhint %}
-
-{% hint style="warning" %}
-On iExec marketplace connect your account to **Goerli \[testnet\]** to access apps deployed on Goerli.
-{% endhint %}
-
-
 
 ## Whats next?
 
