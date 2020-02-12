@@ -145,6 +145,7 @@ The `determinism.iexec`is used in the Proof of Contribution protocol to achieve 
 Create a directory for your application.
 
 ```text
+cd ~/iexec-projects
 mkdir iexec-hello-world-app && cd iexec-hello-world-app
 ```
 
