@@ -1,4 +1,4 @@
-# End-to-End Encryption
+# Protect result
 
 {% hint style="success" %}
 **Prerequisities**
@@ -14,9 +14,35 @@
 
 In the first part of this tutorial, we created a hello world application that runs securely inside an [enclave](intel-sgx-technology.md#enclave). In the second part, we deployed an encrypted dataset on iExec and pushed the secret to be stored safely in the [SMS](scone-framework.md#secret-management-service-sms).
 
-In this section we will see how to combine both. Our next application will read an encrypted dataset and write its content in another file.
+In this section we will see how to combine both. Our next application will read an encrypted dataset and write its content to another file.
 
-Go ahead and clone the tutorial Github repository and jump in the folder `scone/hello-world-app-with-dataset`.
+Go ahead and clone the tutorial repository from Github and jump in the folder `scone/hello-world-app-with-dataset`. This repository can, also, be used as a template to create your own applications.
+
+
+
+
+
+
+
+For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications once you are ready. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
+
+```
+$ git clone https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git
+$ cd confidential-computing-tutorials/scone/hello-world-app
+```
+
+Our application's source code is a python script that echos "hello world" to illustrate a simple run inside an enclave.
+
+{% code title="src/app.py" %}
+```bash
+# print to stdout
+print("Hello from inside the enclave!")
+
+# produce a result file in /scone
+with open("/scone/my-result.txt", "w+") as result_file:
+    result_file.write("It's dark over here!")
+```
+{% endcode %}
 
 
 

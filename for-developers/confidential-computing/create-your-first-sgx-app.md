@@ -1,4 +1,4 @@
-# Applications
+# Build trusted applications
 
 {% hint style="success" %}
 **Prerequisities**
@@ -17,13 +17,27 @@ In this tutorial, we will be using Python as the programming language, but suppo
 * [Prepare and "sconify" an application.](create-your-first-sgx-app.md#prepare-the-application)
 * [Build your application.](create-your-first-sgx-app.md#build-the-application)
 * [Deploy & test on iExec.](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
+* [Download the result.](create-your-first-sgx-app.md#download-the-result)
 
-For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications once you are ready. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
+For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
 
 ```
 $ git clone https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git
 $ cd confidential-computing-tutorials/scone/hello-world-app
 ```
+
+Our application's source code is a python script that echos "hello world" to illustrate a simple run inside an enclave.
+
+{% code title="src/app.py" %}
+```bash
+# print to stdout
+print("Hello from inside the enclave!")
+
+# produce a result file in /scone
+with open("/scone/my-result.txt", "w+") as result_file:
+    result_file.write("It's dark over here!")
+```
+{% endcode %}
 
 ## Prepare the application:
 
@@ -39,19 +53,6 @@ $ tree
     ├── protect-fs.sh
     └── signer.py
 ```
-
-Our application's source code is a python script that echos "hello world" to illustrate a simple run inside an enclave.
-
-{% code title="src/app.py" %}
-```bash
-# print to stdout
-print("Hello from inside the enclave!")
-
-# produce a result file in /scone
-with open("/scone/my-result.txt", "w+") as result_file:
-    result_file.write("It's dark over here!")
-```
-{% endcode %}
 
 {% hint style="info" %}
 Note that the result files should be written in the **/scone** folder.
@@ -69,7 +70,7 @@ The `Dockerfile` is a ready-to-go template where you just need to add your syste
 ### install apk packages
 RUN apk add --no-cache bash build-base gcc libgcc
 
-### install pip3 dependencies
+### install python3 dependencies
 RUN SCONE_MODE=sim pip3 install attrdict python-gnupg web3
 
 ### copy your code inside the image
@@ -106,7 +107,7 @@ Once the `Dockerfile` is ready we proceed to building the image. Make sure you a
 $ docker image build -t <username>/scone-hello-world-app:0.0.1 .
 ```
 
-If every thing goes well you should see this output at the end of the build:
+If every thing goes well you should see this output at the end of the build \(with different hashes of course\):
 
 ```bash
 #####################################################################
@@ -117,10 +118,13 @@ Application's fingerprint (use this when deploying your app onchain):
 
 As mentioned in the output, that alphanumeric string is the [fingerprint](scone-framework.md#applications-fingerprint) of your application. It allows the verification of it's integrity.
 
-Push the obtained docker container to dockerhub so it is publicly available.
+Push the obtained docker container to docker registry so it is publicly available and get its checksum:
 
 ```bash
 $ docker image push <username>/scone-hello-world-app:0.0.1
+...
+0.0.1: digest: sha256:bdc482735010af7bf400... size: 2621
+
 ```
 
 ## Deploy & test on iExec
@@ -146,8 +150,7 @@ Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
 Create an iExec project and initialise it:
 
 ```bash
-$ mkdir scone-hello-world-app
-$ cd scone-hello-world-app
+$ mkdir iexec/ && cd iexec/
 $ iexec init --skip-wallet
 ```
 
@@ -163,27 +166,58 @@ Init a new iExec app:
 $ iexec app init
 ```
 
-Fill in the fields in `iexec.json` \(name, multiaddr,...\) and put the application's fingerprint in the `mrenclave` field then run:
+A new section `"app"` appears in iexec.json, fill in its fields and put the application's fingerprint in the `mrenclave` attribute, then deploy your app:
 
 ```bash
+$ cat iexec.json
+{
+  "description": "My iExec ressource description...",
+  ...
+  ...
+  "app": {
+    "owner": "<0x-your-wallet-address>",
+    "name": "Scone hello world",
+    "type": "DOCKER",
+    "multiaddr": "registry.hub.docker.com/<username>/scone-hello-world-app:0.0.1",
+    "checksum": "<0xf51494d7a...>",
+    "mrenclave": "5abc9e3a43e26870b9967ef31ea5572f90f8a12873425305f4fdff9e730e09c0|d72cfe7975922ccb70b7b859970e16b0|16e7c11e75448e31c94d023e40ece7429fb17481bc62f521c8f70da9c48110a1"
+  }
+}
+
 $ iexec app deploy --chain goerli
 ℹ using chain [goerli]
 ? Using wallet UTC...
 Please enter your password to unlock your wallet [hidden]
-✔ Deployed new app at address <0xapp-address>
+✔ Deployed new app at address <0x-your-app-address>
 ```
 
-To test your application on iExec use the command below:
+To test your application on iExec use the command below. The `--watch` option will follow and display the status of the task in real time.
 
 ```bash
-$ iexec app run <0xapp-address>       \
+$ iexec app run <0x-your-app-address> \
     --chain goerli                    \
     --params "python3 /app/app.py"    \
     --tag tee                         \
-    --beneficiary 0x0000000000000000000000000000000000000000 \
     --dataset 0x0000000000000000000000000000000000000000 \
+    --beneficiary 0x0000000000000000000000000000000000000000 \
     --watch
-#   [--force]
+    
+ℹ using chain [goerli]
+? Using wallet UTC...
+Please enter your password to unlock your wallet [hidden]
+? Do you want to spend 0 nRLC to execute the following request: 
+app:         <0x-your-app-address>                      (0 nRLC)
+workerpool:  0x706bB37Fb0545aD82f02721cDe7B8F9d351390Ec (0 nRLC)
+params:      python3 /app/app.py
+category:    3
+tag:         0x0000000000000000000000000000000000000000000000000000000000000001
+beneficiary: 0x0000000000000000000000000000000000000000
+ Yes
+ℹ deal submitted with dealid 0x29f85a881f72f7040ff3fe8b9218ee2b8cc3541167bc8815c027a8c48a128b27
+ℹ Watching tasks execution...
+- Task idx 0 (0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b) status COMPLETED
+
+✔ 1 tasks COMPLETED with dealid 0x29f85a881f72f7040ff3fe8b9218ee2b8cc3541167bc8815c027a8c48a128b27
 ```
 
 You can get all information about your tasks in the iExec [explorer](https://explorer.iex.ec/goerli). If the execution fails or takes so long, you can check the debug enclave logs at [https://graylog.iex.ec/goerli-tee](https://graylog.iex.ec/goerli-tee). Use the search box to filter logs by **task id.**
@@ -192,9 +226,70 @@ You can get all information about your tasks in the iExec [explorer](https://exp
 Please request access here: [https://cutt.ly/grGXZNY](https://cutt.ly/grGXZNY).
 {% endhint %}
 
-That's it, you deployed you first SCONE app on iExec and it is ready to be invoked by tasks. See how to publish orders &lt;here&gt;.
+## Download the result
+
+After the execution is finished \(the status is `COMPLETED`\) download the result:
+
+```bash
+$ iexec task show 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b --download --chain goerli
+
+ℹ using chain [goerli]
+? Using wallet UTC...
+Please enter your password to unlock your wallet [hidden]
+✔ Task 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b details: 
+status:               3
+dealid:               0x29f85a881f72f7040ff3fe8b9218ee2b8cc3541167bc8815c027a8c48a128b27
+idx:                  0
+timeref:              10800
+contributionDeadline: 1581577752
+revealDeadline:       1581523872
+finalDeadline:        1581610152
+consensusValue:       0x79aa3a2408de8f0a3c53720eaf45d723a25ec94eca600bb6acff058f930037ba
+revealCounter:        1
+winnerCounter:        1
+contributors: 
+  0: 0x1cb25226FeCeE496f246DDd1D735276B2E168B5a
+resultDigest:         0x96b341807bafa4ce791572b4cb3ee42ed0960a5d571af6ef704bf8df861ab794
+results:              /ipfs/QmWqHs8Q4dwPJvQZnz1CZYscMZ3NdPs5oAjt6LWun7ZfqX
+statusName:           COMPLETED
+
+ℹ downloaded task result to file /tmp/scone/confidential-computing-tutorials/scone/hello-world-app/iexec/0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b.zip
+```
+
+Unzip the task folder, then unzip the result folder:
+
+```bash
+$ unzip 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b.zip -d result
+$ unzip result/iexec_out/result.zip -d result/iexec_out
+$ rm result/iexec_out/result.zip
+  
+$ tree result/
+result/
+├── iexec_out
+│   ├── enclaveSig.iexec
+│   ├── my-result.txt
+│   ├── public.key
+│   └── volume.fspf
+└── stdout.txt
+```
+
+As you can see, the `result/` directory contains an `stdout.txt` file and the well known `iexec_out/` folder. In `iexec_out` resides our result file `my-result.txt` . You can verify their contents:
+
+```bash
+$ grep -n "Hello from inside the enclave!" result/stdout.txt 
+39:Hello from inside the enclave!
+
+$ cat result/iexec_out/my-result.txt 
+It's dark over here!
+```
+
+{% hint style="info" %}
+The folder "iexec\_out" contains other metadata files: **enclaveSig.iexec** - signature of the enclave used for verification, **public.key** \(of the requester\) and **volume.fspf** files are both used in the case of an encrypted result \(see this [chapter](end-to-end-encryption.md)\).
+{% endhint %}
+
+That's it, you deployed you first confidential computing app on iExec and ran your first enclave-protected execution successfully.
 
 ## Next step?
 
-In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. It is possible to do that using iExec, check out next chapter to see how.
+In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. Check out next chapter to see how.
 
