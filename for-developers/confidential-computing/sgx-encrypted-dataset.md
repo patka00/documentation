@@ -45,7 +45,7 @@ If you create a new wallet don't forget to ask for some Goerli ETH on their fauc
 Create a new folder and init it using the iExec SDK:
 
 ```text
-$ mkdir iexec-encrypted-dataset && cd iexec-encrypted-dataset/
+$ mkdir iexec/ && cd iexec/
 $ iexec init --skip-wallet
 $ tree
 .
@@ -53,7 +53,7 @@ $ tree
 └── iexec.json
 ```
 
-You should see two new files in the directory `iexec.json` and `chain.json`. Then, init the dataset configuration. This command will create the folders `datasets/encrypted`, `datasets/original` and `.secrets/datasets`. A new section `"dataset"` was added to the `iexec.json` file.
+You should see two new files in the directory `iexec.json` and `chain.json`. Now, init the dataset configuration. This command will create the folders `datasets/encrypted`, `datasets/original` and `.secrets/datasets`. A new section `"dataset"` will be added to the `iexec.json` file.
 
 ```text
 $ iexec dataset init --encrypted

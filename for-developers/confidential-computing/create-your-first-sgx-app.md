@@ -39,6 +39,10 @@ with open("/scone/my-result.txt", "w+") as result_file:
 ```
 {% endcode %}
 
+{% hint style="info" %}
+Note that the result files should be written in the **/scone** folder.
+{% endhint %}
+
 ## Prepare the application:
 
 If you `tree` the content of the directory you will find this structure:
@@ -53,10 +57,6 @@ $ tree
     ├── protect-fs.sh
     └── signer.py
 ```
-
-{% hint style="info" %}
-Note that the result files should be written in the **/scone** folder.
-{% endhint %}
 
 {% hint style="warning" %}
 The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory that's why we copy it inside the Dockerfile. It is called during the execution time by the worker.
