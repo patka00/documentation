@@ -100,7 +100,7 @@ The ETH in your wallet will allow you to pay for the Ethereum blockchain transac
 [Read more about transaction fees](https://bitfalls.com/2017/12/05/ethereum-gas-and-transaction-fees-explained/)
 {% endhint %}
 
-## Deploy your application on iExec
+## Deploy your app on iExec
 
 iExec enables decentralized deployment of dockerized applications. The applications deployed on iExec are Smart Contracts identitified by their ethereum address and referencing a public docker image. Each iExec application has an owner who can set the execution permissions on iExec platform.
 
@@ -150,7 +150,7 @@ You can check your deployed apps with their index, let's check your last deploye
 iexec app show --chain goerli
 ```
 
-## Run your application on iExec
+## Run your app on iExec
 
 iExec enables running applications on a decentralized infrastructure against RLC \(iExec coin\).
 
@@ -248,14 +248,18 @@ cat my-result/stdout.txt
 cat my-result/iexec_out/keypair.txt
 ```
 
-## Publish your application on iExec marketplace
+Congratulation you successfully executed your application on iExec! 
 
-Your application is now deployed on iExec, as owner of this application you define the conditions to use your application.
+## Publish your app on iExec marketplace
+
+Your application is deployed on iExec and you completed an execution on iExec. For now, only you can request an execution of your application. Next step is to make it available for anyone.
+
+As owner of this application you define the conditions to use your application.
 
 {% hint style="info" %}
-iExec uses signed orders to define the terms and conditions of use for each resource.
+iExec uses orders signed by the resource owner's wallet toensure resources governance. 
 
-The terms and conditions to use an app are defined in the **apporder**.
+The conditions to use an app are defined in the **apporder**.
 {% endhint %}
 
 Initialize a new apporder
@@ -301,6 +305,11 @@ You can check the published apporders for your app
 ```text
 iexec orderbook app <your app address> --chain goerli
 ```
+
+Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized infrastructure.
+
+* With the iexec SDK cli `iexec app run <your app address> --chain goerli` 
+* On iExec marketplace
 
 ## Request an execution of your application
 
