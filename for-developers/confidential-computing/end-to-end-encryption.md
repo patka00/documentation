@@ -20,6 +20,14 @@ Go ahead and clone the tutorial Github repository and jump in the folder `scone/
 
 
 
+Draft:
+
+Once you deployed your hw dataset, let's make the app we deployed previously &lt;link&gt; read it.
+
+change code
+
+then return to tutorial.
+
 
 
 

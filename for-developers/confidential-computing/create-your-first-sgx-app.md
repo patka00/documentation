@@ -54,6 +54,10 @@ with open("/scone/my-result.txt", "w+") as result_file:
 {% endcode %}
 
 {% hint style="info" %}
+Note that the result files should be written in the **/scone** folder.
+{% endhint %}
+
+{% hint style="warning" %}
 The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory that's why we copy it inside the Dockerfile. It is called during the execution time by the worker.
 {% endhint %}
 
@@ -62,17 +66,13 @@ The `Dockerfile` is a ready-to-go template where you just need to add your syste
 ```bash
 ################################
 
-### install apk dependencies
+### install apk packages
 RUN apk add --no-cache bash build-base gcc libgcc
 
-### uncomment and add your pip dependencies
-# RUN SCONE_MODE=sim pip install web3
+### install pip3 dependencies
+RUN SCONE_MODE=sim pip3 install attrdict python-gnupg web3
 
-### or use a requirements.txt file
-# COPY ./requirements.txt /requirements.txt
-# RUN SCONE_MODE=sim pip install -r /requirements.txt
-
-### copy the code inside the image
+### copy your code inside the image
 COPY ./src /app
 
 ################################
@@ -103,7 +103,7 @@ Please note that the base docker image is an alpine 3.10 and the version of the 
 Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command:
 
 ```bash
-$ docker image build -t <username>/scone-hello-world-app:1.0.0 .
+$ docker image build -t <username>/scone-hello-world-app:0.0.1 .
 ```
 
 If every thing goes well you should see this output at the end of the build:
@@ -120,14 +120,14 @@ As mentioned in the output, that alphanumeric string is the [fingerprint](scone-
 Push the obtained docker container to dockerhub so it is publicly available.
 
 ```bash
-$ docker image push <username>/scone-hello-world-app:1.0.0
+$ docker image push <username>/scone-hello-world-app:0.0.1
 ```
 
 ## Deploy & test on iExec
 
 We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
-First things first, you need a wallet, so let's start by creating one:
+First things first, you need a wallet, so let's start by creating one \(skip this step if you already have one\):
 
 ```bash
 $ iexec wallet create
@@ -167,9 +167,30 @@ Fill in the fields in `iexec.json` \(name, multiaddr,...\) and put the applicati
 
 ```bash
 $ iexec app deploy --chain goerli
+ℹ using chain [goerli]
+? Using wallet UTC...
+Please enter your password to unlock your wallet [hidden]
+✔ Deployed new app at address <0xapp-address>
 ```
 
-**TODO: Add `iexec app run` to test the app.**
+To test your application on iExec use the command below:
+
+```bash
+$ iexec app run <0xapp-address>       \
+    --chain goerli                    \
+    --params "python3 /app/app.py"    \
+    --tag tee                         \
+    --beneficiary 0x0000000000000000000000000000000000000000 \
+    --dataset 0x0000000000000000000000000000000000000000 \
+    --watch
+#   [--force]
+```
+
+You can get all information about your tasks in the iExec [explorer](https://explorer.iex.ec/goerli). If the execution fails or takes so long, you can check the debug enclave logs at [https://graylog.iex.ec/goerli-tee](https://graylog.iex.ec/goerli-tee). Use the search box to filter logs by **task id.**
+
+{% hint style="info" %}
+Please request access here: [https://cutt.ly/grGXZNY](https://cutt.ly/grGXZNY).
+{% endhint %}
 
 That's it, you deployed you first SCONE app on iExec and it is ready to be invoked by tasks. See how to publish orders &lt;here&gt;.
 
