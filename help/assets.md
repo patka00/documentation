@@ -32,5 +32,3 @@ description: >-
 {% endtab %}
 {% endtabs %}
 
-
-

@@ -4,7 +4,7 @@ description: >-
   computing tasks sent by requesters on the iExec Marketplace.
 ---
 
-# Quick Worker Start
+# Quick start
 
 A worker will be rewarded with RLCs for every properly computed tasks.
 

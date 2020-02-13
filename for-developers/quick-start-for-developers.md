@@ -4,7 +4,7 @@ description: >-
   over the iExec infrastructure.
 ---
 
-# Quick Dev Start
+# Quick start
 
 iExec enables decentralized docker app deployment and monetization on the blockchain.
 
@@ -185,7 +185,7 @@ iexec order sign --app --chain goerli
 ```
 
 {% hint style="success" %}
- The signed apporder is stored locally in `orders.json` .
+The signed apporder is stored locally in `orders.json` .
 
 Orders remains private until their publication on the marketplace. Once published, anyone matching the order condition can execute an application!
 {% endhint %}
@@ -210,7 +210,7 @@ Before starting, make sure [MetaMask](https://metamask.io) is installed and conf
 
 ### Import your wallet in MetaMask
 
-Open MetaMask plugin, click **...**  and select **Expand View.**
+Open MetaMask plugin, click **...** and select **Expand View.**
 
 ![](../.gitbook/assets/metamask-expand-view.png)
 
@@ -235,7 +235,7 @@ MetaMask plugin may close while browsing your wallet file, make sure to use Expa
 {% endhint %}
 
 {% hint style="info" %}
-Alternatively you can get your wallet private key with iExec SDK and import it in MetaMask.  However remember, not encrypted private keys are not protected!
+Alternatively you can get your wallet private key with iExec SDK and import it in MetaMask. However remember, not encrypted private keys are not protected!
 
 ```text
 iexec wallet show --show-private-key
@@ -325,4 +325,5 @@ You are now familiar with the iExec key concepts for the developers:
 Continue with these articles:
 
 * [Learn how to build your fisrt application running on iExec](your-first-app.md)
-* [Learn how to manage your apporders](manage-your-apporders.md)
+* [Learn how to manage your apporders](../misc/manage-your-apporders.md)
+
