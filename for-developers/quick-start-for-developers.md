@@ -63,8 +63,8 @@ iExec SDK uses standard Ethereum wallet, you can reuse or import existing Ethere
 Create a new folder for your iexec project and initialize the project:
 
 ```text
-mkdir my-iexec-project
-cd my-iexec-project
+mkdir ~/iexec-projects
+cd ~/iexec-projects
 iexec init --skip-wallet
 ```
 
@@ -141,7 +141,7 @@ iexec app deploy --chain goerli
 {% hint style="success" %}
 While running `iexec app deploy --chain goerli` you sent your first transaction on the goerli blockchain.
 
-You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli` 
+You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli`
 {% endhint %}
 
 You can check your deployed apps with their index, let's check your first deployed app:
@@ -242,9 +242,9 @@ iexec wallet show --show-private-key
 ```
 {% endhint %}
 
-Your wallet created with iExec SDK is now available in your MetaMask browser plugin! 
+Your wallet created with iExec SDK is now available in your MetaMask browser plugin!
 
-### Select Goerli Test Network in MetaMask 
+### Select Goerli Test Network in MetaMask
 
 Open MetaMask plugin and select Goerli in the network drop down.
 
@@ -326,4 +326,3 @@ Continue with these articles:
 
 * [Learn how to build your fisrt application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](manage-your-apporders.md)
-
