@@ -8,7 +8,7 @@ For security reasons, the system calls inside SGX enclaves behave differently. I
 
 #### MrEnclave: \(TLDR; It is the id of an enclave\)
 
-The [MrEnclave](https://sconedocs.github.io/MrEnclave/) is a hash value that identifies every enclave. It is obtained from the content of memory pages and access rights. After you build your SCONE app, you will get a fingerprint that is composed of 3 parts. the 1st and 2nd parts are explained in the section below. The 3rd part is the MrEnclave.
+The [MrEnclave](https://sconedocs.github.io/MrEnclave/) is a hash value that identifies every enclave. It is obtained from the content of memory pages and access rights. After you build your SCONE app, you will get a fingerprint, the MrEnclave is the last part of the fingerprint.
 
 {% hint style="info" %}
 Please note that some of SCONE's [environment variables](https://sconedocs.github.io/SCONE_ENV/) such as **SCONE\_HEAP** can affect the value of the MrEnclave.
@@ -16,7 +16,11 @@ Please note that some of SCONE's [environment variables](https://sconedocs.githu
 
 #### FSPF \(File System Protection File\)
 
-In addition to identifying the code, SCONE, also, takes a snapshot of the file system state. This guarantees that we cannot alter the enclave by modifying its files. The 1st and 2nd parts of the application's fingerprint are the [FSPF\_KEY](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file) and [FSPF\_TAG](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file).
+In addition to identifying the code, SCONE, also, takes a snapshot of the file system state. This guarantees that we cannot alter the enclave by modifying its files' state. To do this, scone uses two parameters the [FSPF\_KEY](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file) and [FSPF\_TAG](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file).
+
+#### Application's fingerprint
+
+It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG seperated by a "\|". You should use this when deploying your application on the blockchain. The SMS uses this as a reference to evaluate the state of client enclaves and whether they should get secrets or not.
 
 ## Secret Management Service \(SMS\)
 
@@ -32,7 +36,7 @@ For more information about SCONE, please refer to their documentation at [https:
 
 We explain the process of how to make your SGX application using iExec in details in the [next chapter](create-your-first-sgx-app.md). Here is a quick general overview:
 
-**SGX Application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and MrEnclave.
+**SGX Application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and fingerprint.
 
 **SGX Dataset:** To make your dataset available on iExec, you should, first, encrypt it with the SDK, and put the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by SGX, which means even us we cannot access it\). Only applications you authorize can get this key.
 
