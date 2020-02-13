@@ -8,9 +8,9 @@ An application's code can be partitioned into "trusted" and "untrusted" parts wh
 
 ## Enclave
 
-In confidential computing jargon, we call "enclave" this special zone protected by the CPU. For simplicity sake we can, also, refer to an Intel® SGX enabled application as "enclave".
+In confidential computing jargon, it is called "enclave" the special memory zone protected by the CPU. For simplicity sake, we can refer to private regions of memory defined by Intel® SGX application as "enclave".
 
 ## Remote attestation
 
-As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the software is running in a Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
+As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
 

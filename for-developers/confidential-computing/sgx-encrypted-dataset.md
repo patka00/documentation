@@ -7,6 +7,7 @@
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.1 or higher.
 * [Quick dev start](../quick-start-for-developers.md) tutorial.
+* [Build trusted applications](create-your-first-sgx-app.md) tutorial.
 * Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](scone-framework.md#scone-framework) framework.
 {% endhint %}
 
@@ -22,92 +23,88 @@ Let's see how to do all of that!
 
 ## Encrypt the dataset
 
-Before starting you need to create a wallet if you don't already have one. Go ahead and run:
+Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously in the [Quick start](../quick-start-for-developers.md) tutorial.
 
 ```text
-$ iexec wallet create
+cd ~/iexec-projects
 ```
 
-{% hint style="success" %}
-Your wallet is stored in the ethereum keystore, the location depends on your OS:
-
-* On Linux: ~/.ethereum/keystore
-* On Mac : ~/Library/Ethereum/keystore
-* On Windows: ~/AppData/Roaming/Ethereum/keystore
-
-Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
-{% endhint %}
-
-{% hint style="warning" %}
-If you create a new wallet don't forget to ask for some Goerli ETH on their faucet [https://goerli-faucet.slock.it/](https://goerli-faucet.slock.it/).
-{% endhint %}
-
-Create a new folder and init it using the iExec SDK:
+Init the dataset configuration.
 
 ```text
-$ mkdir iexec-encrypted-dataset && cd iexec-encrypted-dataset/
-$ iexec init --skip-wallet
-$ tree
-.
-├── chain.json
-└── iexec.json
+iexec dataset init --encrypted
 ```
 
-You should see two new files in the directory `iexec.json` and `chain.json`. Then, init the dataset configuration. This command will create the folders `datasets/encrypted`, `datasets/original` and `.secrets/datasets`. A new section `"dataset"` was added to the `iexec.json` file.
+This command will create the folders `datasets/encrypted`, `datasets/original` and `.secrets/datasets`. A new section `"dataset"` will be added to the `iexec.json` file as well.
 
 ```text
-$ iexec dataset init --encrypted
-$ tree
 .
 ├── chain.json
+│
 ├── datasets
 │   ├── encrypted
 │   └── original
+│
+├── deployed.json
 ├── iexec.json
+└── scone-hello-world-app
+│   └── ...
+│
 └── .secrets
     └── datasets
+
+
 ```
 
-We will create a dummy dataset that has the line `"Hello, world!"` inside `datasets/original`. Alternatively, you can put the zip file of your dataset.
+First create your dataset folder:
 
 ```text
-$ echo "Hello, world!" > datasets/original/hello-world.txt
-$ tree
-.
-├── chain.json
-├── datasets
-│   ├── encrypted
-│   └── original
-│       └── hello-world.txt
-└── iexec.json
+mkdir datasets/original/my-first-dataset
+```
+
+We will create a dummy file that has  `"Hello, world!"` as a content inside `datasets/original/my-first-dataset`. Alternatively, you can put your own dataset file.
+
+```text
+echo "Hello, world!" > datasets/original/my-first-dataset/hello-world.txt
+```
+
+```text
+datasets
+├── encrypted
+└── original
+    └── my-first-dataset
+        └── hello-world.txt
 ```
 
 Now run the following command to encrypt the file:
 
 ```text
-$ iexec dataset encrypt --algorithm scone
-$ tree -a
-.
-├── chain.json
-├── datasets
-│   ├── encrypted
-│   │   └── dataset_helloworld.txt.zip
-│   └── original
-│       └── hello-world.txt
-├── iexec.json
-└── .secrets
-    └── datasets
-        ├── dataset_helloworld.txt.scone.secret
-        └── dataset.secret
+iexec dataset encrypt --algorithm scone
 ```
 
-As you can see the command generated the file `datasets/encrypted/dataset_helloworld.txt.zip`. That file is the encrypted version of your dataset so you can push it somewhere accessible for use and get its URI.
+```text
+datasets
+├── encrypted
+│   └── my-first-dataset.zip
+└── original
+    └── my-first-dataset
+        └── hello-world.txt
+```
 
-The file `.secrets/datasets/dataset_helloworld.txt.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it has the key of the last encrypted dataset.
+As you can see the command generated the file `datasets/encrypted/my-first-dataset.zip`. That file is the encrypted version of your dataset so you can push it somewhere accessible and use its URI.
+
+The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it has the key of the last encrypted dataset.
+
+```text
+.secrets
+└── datasets
+    ├── dataset.secret
+    └── my-first-dataset.scone.secret
+```
 
 ## Deploy the dataset
 
-Fill in the fields of the `iexec.json` file.
+Fill in the fields of the `iexec.json` file. Choose a `name` for your dataset, put the encrypted file's URI in `multiaddr`, and fill in the `checksum`.
 
 ```text
 $ cat iexec.json
@@ -118,32 +115,68 @@ $ cat iexec.json
   
   "dataset": {
     "owner": "0x-your-wallet-address",
-    "name": "my-dataset",
+    "name": "Encrypted hello world dataset",
     "multiaddr": "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
     "checksum": "0x0000000000000000000000000000000000000000000000000000000000000000"
   }
 }
 ```
 
-Choose a name for your dataset \("Encrypted Hello world" for example\) and put the encrypted dataset's URI in `"multiaddr"`. Don't forget the checksum. To deploy the application run:
+To deploy your dataset run:
 
 ```text
-$ iexec dataset deploy --chain goerli
+iexec dataset deploy --chain goerli
 ```
 
-You will get an hexadecimal address for you deployed application. Use that address to push the encryption key to the [SMS](scone-framework.md#secret-management-service-sms) so it is available for authorized applications.
+You will get a hexadecimal address for you deployed dataset. Use that address to push the encryption key to the [SMS](scone-framework.md#secret-management-service-sms) so it is available for authorized applications.
 
 ```text
-$ iexec dataset push-secret 0xaddress --chain goerli
+iexec dataset push-secret 0x-your-dataset-address --chain goerli
 ```
 
 Check it by doing:
 
 ```text
-$ iexec dataset check-secret 0x5A713b5492EEa38928772d683Ec6183959a39058 --chain goerli
+iexec dataset check-secret 0x-your-dataset-address --chain goerli
 ```
 
-We saw in this section how to encrypt a dataset with [SCONE](scone-framework.md#scone-framework) and deploy it on iExec. We learned also how to push the encryption secret to the SMS. In the next chapter we will see how to combine both, the application and the dataset to create a complete workflow.
+We saw in this section how to encrypt a dataset with [SCONE](scone-framework.md#scone-framework) and deploy it on iExec. We learned also how to push the encryption secret to the SMS. Now we need to build the application that is going to consume this dataset. To do that you can use our [template from Github](https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset).
+
+Go to the folder `~/iexec-projects` and clone the repository:
+
+```text
+cd ~/iexec-projects && \
+  git clone https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset.git && \
+  cd scone-hello-world-app-with-dataset/
+```
+
+This python application will read your dataset and write its content to a result file:
+
+{% code title="src/app.py" %}
+```python
+def read_file(filepath):
+    with open(filepath, "r") as f:
+        return f.read()
+
+def write_file(path, data):
+    with open(path, "w+") as f:
+        f.write(data)
+
+if __name__ == "__main__":
+    data = read_file("/iexec_in/hello-world.txt")
+    write_file("/scone/my-result.txt", data)
+```
+{% endcode %}
+
+{% hint style="info" %}
+Note that the result files should be written in the **/scone** folder.
+{% endhint %}
+
+Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md#prepare-the-application) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`. 
+
+## Next step?
+
+Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result also. See in the next chapter how to make your execution result encrypted so you are the only one who can read it.
 
 
 

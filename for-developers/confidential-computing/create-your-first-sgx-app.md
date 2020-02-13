@@ -19,17 +19,18 @@ In this tutorial, we will be using Python as the programming language, but suppo
 * [Deploy & test on iExec.](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
 * [Download the result.](create-your-first-sgx-app.md#download-the-result)
 
-For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Start by cloning the Github repository and `cd` into `scone/hello-world-app` directory.
+For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Let's open up a terminal and jump inside the `~/iexec-projects` folder that we already created earlier in the [Quick dev start](../quick-start-for-developers.md) tutorial. Start by cloning the repository and `cd` into it:
 
 ```
-$ git clone https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git
-$ cd confidential-computing-tutorials/scone/hello-world-app
+cd ~/iexec-projects
+git clone https://github.com/iExecBlockchainComputing/scone-hello-world-app.git
+cd scone-hello-world-app
 ```
 
 Our application's source code is a python script that echos "hello world" to illustrate a simple run inside an enclave.
 
 {% code title="src/app.py" %}
-```bash
+```python
 # print to stdout
 print("Hello from inside the enclave!")
 
@@ -39,12 +40,15 @@ with open("/scone/my-result.txt", "w+") as result_file:
 ```
 {% endcode %}
 
+{% hint style="info" %}
+Note that the result files should be written in the **/scone** folder.
+{% endhint %}
+
 ## Prepare the application:
 
 If you `tree` the content of the directory you will find this structure:
 
 ```bash
-$ tree
 .
 ├── Dockerfile
 ├── src
@@ -54,17 +58,15 @@ $ tree
     └── signer.py
 ```
 
-{% hint style="info" %}
-Note that the result files should be written in the **/scone** folder.
-{% endhint %}
-
 {% hint style="warning" %}
 The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory that's why we copy it inside the Dockerfile. It is called during the execution time by the worker.
 {% endhint %}
 
-The `Dockerfile` is a ready-to-go template where you just need to add your system packages and application's dependencies in the dedicated block \(do not forget to put the correct docker entrypoint\).
+The `Dockerfile` is a ready-to-go template where you just need to add your system packages and application's dependencies in the dedicated block.
 
+{% code title="Dockerfile" %}
 ```bash
+...
 ################################
 
 ### install apk packages
@@ -77,7 +79,9 @@ RUN SCONE_MODE=sim pip3 install attrdict python-gnupg web3
 COPY ./src /app
 
 ################################
+...
 ```
+{% endcode %}
 
 {% hint style="info" %}
 That should be enough for this tutorial, but if you have other specifications you can manipulate the Dockerfile and adapt it to satisfy your requirements, just be sure to copy all your files in the image before invoking the **protect-fs.sh** script \(see below\).
@@ -101,10 +105,10 @@ Please note that the base docker image is an alpine 3.10 and the version of the 
 
 ## Build the application's docker image:
 
-Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command:
+Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command in the terminal:
 
 ```bash
-$ docker image build -t <username>/scone-hello-world-app:0.0.1 .
+docker image build -t <username>/scone-hello-world-app:0.0.1 .
 ```
 
 If every thing goes well you should see this output at the end of the build \(with different hashes of course\):
@@ -121,52 +125,26 @@ As mentioned in the output, that alphanumeric string is the [fingerprint](scone-
 Push the obtained docker container to docker registry so it is publicly available and get its checksum:
 
 ```bash
-$ docker image push <username>/scone-hello-world-app:0.0.1
-...
-0.0.1: digest: sha256:bdc482735010af7bf400... size: 2621
-
+docker image push <username>/scone-hello-world-app:0.0.1
 ```
 
 ## Deploy & test on iExec
 
 We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
-First things first, you need a wallet, so let's start by creating one \(skip this step if you already have one\):
+First things first, go back to the `~/iexec-projects` folder where we initialized our environment:
 
 ```bash
-$ iexec wallet create
-```
-
-{% hint style="success" %}
-Your wallet is stored in the ethereum keystore, the location depends on your OS:
-
-* On Linux: ~/.ethereum/keystore
-* On Mac : ~/Library/Ethereum/keystore
-* On Windows: ~/AppData/Roaming/Ethereum/keystore
-
-Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
-{% endhint %}
-
-Create an iExec project and initialise it:
-
-```bash
-$ mkdir iexec/ && cd iexec/
-$ iexec init --skip-wallet
-```
-
-For testing purpose, we will be using the blockchain Goerli Testnet. You need Goerli ETH to be able to send transactions to the network. Go to their [faucet](https://goerli-faucet.slock.it/) and paste your address to get some of it. To get your wallet address run this command:
-
-```bash
-$ iexec wallet show --chain goerli
+cd ~/iexec-projects # or a - super special - trick: run "cd .."!
 ```
 
 Init a new iExec app:
 
 ```bash
-$ iexec app init
+iexec app init
 ```
 
-A new section `"app"` appears in iexec.json, fill in its fields and put the application's fingerprint in the `mrenclave` attribute, then deploy your app:
+A new section `"app"` appears in iexec.json. Fill in the fields: `name`, `mutiaddr` \(the URI of the docker image\), `checksum`, and put the application's fingerprint in the `mrenclave` attribute.
 
 ```bash
 $ cat iexec.json
@@ -176,17 +154,26 @@ $ cat iexec.json
   ...
   "app": {
     "owner": "<0x-your-wallet-address>",
-    "name": "Scone hello world",
+    "name": "Scone hello world app",
     "type": "DOCKER",
     "multiaddr": "registry.hub.docker.com/<username>/scone-hello-world-app:0.0.1",
     "checksum": "<0xf51494d7a...>",
     "mrenclave": "5abc9e3a43e26870b9967ef31ea5572f90f8a12873425305f4fdff9e730e09c0|d72cfe7975922ccb70b7b859970e16b0|16e7c11e75448e31c94d023e40ece7429fb17481bc62f521c8f70da9c48110a1"
   }
 }
+```
 
-$ iexec app deploy --chain goerli
+ Now, deploy your app:
+
+```bash
+iexec app deploy --chain goerli
+```
+
+You should see this output:
+
+```bash
 ℹ using chain [goerli]
-? Using wallet UTC...
+? Using wallet UTC<...>
 Please enter your password to unlock your wallet [hidden]
 ✔ Deployed new app at address <0x-your-app-address>
 ```
@@ -194,14 +181,18 @@ Please enter your password to unlock your wallet [hidden]
 To test your application on iExec use the command below. The `--watch` option will follow and display the status of the task in real time.
 
 ```bash
-$ iexec app run <0x-your-app-address> \
+iexec app run <0x-your-app-address>   \
     --chain goerli                    \
-    --params "python3 /app/app.py"    \
+    --params "/app/app.py"            \
     --tag tee                         \
     --dataset 0x0000000000000000000000000000000000000000 \
     --beneficiary 0x0000000000000000000000000000000000000000 \
     --watch
-    
+```
+
+If everything goes well you should see this:
+
+```bash
 ℹ using chain [goerli]
 ? Using wallet UTC...
 Please enter your password to unlock your wallet [hidden]
@@ -220,7 +211,7 @@ beneficiary: 0x0000000000000000000000000000000000000000
 ✔ 1 tasks COMPLETED with dealid 0x29f85a881f72f7040ff3fe8b9218ee2b8cc3541167bc8815c027a8c48a128b27
 ```
 
-You can get all information about your tasks in the iExec [explorer](https://explorer.iex.ec/goerli). If the execution fails or takes so long, you can check the debug enclave logs at [https://graylog.iex.ec/goerli-tee](https://graylog.iex.ec/goerli-tee). Use the search box to filter logs by **task id.**
+You can get all information about your tasks in the iExec [explorer](https://explorer.iex.ec/goerli). If the execution fails or takes longer than it should be, you can check the debug enclave logs at [https://graylog.iex.ec/goerli-tee](https://graylog.iex.ec/goerli-tee). Use the search box to filter logs by **task id.**
 
 {% hint style="info" %}
 Please request access here: [https://cutt.ly/grGXZNY](https://cutt.ly/grGXZNY).
@@ -228,11 +219,17 @@ Please request access here: [https://cutt.ly/grGXZNY](https://cutt.ly/grGXZNY).
 
 ## Download the result
 
-After the execution is finished \(the status is `COMPLETED`\) download the result:
+After the execution is finished \(the status is `COMPLETED`\) download the result of your task. This command provides also a resume of the execution:
 
 ```bash
-$ iexec task show 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b --download --chain goerli
+iexec task show 0x3d77255d4c1061aaa12fb0be79... --download --chain goerli
+```
 
+{% hint style="info" %}
+Note that you should use the **task id** not the deal id.
+{% endhint %}
+
+```bash
 ℹ using chain [goerli]
 ? Using wallet UTC...
 Please enter your password to unlock your wallet [hidden]
@@ -253,17 +250,24 @@ resultDigest:         0x96b341807bafa4ce791572b4cb3ee42ed0960a5d571af6ef704bf8df
 results:              /ipfs/QmWqHs8Q4dwPJvQZnz1CZYscMZ3NdPs5oAjt6LWun7ZfqX
 statusName:           COMPLETED
 
-ℹ downloaded task result to file /tmp/scone/confidential-computing-tutorials/scone/hello-world-app/iexec/0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b.zip
+ℹ downloaded task result to file /home/<user>/scone-hello-world-app/iexec/0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b.zip
 ```
 
-Unzip the task folder, then unzip the result folder:
+Unzip the task folder:
 
 ```bash
-$ unzip 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b.zip -d result
-$ unzip result/iexec_out/result.zip -d result/iexec_out
-$ rm result/iexec_out/result.zip
-  
-$ tree result/
+unzip 0x3d77255d4c1061aaa12fb0be79...f1b.zip -d result
+```
+
+Then unzip the result folder:
+
+```bash
+unzip result/iexec_out/result.zip -d result/iexec_out && rm result/iexec_out/result.zip
+```
+
+The folder `result/` contains the following structure:
+
+```bash
 result/
 ├── iexec_out
 │   ├── enclaveSig.iexec
@@ -273,13 +277,13 @@ result/
 └── stdout.txt
 ```
 
-As you can see, the `result/` directory contains an `stdout.txt` file and the well known `iexec_out/` folder. In `iexec_out` resides our result file `my-result.txt` . You can verify their contents:
+As you can see, we have an `stdout.txt` file that contains you application's logs and the well known `iexec_out/` folder. In `iexec_out` resides our result file `my-result.txt` . You can verify the content of those files:
 
 ```bash
 $ grep -n "Hello from inside the enclave!" result/stdout.txt 
 39:Hello from inside the enclave!
 
-$ cat result/iexec_out/my-result.txt 
+$ cat result/iexec_out/my-result.txt
 It's dark over here!
 ```
 
@@ -287,7 +291,7 @@ It's dark over here!
 The folder "iexec\_out" contains other metadata files: **enclaveSig.iexec** - signature of the enclave used for verification, **public.key** \(of the requester\) and **volume.fspf** files are both used in the case of an encrypted result \(see this [chapter](end-to-end-encryption.md)\).
 {% endhint %}
 
-That's it, you deployed you first confidential computing app on iExec and ran your first enclave-protected execution successfully.
+That's it, you deployed you confidential computing app on iExec and ran your enclave-protected execution successfully.
 
 ## Next step?
 
