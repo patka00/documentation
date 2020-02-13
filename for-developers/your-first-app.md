@@ -4,7 +4,7 @@ description: >-
   iExec infrastructure.
 ---
 
-# Your First App
+# Your first application
 
 In this tutorial we will prepare an iExec app based on an existing docker image and we will run it on iExec decentralized infrastructure.
 
@@ -37,11 +37,11 @@ iExec leverage [Docker](https://www.docker.com/why-docker) containers to ensure 
 
 ### What kind of application can I build on iExec?
 
-Today you can run any application as a task. This mean services are not supported for now. 
+Today you can run any application as a task. This mean services are not supported for now.
 
 ## Application I/O
 
-This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some 
+This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some
 
 ### Application args
 
@@ -55,7 +55,7 @@ Your app may use input files, all the input files specified by the requester wil
 
 Input files contain non sensitive data publicly available on the Internet. The requester may specify any number of input files in the requestorder.
 
-For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file name \(`x` is the index of the file starting with `1`\).  The total number of input files is stored in the variable.
+For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file name \(`x` is the index of the file starting with `1`\). The total number of input files is stored in the variable.
 
 Use these variables in your application to find input files to process. \(first input file path is `/iexec_in/$IEXEC_INPUT_FILE_NAME_1`\)
 
@@ -75,9 +75,9 @@ Use these variables if your app deals with input files
 
 | Name | Type | Content |
 | :--- | :--- | :--- |
-| IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder (`/iexec_in/`) |
+| IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder \(`/iexec_in/`\) |
 | IEXEC\_NB\_INPUT\_FILES | int &gt;= 0 | Total number of input files |
-| IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x (`x` starts with `1`) |
+| IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x \(`x` starts with `1`\) |
 | IEXEC\_DATASET\_FILENAME | string or unset | Name of the dataset file if used |
 
 #### Bag of Tasks variables
@@ -139,7 +139,6 @@ touch src/iexec-hello-world.sh
 echo "stdout is logged into stdout.txt";
 echo "hello world" > /iexec_out/my-app-output.txt;
 echo $@$IEXEC_NB_INPUT_FILES > /iexec_out/determinism.iexec;
-
 ```
 {% endcode %}
 {% endtab %}
@@ -170,14 +169,14 @@ echo ' - IEXEC_INPUT_FILES_FOLDER='$IEXEC_INPUT_FILES_FOLDER;
 echo ' - IEXEC_NB_INPUT_FILES='$IEXEC_NB_INPUT_FILES;
 if [ "$IEXEC_NB_INPUT_FILES" -ge 1 ]; # print IEXEC_INPUT_FILE_NAME_X
 then
-	i=1;
-	while [ $i -le $IEXEC_NB_INPUT_FILES ]
-	do
-	   name='IEXEC_INPUT_FILE_NAME_'$i
-	   eval "value=\"\$$name\""
-	   echo '     - '$name=$value
-	   i=`expr $i + 1`
-	done
+    i=1;
+    while [ $i -le $IEXEC_NB_INPUT_FILES ]
+    do
+       name='IEXEC_INPUT_FILE_NAME_'$i
+       eval "value=\"\$$name\""
+       echo '     - '$name=$value
+       i=`expr $i + 1`
+    done
 fi
 echo ' - IEXEC_DATASET_FILENAME='$IEXEC_DATASET_FILENAME;
 echo ' - IEXEC_BOT_SIZE='$IEXEC_BOT_SIZE;
@@ -204,7 +203,7 @@ echo "FINISH";
 {% endtabs %}
 
 {% hint style="info" %}
-`iexec-hello-world` is the minimum shell application, learn more with `hackable-iexec-hello-world` 
+`iexec-hello-world` is the minimum shell application, learn more with `hackable-iexec-hello-world`
 {% endhint %}
 
 ### Dockerize your app
@@ -233,7 +232,7 @@ sudo docker build . --tag iexec-hello-world
 ```
 
 {% hint style="success" %}
-`docker build` produce an image id, using `--tag <name>`  option is a convenient way to name the image to reuse it in the next steps.
+`docker build` produce an image id, using `--tag <name>` option is a convenient way to name the image to reuse it in the next steps.
 {% endhint %}
 
 Congratulation you built your first docker image for iExec!
@@ -417,5 +416,5 @@ Resources:
 Continue with these articles:
 
 * Confidential app
-* [Learn how to manage your apporders](manage-your-apporders.md)
+* [Learn how to manage your apporders](../misc/manage-your-apporders.md)
 

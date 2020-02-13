@@ -1,4 +1,4 @@
-# Intel® SGX technology
+# Overview
 
 ## Intel® Software Guard Extension \(Intel® SGX\)
 

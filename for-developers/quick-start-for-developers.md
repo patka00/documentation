@@ -4,7 +4,7 @@ description: >-
   over the iExec infrastructure.
 ---
 
-# Quick Dev Start
+# Quick start
 
 iExec enables decentralized docker app deployment and monetization on the blockchain.
 
@@ -63,8 +63,8 @@ iExec SDK uses standard Ethereum wallet, you can reuse or import existing Ethere
 Create a new folder for your iexec project and initialize the project:
 
 ```text
-mkdir my-iexec-project
-cd my-iexec-project
+mkdir ~/iexec-projects
+cd ~/iexec-projects
 iexec init --skip-wallet
 ```
 
@@ -141,7 +141,7 @@ iexec app deploy --chain goerli
 {% hint style="success" %}
 While running `iexec app deploy --chain goerli` you sent your first transaction on the goerli blockchain.
 
-You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli` 
+You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli`
 {% endhint %}
 
 You can check your deployed apps with their index, let's check your first deployed app:
@@ -185,7 +185,7 @@ iexec order sign --app --chain goerli
 ```
 
 {% hint style="success" %}
- The signed apporder is stored locally in `orders.json` .
+The signed apporder is stored locally in `orders.json` .
 
 Orders remains private until their publication on the marketplace. Once published, anyone matching the order condition can execute an application!
 {% endhint %}
@@ -210,7 +210,7 @@ Before starting, make sure [MetaMask](https://metamask.io) is installed and conf
 
 ### Import your wallet in MetaMask
 
-Open MetaMask plugin, click **...**  and select **Expand View.**
+Open MetaMask plugin, click **...** and select **Expand View.**
 
 ![](../.gitbook/assets/metamask-expand-view.png)
 
@@ -235,16 +235,16 @@ MetaMask plugin may close while browsing your wallet file, make sure to use Expa
 {% endhint %}
 
 {% hint style="info" %}
-Alternatively you can get your wallet private key with iExec SDK and import it in MetaMask.  However remember, not encrypted private keys are not protected!
+Alternatively you can get your wallet private key with iExec SDK and import it in MetaMask. However remember, not encrypted private keys are not protected!
 
 ```text
 iexec wallet show --show-private-key
 ```
 {% endhint %}
 
-Your wallet created with iExec SDK is now available in your MetaMask browser plugin! 
+Your wallet created with iExec SDK is now available in your MetaMask browser plugin!
 
-### Select Goerli Test Network in MetaMask 
+### Select Goerli Test Network in MetaMask
 
 Open MetaMask plugin and select Goerli in the network drop down.
 
@@ -325,5 +325,5 @@ You are now familiar with the iExec key concepts for the developers:
 Continue with these articles:
 
 * [Learn how to build your fisrt application running on iExec](your-first-app.md)
-* [Learn how to manage your apporders](manage-your-apporders.md)
+* [Learn how to manage your apporders](../misc/manage-your-apporders.md)
 
