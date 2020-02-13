@@ -73,41 +73,14 @@ The runtime variables are environment variables set by the iExec worker and avai
 
 Use these variables if your app deals with input files
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:left">Name</th>
-      <th style="text-align:left">Type</th>
-      <th style="text-align:left">Content</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:left">IEXEC_INPUT_FILES_FOLDER</td>
-      <td style="text-align:left">path</td>
-      <td style="text-align:left">Absolute path of iexec input folder (<code>/iexec_in/</code>)</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">IEXEC_NB_INPUT_FILES</td>
-      <td style="text-align:left">int &gt;= 0</td>
-      <td style="text-align:left">Total number of input files</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">IEXEC_INPUT_FILE_NAME_x</td>
-      <td style="text-align:left">string or unset</td>
-      <td style="text-align:left">
-        <p>Name of the input file indexed by x (<code>x</code>
-        </p>
-        <p>starts with <code>1</code>)</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:left">IEXEC_DATASET_FILENAME</td>
-      <td style="text-align:left">string or unset</td>
-      <td style="text-align:left">Name of the dataset file if used</td>
-    </tr>
-  </tbody>
-</table>#### Bag of Tasks variables
+| Name | Type | Content |
+| :--- | :--- | :--- |
+| IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder (`/iexec_in/`) |
+| IEXEC\_NB\_INPUT\_FILES | int &gt;= 0 | Total number of input files |
+| IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x (`x` starts with `1`) |
+| IEXEC\_DATASET\_FILENAME | string or unset | Name of the dataset file if used |
+
+#### Bag of Tasks variables
 
 Use these variables to index tasks in parallelization use cases.
 
