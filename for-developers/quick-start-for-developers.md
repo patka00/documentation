@@ -54,6 +54,10 @@ Your wallet is stored in the ethereum keystore, the location depends on your OS:
 Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
 {% endhint %}
 
+{% hint style="info" %}
+iExec SDK uses standard Ethereum wallet, you can reuse or import existing Ethereum wallet. See iExec SDK documentation [wallet command](https://github.com/iExecBlockchainComputing/iexec-sdk#wallet) and [wallet options](https://github.com/iExecBlockchainComputing/iexec-sdk#wallet-options).
+{% endhint %}
+
 ## Initialize your iExec project
 
 Create a new folder for your iexec project and initialize the project:
@@ -92,9 +96,15 @@ iexec wallet show --chain goerli
 
 {% hint style="info" %}
 The ETH in your wallet will allow you to pay for the blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
+
+[Read more about transaction fees](https://bitfalls.com/2017/12/05/ethereum-gas-and-transaction-fees-explained/)
 {% endhint %}
 
 ## Deploy your application on iExec
+
+iExec enables decentralized deployment of dockerized applications. The applications deployed on iExec are Smart Contracts identitified by their ethereum address and referencing a public docker image. Each iExec application has an owner who can set the execution permissions on iExec platform.
+
+Let's deploy an iExec app!
 
 Initialize a new application
 
@@ -112,7 +122,13 @@ The iExec SDK writes the minimum app configuration in `iexec.json`
 | multiaddr | download URI of the application \(a public docker registry\) |
 | checksum | checksum of the app \("0x" + docker image digest\) |
 
+{% hint style="info" %}
 The default app is the public docker image [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)
+
+This application allows to generate an ethereum with a specific address starting pattern by generating thousands of random wallets. This process requiring high computation power is enabled by running the app on iExec.
+
+Disclaimer: Don't use this app output wallet to store any value as output may be accessed by an untrusted actor. You will learn how to protect data in a next chapter.
+{% endhint %}
 
 You can deploy this application on iExec, it will run out of the box. Where you are confident with iExec concept, you can read [Your First App](https://github.com/iExecBlockchainComputing/documentation/tree/27d732fb88bb85c49d6ad2caf93bbe8873275940/your-first-app.md) and learn how to setup your own app on iExec.
 
@@ -169,7 +185,9 @@ iexec order sign --app --chain goerli
 ```
 
 {% hint style="success" %}
-The signed apporder is stored locally in `orders.json`. 
+ The signed apporder is stored locally in `orders.json` .
+
+Orders remains private until their publication on the marketplace. Once published, anyone matching the order condition can execute an application!
 {% endhint %}
 
 Publish the apporder on iExec marketplace to share it with others
