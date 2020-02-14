@@ -12,9 +12,9 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 
 * [Understand what is an iExec decentralized application?](your-first-app.md#understand-what-is-an-iexec-decentralized-application)
 * [Application I/O](your-first-app.md#application-i-o)
-* [Build your app](your-first-app.md#build-your-application)
-* [Test your app locally](your-first-app.md#test-your-application-locally)
-* [Test your app on iExec](your-first-app.md#test-your-application-on-iexec)
+* [Build your app](your-first-app.md#build-your-app)
+* [Test your app locally](your-first-app.md#test-your-app-locally)
+* [Test your app on iExec](your-first-app.md#test-your-app-on-iexec)
 * [Publish your app on iExec marketplace](your-first-app.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](your-first-app.md#whats-next)
 
@@ -131,8 +131,8 @@ touch src/iexec-hello-world.sh
 **Copy the following content** in `src/iexec-hello-world.sh` .
 
 {% tabs %}
-{% tab title="iexec-hello-word" %}
-{% code title="iexec-hello-word.sh" %}
+{% tab title="iexec-hello-world" %}
+{% code title="iexec-hello-world.sh" %}
 ```bash
 #!/bin/sh
 
