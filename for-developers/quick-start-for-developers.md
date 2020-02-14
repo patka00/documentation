@@ -184,7 +184,7 @@ At any time you can:
 * withdraw RLC from your iExec account to your wallet \(only stake can be withdrawed\)
 {% endhint %}
 
-Topup  your iExec account
+Topup your iExec account
 
 ```text
 iexec account deposit 200 --chain goerli
@@ -210,7 +210,7 @@ iexec app run --params "beef" --watch --chain goerli
 
 Useful options:
 
-*  `--params <params>`  specify the app execution params
+* `--params <params>`  specify the app execution params
 * `--watch`  watch execution status changes
 
 Discover more option with `iexec app run --help`
@@ -288,7 +288,7 @@ iexec order sign --app --chain goerli
 ```
 
 {% hint style="success" %}
- The signed apporder is stored locally in `orders.json` .
+The signed apporder is stored locally in `orders.json` .
 
 Orders remains private until their publication on the marketplace. Once published, anyone matching the order condition can execute an application!
 {% endhint %}
@@ -325,4 +325,5 @@ You are now familiar with the iExec key concepts for the developers:
 Continue with these articles:
 
 * [Learn how to build your fisrt application running on iExec](your-first-app.md)
-* [Learn how to manage your apporders](../misc/manage-your-apporders.md)
+* [Learn how to manage your apporders](advanced/manage-your-apporders.md)
+
