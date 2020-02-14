@@ -1,5 +1,5 @@
 ---
-description: >-
+ description: >-
   iExec is building the future of the Internet infrastructure by decentralizing
   the cloud computing market. It is the first blockchain-based cloud computing
   marketplace.
