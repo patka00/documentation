@@ -12,18 +12,20 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 
 * [Understand what is an iExec decentralized application?](your-first-app.md#understand-what-is-an-iexec-decentralized-application)
 * [Application I/O](your-first-app.md#application-i-o)
-* [Build your app](your-first-app.md#build-your-application)
-* [Test your app locally](your-first-app.md#test-your-application-locally)
-* [Test your app on iExec](your-first-app.md#test-your-application-on-iexec)
+* [Build your app](your-first-app.md#build-your-app)
+* [Test your app locally](your-first-app.md#test-your-app-locally)
+* [Test your app on iExec](your-first-app.md#test-your-app-on-iexec)
 * [Publish your app on iExec marketplace](your-first-app.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](your-first-app.md#whats-next)
 
-**prerequisite:**
+{% hint style="success" %}
+**Prerequisities**
 
-* Completed [Quick Dev Start](quick-start-for-developers.md)
-* Ethereum wallet charged with goerli ETH an RLC
-* docker installed
+* [Quick start](../quick-start-for-developers.md) tutorial completed
+* Ethereum wallet charged with Goerli ETH an RLC
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client
 * [Dockerhub](https://hub.docker.com/) account
+{% endhint %}
 
 ## Understand what is an iExec decentralized application?
 
@@ -131,8 +133,8 @@ touch src/iexec-hello-world.sh
 **Copy the following content** in `src/iexec-hello-world.sh` .
 
 {% tabs %}
-{% tab title="iexec-hello-word" %}
-{% code title="iexec-hello-word.sh" %}
+{% tab title="iexec-hello-world" %}
+{% code title="iexec-hello-world.sh" %}
 ```bash
 #!/bin/sh
 
@@ -343,7 +345,7 @@ cd ~/iexec-projects/
 You will need a few configuration in `iexec.json` to deploy your app:
 
 * Replace app **name** with your application name \(display only\)
-* Replace app **multiaddr** with your app image download URI \(should looks like `registry.hub.docker.com/dockerusername/iexec-hello-world:1.0.0`\)
+* Replace app **multiaddr** with your app image download URI \(should looks like `registry.hub.docker.com/<dockerusername>/iexec-hello-world:1.0.0`\)
 * Replace app **checksum** with your application image checksum \(see tip below\)
 
 {% hint style="info" %}
