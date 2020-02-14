@@ -18,12 +18,14 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 * [Publish your app on iExec marketplace](your-first-app.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](your-first-app.md#whats-next)
 
-**prerequisite:**
+{% hint style="success" %}
+**Prerequisities**
 
-* Completed [Quick Dev Start](quick-start-for-developers.md)
-* Ethereum wallet charged with goerli ETH an RLC
-* docker installed
+* [Quick start](../quick-start-for-developers.md) tutorial completed.
+* Ethereum wallet charged with Goerli ETH an RLC
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Dockerhub](https://hub.docker.com/) account
+{% endhint %}
 
 ## Understand what is an iExec decentralized application?
 

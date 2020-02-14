@@ -19,9 +19,11 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 * [Publish your app on iExec marketplace](quick-start-for-developers.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](quick-start-for-developers.md#whats-next)
 
-**prerequisite:**
+{% hint style="success" %}
+**Prerequisite**
 
-* [Nodejs &gt;=v8.0.0](https://nodejs.org) installed
+* [Nodejs](https://nodejs.org) 8.0.0 or higher.
+{% endhint %}
 
 ## Create your identity on the blockchain
 
