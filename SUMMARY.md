@@ -13,6 +13,7 @@
   * [Protect result](for-developers/confidential-computing/end-to-end-encryption.md)
 * [Advanced](for-developers/advanced/README.md)
   * [Manage your apporders](for-developers/advanced/manage-your-apporders.md)
+  * [Manage your datsetorders](for-developers/advanced/manage-your-datsetorders.md)
 
 ## For Workers
 
