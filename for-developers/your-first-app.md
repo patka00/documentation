@@ -21,9 +21,9 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 {% hint style="success" %}
 **Prerequisities**
 
-* [Quick start](../quick-start-for-developers.md) tutorial completed.
+* [Quick start](../quick-start-for-developers.md) tutorial completed
 * Ethereum wallet charged with Goerli ETH an RLC
-* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client
 * [Dockerhub](https://hub.docker.com/) account
 {% endhint %}
 

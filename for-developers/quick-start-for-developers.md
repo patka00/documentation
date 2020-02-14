@@ -22,7 +22,7 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 {% hint style="success" %}
 **Prerequisite**
 
-* [Nodejs](https://nodejs.org) 8.0.0 or higher.
+* [Nodejs](https://nodejs.org) 8.0.0 or higher
 {% endhint %}
 
 ## Create your identity on the blockchain
@@ -258,7 +258,7 @@ Your application is deployed on iExec and you completed an execution on iExec. F
 As owner of this application you define the conditions to use your application.
 
 {% hint style="info" %}
-iExec uses orders signed by the resource owner's wallet toensure resources governance.
+iExec uses orders signed by the resource owner's wallet to ensure resources governance.
 
 The conditions to use an app are defined in the **apporder**.
 {% endhint %}
