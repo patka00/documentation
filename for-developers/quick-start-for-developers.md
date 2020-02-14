@@ -13,10 +13,10 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 **Tutorial Steps :**
 
 * [Create your identity on the blockchain](quick-start-for-developers.md#create-your-identity-on-the-blockchain)
-* [Initialize your iExec project](quick-start-for-developers.md#initialize-your-iExec-project)
-* [Deploy your app on iExec](quick-start-for-developers.md#deploy-your-application-on-iExec)
+* [Initialize your iExec project](quick-start-for-developers.md#initialize-your-iexec-project)
+* [Deploy your app on iExec](quick-start-for-developers.md#deploy-your-app-on-iexec)
 * [Run your app on iExec](quick-start-for-developers.md#run-your-app-on-iexec)
-* [Publish your app on iExec marketplace](quick-start-for-developers.md#publish-your-application-on-iExec-marketplace)
+* [Publish your app on iExec marketplace](quick-start-for-developers.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](quick-start-for-developers.md#whats-next)
 
 **prerequisite:**
@@ -129,7 +129,7 @@ This application allows to generate an ethereum with a specific address starting
 Disclaimer: Don't use this app output wallet to store any value as output may be accessed by an untrusted actor. You will learn how to protect data in a next chapter.
 {% endhint %}
 
-You can deploy this application on iExec, it will run out of the box. Where you are confident with iExec concept, you can read [Your First App](https://github.com/iExecBlockchainComputing/documentation/tree/27d732fb88bb85c49d6ad2caf93bbe8873275940/your-first-app.md) and learn how to setup your own app on iExec.
+You can deploy this application on iExec, it will run out of the box. Where you are confident with iExec concept, you can read [Your first app](your-first-app.md) and learn how to setup your own app on iExec.
 
 You will now deploy your app on iExec, this will be your first transaction on the blockchain:
 
@@ -324,4 +324,3 @@ Continue with these articles:
 
 * [Learn how to build your fisrt application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](../misc/manage-your-apporders.md)
-
