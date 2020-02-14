@@ -15,7 +15,7 @@ Edit the apporder part in iexec.json to set the conditions to use your app
 | app | app address |
 | appprice | price to charge the requester for each execution of the app \(in nRLC\) |
 | volume | number of order created, each usage decrease this number |
-| tag | not use |
+| tag | restrict usage to specific runtime such "tee" or "gpu" |
 | datasetrestrict | restrict to use the app with a specific dataset \(1\) |
 | workerpoolrestrict | restrict to run the app on a specific workerpool \(1\) |
 | requesterrestrict | restrict the app usage to a specific requester \(1\) |
@@ -44,3 +44,8 @@ Unpublish the apporder from the iExec Marketplace
 iexec order unpublish --app <orderHash>
 ```
 
+An unpublished order is still valid on the blockchain, to invalidante it use the cancel command.
+
+```text
+iexec order cancel --app <orderHash>
+```
