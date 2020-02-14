@@ -102,57 +102,6 @@ iexec wallet import your_private_key
 
 **4 - Launch your worker, the script will automatically use the imported wallet.**
 
-### Docker
-
-In a terminal, run:
-
-```text
-docker run -d --name "MY_WORKER_NAME" \
-   --hostname "MY_WORKER_NAME" \
-   --env "IEXEC_WORKER_NAME=MY_WORKER_NAME" \
-   --env "IEXEC_CORE_HOST=public-pool.iex.ec" \
-   --env "IEXEC_CORE_PORT=18090" \
-   --env "IEXEC_WORKER_WALLET_PATH=/iexec-wallet/wallet.json" \
-   --env "IEXEC_WORKER_WALLET_PASSWORD=MY_PASSWORD" \
-   -v PATH_TO_MY_WALLET_FILE:/iexec-wallet/wallet.json \
-   -v /tmp/iexec-worker:/tmp/iexec-worker\
-   -v /var/run/docker.sock:/var/run/docker.sock \
-   iexechub/iexec-worker:3.X.X
-```
-
-Please get the lastest version available \(3.X.X\) [here](https://hub.docker.com/r/iexechub/iexec-core/tags). Note that it must match the version of the scheduler.
-
-Please note that all the values shown here are just given as an example, it should be adapted to the worker workerpool you are trying to join and to the machine on which the worker will run.
-
-**Here is the details for the different parameters used in the command:**
-
-| Parameter | Meaning |
-| :--- | :--- |
-| IEXEC\_WORKER\_NAME | Name of your worker on the workerpool dashboard |
-| EXEC\_CORE\_HOST | Domain of the scheduler |
-| IEXEC\_CORE\_PORT | Port of the scheduler |
-| IEXEC\_WORKER\_BASE\_DIR | Should match the tmp folder your mounting \(-v /tmp/iexec-worker\).Results of tasks will be stored in /tmp/iexec-worker/my-iexec-worker\) |
-| IEXEC\_GAS\_PRICE\_MULTIPLIER | Increase it will speed up tx \(default: 1.3\)\*see Fees section |
-| IEXEC\_GAS\_PRICE\_CAP | Max gas price for any tx \(default: 22Gwei\)\*see Fees section |
-| IEXEC\_WORKER\_OVERRIDE\_BLOCKCHAIN\_NODE\_ADDRESS | Use a custom ethereum node here, otherwise the one given by the core will be used |
-
-Regarding the volumes mounted with the -v option in the docker run command, they are mandatory, **if not defined the worker may not behave as expected**:
-
-1. The option _-v /home/ubuntu/wallet.json:/iexec-wallet/wallet.json_ is used for the worker to know which wallet to use.
-2. The option _-v /tmp/iexec-worker:/tmp/iexec-worker_ will be used to store all the results from the worker.
-3. The option _-v /var/run/docker.sock:/var/run/docker.sock_ is to allow the worker to start new docker containers when performing tasks.
-
-**Supported CPU**
-
-* x86
-* x86\_64
-
-**Supported OS**
-
-* Linux
-* MacOS
-* Windows
-
 ### Join-Workerpool script
 
 When available, click on the “Join Worker Pool” button on the top left of the dashboard page and follow instructions.
@@ -237,4 +186,3 @@ The next step is to install the drivers from Intel for the SGX extension. This c
 ```
 
 That’s it! Now you can register at your scheduler as an SGX compatible worker, and you’ll soon receive requests for SGX jobs.
-
