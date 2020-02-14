@@ -18,8 +18,6 @@ In confidential computing jargon, it is called "enclave" the special memory zone
 
 As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
 
-
-
 ## Confidential Computing with iExec
 
 ### SCONE Framework
