@@ -174,7 +174,7 @@ Congratulation you own RLC on Goerli testnet!
 Next step is to topup your **iExec Account** and use your credit to run your application.
 
 {% hint style="info" %}
-Your iExec account is your compution credit managed by iExec smart contracts.
+Your iExec account is managed by you and iExec smart-contracts. It takes care of holding your RLC (computation credit).
 
 When you request an execution the price for the task is locked from your account's stake then transferred to the workers contributing to the task \(read more about [Proof of Contribution](../key-concepts/proof-of-contribution.md) protocol\).
 
