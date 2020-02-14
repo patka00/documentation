@@ -44,7 +44,7 @@ Unpublish the apporder from the iExec Marketplace
 iexec order unpublish --app <orderHash>
 ```
 
-An unpublished order is still valid on the blockchain, to invalidante it use the cancel command.
+An unpublished order is still valid on the blockchain, to invalidate it use the cancel command.
 
 ```text
 iexec order cancel --app <orderHash>
