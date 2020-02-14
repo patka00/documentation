@@ -34,7 +34,7 @@ Let's setup your wallet.
 Install the iExec SDK cli \(requires [Nodejs](https://nodejs.org)\)
 
 ```text
-sudo npm i -g iexec
+npm i -g iexec        # sudo <cmd> if needed
 ```
 
 Create a new Wallet file
@@ -43,7 +43,7 @@ Create a new Wallet file
 iexec wallet create
 ```
 
-You will be asked to choose a password to protect your wallet, don't forget it there is no way to recover it. The SDK creates a wallet file that contains a random generated private key encrypted by the chosen password and the derived public address. Make sure to backup the wallet file in a safe place and write down your address.
+You will be asked to choose a password to protect your wallet, don't forget it since there is no way to recover it. The SDK creates a wallet file that contains a random generated private key encrypted by the chosen password and the derived public address. Make sure to backup the wallet file in a safe place and write down your address.
 
 {% hint style="success" %}
 Your wallet is stored in the ethereum keystore, the location depends on your OS:
@@ -52,7 +52,7 @@ Your wallet is stored in the ethereum keystore, the location depends on your OS:
 * On Mac : ~/Library/Ethereum/keystore
 * On Windows: ~/AppData/Roaming/Ethereum/keystore
 
-Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
+Wallet file name follow the pattern `UTC--<CREATION_DATE>--<ADDRESS>`
 {% endhint %}
 
 {% hint style="info" %}
@@ -73,7 +73,7 @@ iexec init --skip-wallet
 The iExec SDK creates the minimum configuration files:
 
 * `iexec.json` contains the project configuration
-* `chains.json` contains the blockchain connection configuration
+* `chain.json` contains the blockchain connection configuration
 * we use `--skip-wallet` to skip wallet creation as we already created it
 {% endhint %}
 
@@ -96,7 +96,7 @@ iexec wallet show --chain goerli
 ```
 
 {% hint style="info" %}
-The ETH in your wallet will allow you to pay for the Ethereum blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
+The ETH in your wallet will allow you to pay for Ethereum blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
 
 [Read more about transaction fees](https://bitfalls.com/2017/12/05/ethereum-gas-and-transaction-fees-explained/)
 {% endhint %}
@@ -153,7 +153,7 @@ iexec app show --chain goerli
 
 ## Run your app on iExec
 
-iExec enables running applications on a decentralized infrastructure against RLC \(iExec coin\).
+iExec enables running applications on a decentralized infrastructure against RLC \(iExec token\).
 
 Let's get some test RLC to run your app
 
@@ -174,7 +174,7 @@ Congratulation you own RLC on Goerli testnet!
 Next step is to topup your **iExec Account** and use your credit to run your application.
 
 {% hint style="info" %}
-Your iExec account is your compution credit managed by iExec smart contracts.
+Your iExec account is managed by you and iExec smart-contracts. It takes care of holding your RLC (computation credit).
 
 When you request an execution the price for the task is locked from your account's stake then transferred to the workers contributing to the task \(read more about [Proof of Contribution](../key-concepts/proof-of-contribution.md) protocol\).
 
