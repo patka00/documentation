@@ -5,9 +5,9 @@
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
-* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.1 or higher.
-* [Quick dev start](../quick-start-for-developers.md) tutorial.
-* Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#scone-framework) framework.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
+* [Quick start](../quick-start-for-developers.md) tutorial.
+* Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](intel-sgx-technology.md#scone-framework) framework.
 {% endhint %}
 
 After understanding the fundamentals of Confidential Computing and explaining technologies behind it, it is time to roll up our sleeves and start playing with [enclaves](intel-sgx-technology.md#enclave).
@@ -19,7 +19,7 @@ In this tutorial, we will be using Python as the programming language, but suppo
 * [Deploy & test on iExec.](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
 * [Download the result.](create-your-first-sgx-app.md#download-the-result)
 
-For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Let's open up a terminal and jump inside the `~/iexec-projects` folder that we already created earlier in the [Quick dev start](../quick-start-for-developers.md) tutorial. Start by cloning the repository and `cd` into it:
+For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Let's open up a terminal and jump inside the `~/iexec-projects` folder that we already created earlier in the [quick start](../quick-start-for-developers.md) tutorial. Start by cloning the repository and `cd` into it:
 
 ```text
 cd ~/iexec-projects
@@ -89,7 +89,7 @@ That should be enough for this tutorial, but if you have other specifications yo
 
 The base docker image `iexechub/sconecuratedimages-iexec:python-3.7.3-alpine-3.10` contains a python interpreter that runs inside an enclave. When started, it will read the application's code and execute it. The question here is: **how would the enclave verify the integrity of the code?**
 
-Well that's where the file `utils/protect-fs.sh` comes in place. If you inspect the content of this script, you can see that we use the famous [fspf](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#fspf-file-system-protection-file) feature of SCONE. We use SCONE's [CLI](https://sconedocs.github.io/SCONE_CLI/) to authenticate the file system directories that can be used by the application \(/bin, /lib...\) as well as the code itself, and take a snapshot of their state. This snapshot will be later shared with the enclave \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it is a possible attack.
+Well that's where the file `utils/protect-fs.sh` comes in place. If you inspect the content of this script, you can see that we use the famous [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE. We use SCONE's [CLI](https://sconedocs.github.io/SCONE_CLI/) to authenticate the file system directories that can be used by the application \(/bin, /lib...\) as well as the code itself, and take a snapshot of their state. This snapshot will be later shared with the enclave \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it is a possible attack.
 
 {% hint style="warning" %}
 It is important to carefully choose files to authenticate. It can be tricky to consider including enough files to protect the application without being more general than we should. For example if we authenticate the entire /etc directory the enclave will fail to start because the content of /etc/hosts is modified at runtime by Docker.
@@ -120,7 +120,7 @@ Application's fingerprint (use this when deploying your app onchain):
 #####################################################################
 ```
 
-As mentioned in the output, that alphanumeric string is the [fingerprint](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#applications-fingerprint) of your application. It allows the verification of it's integrity.
+As mentioned in the output, that alphanumeric string is the [fingerprint](intel-sgx-technology.md#applications-fingerprint) of your application. It allows the verification of it's integrity.
 
 Push the obtained docker container to docker registry so it is publicly available and get its checksum:
 
@@ -130,7 +130,7 @@ docker image push <username>/scone-hello-world-app:0.0.1
 
 ## Deploy & test on iExec
 
-We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [Quick dev start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
+We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
 First things first, go back to the `~/iexec-projects` folder where we initialized our environment:
 
@@ -144,7 +144,7 @@ Init a new iExec app:
 iexec app init
 ```
 
-A new section `"app"` appears in iexec.json. Fill in the fields: `name`, `mutiaddr` \(the URI of the docker image\), `checksum`, and put the application's fingerprint in the `mrenclave` attribute.
+A new section `"app"` appears in `iexec.json`. Fill in the fields: `name`, `mutiaddr` \(the URI of the docker image\), `checksum`, and put the application's fingerprint in the `mrenclave` attribute.
 
 ```bash
 $ cat iexec.json

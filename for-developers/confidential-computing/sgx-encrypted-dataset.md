@@ -5,15 +5,15 @@
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
-* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.1 or higher.
-* [Quick dev start](../quick-start-for-developers.md) tutorial.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
+* [Quick start](../quick-start-for-developers.md) tutorial.
+* Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](intel-sgx-technology.md#scone-framework) framework.
 * [Build trusted applications](create-your-first-sgx-app.md) tutorial.
-* Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#scone-framework) framework.
 {% endhint %}
 
 Trusted Execution Environments provide a huge advantage from a security perspective. They guarantee that the behavior of an execution does not change even when launched on an untrusted remote machine. The data inside this type of environments is also protected, which allows its monetization while preventing leakage.
 
-With iExec, it is possible to authorize only applications you trust to use your datasets and get paid for it. Data is encrypted using standard encryption mechanisms and the plain version never leaves your machine. The encrypted dataset is made available for usage and the encryption key is pushed into the [SMS](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#secret-management-service-sms) which runs inside a secure [enclave](intel-sgx-technology.md#enclave). After you deploy the dataset on iExec it is you, and only you, who decides which application is allowed to get the secret to decrypt it.
+With iExec, it is possible to authorize only applications you trust to use your datasets and get paid for it. Data is encrypted using standard encryption mechanisms and the plain version never leaves your machine. The encrypted version is made available for usage and the encryption key is pushed into the [SMS](intel-sgx-technology.md#secret-management-service-sms) which runs inside a secure [enclave](intel-sgx-technology.md#enclave). After you deploy the dataset on iExec it is you, and only you, who decides which application is allowed to get the secret to decrypt it.
 
 {% hint style="warning" %}
 Datasets are only decrypted inside authorized [enclaves](intel-sgx-technology.md#enclave) and never leave them. Same thing for secrets.
@@ -23,7 +23,7 @@ Let's see how to do all of that!
 
 ## Encrypt the dataset
 
-Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously in the [Quick start](../quick-start-for-developers.md) tutorial.
+Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously in the [quick start](../quick-start-for-developers.md) tutorial.
 
 ```text
 cd ~/iexec-projects
@@ -126,21 +126,21 @@ To deploy your dataset run:
 iexec dataset deploy --chain goerli
 ```
 
-You will get a hexadecimal address for you deployed dataset. Use that address to push the encryption key to the [SMS](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#secret-management-service-sms) so it is available for authorized applications.
+You will get a hexadecimal address for you deployed dataset. Use that address to push the encryption key to the [SMS](intel-sgx-technology.md#secret-management-service-sms) so it is available for authorized applications.
 
 ```text
-iexec dataset push-secret 0x-your-dataset-address --chain goerli
+iexec dataset push-secret <0x-your-dataset-address> --chain goerli
 ```
 
 Check it by doing:
 
 ```text
-iexec dataset check-secret 0x-your-dataset-address --chain goerli
+iexec dataset check-secret <0x-your-dataset-address> --chain goerli
 ```
 
-We saw in this section how to encrypt a dataset with [SCONE](https://github.com/iExecBlockchainComputing/documentation/tree/1279416f007d16fd94a317e82c2d740a14ef4d2e/for-developers/confidential-computing/scone-framework.md#scone-framework) and deploy it on iExec. We learned also how to push the encryption secret to the SMS. Now we need to build the application that is going to consume this dataset. To do that you can use our [template from Github](https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset).
+We saw in this section how to encrypt a dataset with [SCONE](intel-sgx-technology.md#scone-framework) and deploy it on iExec. We learned also how to push the encryption secret to the [SMS](intel-sgx-technology.md#secret-management-service-sms). Now we need to build the application that is going to consume this dataset. To do that you can use our [template from Github](https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset).
 
-Go to the folder `~/iexec-projects` and clone the repository:
+Make sure you are in `~/iexec-projects` and clone the repository:
 
 ```text
 cd ~/iexec-projects && \
@@ -170,7 +170,7 @@ if __name__ == "__main__":
 Note that the result files should be written in the **/scone** folder.
 {% endhint %}
 
-Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md#prepare-the-application) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
+Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
 
 ## Next step?
 
