@@ -4,7 +4,7 @@ description: >-
   over the iExec infrastructure.
 ---
 
-# Quick start
+# Quick Start
 
 iExec enables decentralized docker app deployment and monetization on the blockchain.
 
@@ -61,7 +61,7 @@ iExec SDK uses standard Ethereum wallet, you can reuse or import existing Ethere
 
 ## Initialize your iExec project
 
-Create a new folder for your iexec project and initialize the project:
+Create a new folder for your iExec project and initialize the project:
 
 ```text
 mkdir ~/iexec-projects
@@ -77,9 +77,9 @@ The iExec SDK creates the minimum configuration files:
 * we use `--skip-wallet` to skip wallet creation as we already created it
 {% endhint %}
 
-You can now connect to the blockchain. In the following steps we will use the **Goerli testnet**. Goerli is an Ethereum blockchain operated for testing purpose.
+You can now connect to the blockchain. In the following steps we will use the **Goerli testnet**. Goerli is an Ethereum blockchain operated for testing purposes.
 
-Check your wallet content on Goerli
+You can now check your wallet content and funds on Goerli:
 
 ```text
 iexec wallet show --chain goerli
@@ -89,7 +89,7 @@ For now your wallet is empty.
 
 Go to [Goerli Faucet](https://goerli-faucet.slock.it/) and paste your wallet address to ask some test ETH.
 
-Check you received some Goerli ETH in your wallet:
+Check your wallet to see if you received the Goerli ETH funds in your wallet:
 
 ```text
 iexec wallet show --chain goerli
@@ -103,7 +103,7 @@ The ETH in your wallet will allow you to pay for Ethereum blockchain transaction
 
 ## Deploy your app on iExec
 
-iExec enables decentralized deployment of dockerized applications. The applications deployed on iExec are Smart Contracts identitified by their ethereum address and referencing a public docker image. Each iExec application has an owner who can set the execution permissions on iExec platform.
+iExec enables decentralized deployment of dockerized applications. The applications deployed on iExec are Smart Contracts identified by their Ethereum address and referencing a public docker image. Each iExec application has an owner who can set the execution permissions on iExec platform.
 
 Let's deploy an iExec app!
 
@@ -153,7 +153,7 @@ iexec app show --chain goerli
 
 ## Run your app on iExec
 
-iExec enables running applications on a decentralized infrastructure against RLC \(iExec token\).
+iExec allows to run applications on a decentralized infrastructure with payment in **RLC** tokens \(the native cryptocurrency of iExec\).
 
 Let's get some test RLC to run your app
 
@@ -161,7 +161,7 @@ Let's get some test RLC to run your app
 iexec wallet getRLC --chain goerli
 ```
 
-After a few moments your wallet will be credited with test RLC.
+After a few moments, your wallet will be credited with test RLC.
 
 You can check your wallet content
 
@@ -171,20 +171,20 @@ iexec wallet show --chain goerli
 
 Congratulation you own RLC on Goerli testnet!
 
-Next step is to topup your **iExec Account** and use your credit to run your application.
+Next step is to top up your **iExec Account** and use your credit to run your application.
 
 {% hint style="info" %}
-Your iExec account is managed by you and iExec smart-contracts. It takes care of holding your RLC (computation credit).
+Your iExec account is your credit ready to use to pay for computation, it is managed by  smart contracts \(and not owned by iExec\).
 
 When you request an execution the price for the task is locked from your account's stake then transferred to the workers contributing to the task \(read more about [Proof of Contribution](../key-concepts/proof-of-contribution.md) protocol\).
 
 At any time you can:
 
-* deposit RLC from your wallet to your iExec account
+* deposit RLC from your wallet to your iExec Account
 * withdraw RLC from your iExec account to your wallet \(only stake can be withdrawed\)
 {% endhint %}
 
-Topup your iExec account
+Top up your iExec Account
 
 ```text
 iexec account deposit 200 --chain goerli
@@ -192,14 +192,14 @@ iexec account deposit 200 --chain goerli
 
 You moved 200 nRLC from your wallet to your account.
 
-Check it whit the following commands
+You can now check it with the following commands
 
 ```text
 iexec account show --chain goerli
 iexec wallet show --chain goerli
 ```
 
-Your application is deployed, you have some RLC on your account, everything is ready to run your application!
+Your application is deployed, you have some RLC in your iExec Account, everything is now ready to run your application!
 
 ```text
 iexec app run --params "beef" --watch --chain goerli
@@ -222,7 +222,7 @@ Congratulation you requested the execution of [iexechub/vanityeth](https://hub.d
 
 Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\).
 
-Download your task result
+Download the result of your task
 
 ```text
 iexec task show <taskid> --download my-result --chain goerli
@@ -249,13 +249,13 @@ cat my-result/stdout.txt
 cat my-result/iexec_out/keypair.txt
 ```
 
-Congratulation you successfully executed your application on iExec!
+Congratulations! You successfully executed your application on iExec!
 
-## Publish your app on iExec marketplace
+## Publish your app on the iExec Marketplace
 
-Your application is deployed on iExec and you completed an execution on iExec. For now, only you can request an execution of your application. Next step is to make it available for anyone.
+Your application is deployed on iExec and you completed an execution on iExec. For now, only you can request an execution of your application. The next step is to publish it on the iExec Marketplace, making it available for anyone to use .
 
-As owner of this application you define the conditions to use your application.
+As the owner of this application, you can define the conditions under which it can be used
 
 {% hint style="info" %}
 iExec uses orders signed by the resource owner's wallet to ensure resources governance.
@@ -290,7 +290,7 @@ iexec order sign --app --chain goerli
 {% hint style="success" %}
 The signed apporder is stored locally in `orders.json` .
 
-Orders remains private until their publication on the marketplace. Once published, anyone matching the order condition can execute an application!
+Orders remains private until their publication on the iExec Marketplace. Once published, anyone matching the order condition can execute an application!
 {% endhint %}
 
 Publish the apporder on iExec marketplace to share it with others
@@ -307,23 +307,22 @@ You can check the published apporders for your app
 iexec orderbook app <your app address> --chain goerli
 ```
 
-Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized infrastructure.
+Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized  infrastructure.
 
 * With the iexec SDK cli `iexec app run <app address> --chain goerli`
 * On iExec marketplace
 
 ## What's next?
 
-You are now familiar with the iExec key concepts for the developers:
+You are now familiar with the following key iExec concepts for developers:
 
-* your wallet is your onchain ID and blockchain account
-* you can deploy decentralized applications on iExec
-* anyone can run tasks against RLC on iExec
-* payments are processed by the decentralized platform between iExec users accounts
-* resources governance is managed by orders
+* Your wallet is your onchain ID and blockchain account
+* You can deploy decentralized applications on iExec
+* Anyone can run tasks against payment in RLC on iExec
+* Payments are processed by the decentralized platform between users' iExec Accounts
+* Resource governance is managed by orders
 
-Continue with these articles:
+Continue with these guides:
 
-* [Learn how to build your fisrt application running on iExec](your-first-app.md)
+* [Learn how to build your first application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
-

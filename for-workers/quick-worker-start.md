@@ -186,3 +186,4 @@ The next step is to install the drivers from Intel for the SGX extension. This c
 ```
 
 That’s it! Now you can register at your scheduler as an SGX compatible worker, and you’ll soon receive requests for SGX jobs.
+
