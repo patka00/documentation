@@ -4,37 +4,37 @@ description: >-
   over the iExec infrastructure.
 ---
 
-# Quick Dev Start
+# Quick start
 
-iExec enables decentralized app deployment and monetization on the blockchain.
+iExec enables decentralized docker app deployment and monetization on the blockchain.
 
 In this tutorial we will use the iExec SDK command line to deploy an iExec app on a test blockchain.
 
 **Tutorial Steps :**
 
 * [Create your identity on the blockchain](quick-start-for-developers.md#create-your-identity-on-the-blockchain)
-* [Initialize your iExec project](quick-start-for-developers.md#initialize-your-iExec-project)
-* [Deploy your application on iExec](quick-start-for-developers.md#deploy-your-application-on-iExec)
-* [Publish your application on iExec marketplace](quick-start-for-developers.md#publish-your-application-on-iExec-marketplace)
-* [Request an execution of your application](quick-start-for-developers.md#request-an-execution-of-your-application)
+* [Initialize your iExec project](quick-start-for-developers.md#initialize-your-iexec-project)
+* [Deploy your app on iExec](quick-start-for-developers.md#deploy-your-app-on-iexec)
+* [Run your app on iExec](quick-start-for-developers.md#run-your-app-on-iexec)
+* [Publish your app on iExec marketplace](quick-start-for-developers.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](quick-start-for-developers.md#whats-next)
 
-**prerequisite:**
+{% hint style="success" %}
+**Prerequisite**
 
-* [Nodejs &gt;=v8.0.0](https://nodejs.org)
-* [Github](https://github.com) or [Gitter](https://gitter.im) account
-* A browser with [MetaMask plugin](https://metamask.io)
+* [Nodejs](https://nodejs.org) 8.0.0 or higher
+{% endhint %}
 
 ## Create your identity on the blockchain
 
-On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and address address. What you own on the blockchain is associeted to your address.
+On the blockchain, your identity is defined by your **wallet**, a cryptographic pair of private key and public address. What you own on the blockchain is associated with your address. The applications you deploy on iExec are associated with your wallet.
 
 Let's setup your wallet.
 
-Install the iExec SDK cli \(requires Nodejs\)
+Install the iExec SDK cli \(requires [Nodejs](https://nodejs.org)\)
 
 ```text
-npm i -g iexec
+sudo npm i -g iexec
 ```
 
 Create a new Wallet file
@@ -43,46 +43,71 @@ Create a new Wallet file
 iexec wallet create
 ```
 
-You will be asked to choose a password to protect your wallet, don't forget it there is no way to recover it. The SDK creates a wallet file that contains a random generated private key encryped by the chosen password and the associated address. Make sure to backup the wallet file in a safe place and write down your address.
+You will be asked to choose a password to protect your wallet, don't forget it there is no way to recover it. The SDK creates a wallet file that contains a random generated private key encrypted by the chosen password and the derived public address. Make sure to backup the wallet file in a safe place and write down your address.
+
+{% hint style="success" %}
+Your wallet is stored in the ethereum keystore, the location depends on your OS:
+
+* On Linux: ~/.ethereum/keystore
+* On Mac : ~/Library/Ethereum/keystore
+* On Windows: ~/AppData/Roaming/Ethereum/keystore
+
+Wallet file name follow the pattern `UTC--CREATION_DATE--ADDRESS`
+{% endhint %}
+
+{% hint style="info" %}
+iExec SDK uses standard Ethereum wallet, you can reuse or import existing Ethereum wallet. See iExec SDK documentation [wallet command](https://github.com/iExecBlockchainComputing/iexec-sdk#wallet) and [wallet options](https://github.com/iExecBlockchainComputing/iexec-sdk#wallet-options).
+{% endhint %}
 
 ## Initialize your iExec project
 
-Create a new folder for your iexec project and initilize the project.
+Create a new folder for your iexec project and initialize the project:
 
 ```text
-mkdir iexec-project
-cd iexec-project
+mkdir ~/iexec-projects
+cd ~/iexec-projects
 iexec init --skip-wallet
 ```
 
-The iExec SDK will create the minimum configuration files:
+{% hint style="info" %}
+The iExec SDK creates the minimum configuration files:
 
 * `iexec.json` contains the project configuration
 * `chains.json` contains the blockchain connection configuration
 * we use `--skip-wallet` to skip wallet creation as we already created it
+{% endhint %}
 
-You can now connect to the blockchain. In the following steps we will use the Kovan testnet, Kovan is an Ethereum blockchain operated for test purpose only. Check your wallet content on Kovan:
+You can now connect to the blockchain. In the following steps we will use the **Goerli testnet**. Goerli is an Ethereum blockchain operated for testing purpose.
 
-```text
-iexec wallet show --chain kovan
-```
-
-For now your wallet is empty. Go to a Kovan Faucet to ask some test ETH:
-
-* [faucet.kovan.network](https://faucet.kovan.network/) \(you will need a github account\).
-* [kovan-testnet/faucet - Gitter](https://gitter.im/kovan-testnet/faucet) \(you will need to login to gitter\).
-
-You can now check you wallet is no more empty:
+Check your wallet content on Goerli
 
 ```text
-iexec wallet show --chain kovan
+iexec wallet show --chain goerli
 ```
 
-The ETH in your wallet will allow you to pay for the blockchain transaction fees. Every time you writes on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to pay the peoples operating the blockchain.
+For now your wallet is empty.
 
-## Deploy your application on iExec
+Go to [Goerli Faucet](https://goerli-faucet.slock.it/) and paste your wallet address to ask some test ETH.
 
-Initialize a new application.
+Check you received some Goerli ETH in your wallet:
+
+```text
+iexec wallet show --chain goerli
+```
+
+{% hint style="info" %}
+The ETH in your wallet will allow you to pay for the Ethereum blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
+
+[Read more about transaction fees](https://bitfalls.com/2017/12/05/ethereum-gas-and-transaction-fees-explained/)
+{% endhint %}
+
+## Deploy your app on iExec
+
+iExec enables decentralized deployment of dockerized applications. The applications deployed on iExec are Smart Contracts identitified by their ethereum address and referencing a public docker image. Each iExec application has an owner who can set the execution permissions on iExec platform.
+
+Let's deploy an iExec app!
+
+Initialize a new application
 
 ```text
 iexec app init
@@ -94,161 +119,211 @@ The iExec SDK writes the minimum app configuration in `iexec.json`
 | :--- | :--- |
 | owner | app owner ethereum address \(default your wallet address\) |
 | name | name of the application |
-| type | type of application \('DOCKER' for docker container\) |
-| multiaddr | download uri of the application \(a public docker registry\) |
-| checksum | checksum of the app \('0x' + docker image digest\) |
+| type | type of application \("DOCKER" for docker container\) |
+| multiaddr | download URI of the application \(a public docker registry\) |
+| checksum | checksum of the app \("0x" + docker image digest\) |
 
-```text
-owner:     0xb6811eaB0Bd3733600A3456B54C7BEf7d4Abb182 # here is the owner address (your wallet address)
-name:      VanityEth # here is the name of the application
-type:      DOCKER # here is the type of application (docker container)
-multiaddr: registry.hub.docker.com/iexechub/vanityeth:1.1.1 # here is the address of the app (where the code is)
-checksum:  0x00f51494d7a42a3c1c43464d9f09e06b2a99968e3b978f6cd11ab3410b7bcd14 # here is the checksum of the app
-```
+{% hint style="info" %}
+The default app is the public docker image [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)
 
-The default app points to the public docker image [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)
+This application allows to generate an ethereum with a specific address starting pattern by generating thousands of random wallets. This process requiring high computation power is enabled by running the app on iExec.
 
-You can deploy this application on iExec, it will run out of the box. Where you are confident with iExec concept, you can read [Your First App](https://github.com/iExecBlockchainComputing/documentation/tree/27d732fb88bb85c49d6ad2caf93bbe8873275940/your-first-app.md) and learn how to setup your own app on iExec.
+Disclaimer: Don't use this app output wallet to store any value as output may be accessed by an untrusted actor. You will learn how to protect data in a next chapter.
+{% endhint %}
+
+You can deploy this application on iExec, it will run out of the box. Where you are confident with iExec concept, you can read [Your first app](your-first-app.md) and learn how to setup your own app on iExec.
 
 You will now deploy your app on iExec, this will be your first transaction on the blockchain:
 
 ```text
-iexec app deploy --chain kovan
+iexec app deploy --chain goerli
 ```
 
-Your can check your deployed apps with their index, let's check your first deployed app.
+{% hint style="success" %}
+While running `iexec app deploy --chain goerli` you sent your first transaction on the goerli blockchain.
+
+You spent a small amount of ETH from your wallet to pay for this transaction, you can check you new wallet ballance with `iexec wallet show --chain goerli`
+{% endhint %}
+
+You can check your deployed apps with their index, let's check your last deployed app:
 
 ```text
-iexec app show 1 --chain kovan
+iexec app show --chain goerli
 ```
 
-## Publish your application on iExec marketplace
+## Run your app on iExec
 
-Your application is now deployed on iExec, but make it available for others. iExec uses signed orders to define the terms and conditions of use for each resources. The terms and conditions to use an app are defined in the **apporder**.
+iExec enables running applications on a decentralized infrastructure against RLC \(iExec coin\).
 
-Initialize a new apporder:
+Let's get some test RLC to run your app
 
 ```text
-iexec order init --app --chain kovan
+iexec wallet getRLC --chain goerli
 ```
 
-The SDK prepares the default apporder configuration in `iexec.json`
+After a few moments your wallet will be credited with test RLC.
+
+You can check your wallet content
 
 ```text
-app:                0x490dB6143aF29d968B186019B19f2E32C088d817 # your app address
-appprice:           0 # the price per run
-volume:             1000000 # number of execution allowed
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000 # specific requirements (default none)
-datasetrestrict:    0x0000000000000000000000000000000000000000 # restriction on accepted dataset (default all)
-workerpoolrestrict: 0x0000000000000000000000000000000000000000 # restriction on accepted workerpool (default all)
-requesterrestrict:  0x0000000000000000000000000000000000000000 # restriction on accepted requester (ie: end user, default all)
+iexec wallet show --chain goerli
 ```
 
-Sign the apporder:
+Congratulation you own RLC on Goerli testnet!
+
+Next step is to topup your **iExec Account** and use your credit to run your application.
+
+{% hint style="info" %}
+Your iExec account is your compution credit managed by iExec smart contracts.
+
+When you request an execution the price for the task is locked from your account's stake then transferred to the workers contributing to the task \(read more about [Proof of Contribution](../key-concepts/proof-of-contribution.md) protocol\).
+
+At any time you can:
+
+* deposit RLC from your wallet to your iExec account
+* withdraw RLC from your iExec account to your wallet \(only stake can be withdrawed\)
+{% endhint %}
+
+Topup your iExec account
 
 ```text
-iexec order sign --app --chain kovan
+iexec account deposit 200 --chain goerli
 ```
 
-The signed apporder is stored localy in `orders.json`
+You moved 200 nRLC from your wallet to your account.
 
-Publish the apporder on iExec marketplace to share it with others.
+Check it whit the following commands
 
 ```text
-iexec order publish --app --chain kovan
+iexec account show --chain goerli
+iexec wallet show --chain goerli
 ```
 
-Your application is now available for everyone on iExec marketplace on the conditions you defined in apporder.
-
-You can check the published apporders for your app:
+Your application is deployed, you have some RLC on your account, everything is ready to run your application!
 
 ```text
-iexec orderbook app <your app address> --chain kovan
+iexec app run --params "beef" --watch --chain goerli
 ```
 
-## Request an execution of your application
+{% hint style="info" %}
+`iexec app run` allows to run an application on iExec at the market price.
 
-Before starting make sure [MetaMask](https://metamask.io) is installed and configured on your browser
+Useful options:
 
-### Import your wallet in MetaMask
+* `--params <params>`  specify the app execution params
+* `--watch`  watch execution status changes
 
-Get your wallet private key with iExec SDK:
+Discover more option with `iexec app run --help`
+{% endhint %}
+
+{% hint style="success" %}
+Congratulation you requested the execution of [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) with the parameters `"beef"`. This should compute an Ethereum address starting with `0xbeef` .
+{% endhint %}
+
+Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\).
+
+Download your task result
 
 ```text
-iexec wallet show --show-private-key
+iexec task show <taskid> --download my-result --chain goerli
 ```
 
-Open MetaMask plugin and click on your account picture to toggle the menu. Select **Import Account** and paste your private key to import your wallet You wallet will be added in the accounts list.
+{% hint style="info" %}
+A task result is a zip file with tree
 
-Open MetaMask plugin and select Kovan in the network dropdown. You should see your wallet contains some ETH on Kovan.
+```text
+result.zip
+  ├── iexec_out/
+  └── stdout.txt
+```
 
-### Get some test RLC
+* `stdout.txt` always contains the application logs.
+* `iexec_out/` content is application specific
+{% endhint %}
 
-iExec is a decentralized marketplace for computing resources. The resources on the marketplace are available for iExec cryptocurrency called RLC. You wille need some RLC to request an execution on iExec. On Kovan testnet, you can ask test RLC for free.
+[iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) produce an Ethereun keypair in `iexec_out/keypair.txt` . Let's discover the result of the computation.
 
-Go to [iExec Marketplace](https://market.iex.ec/) and click **Login**. Choose MetaMask as Wallet provider, to connect your wallet with iExec Marketplace. When connected, you access the [iExec Wallet Manager](../iexec-products/wallet-management/wallet-management-using-the-ui.md)
+```text
+unzip my-result.zip -d my-result
+cat my-result/stdout.txt
+cat my-result/iexec_out/keypair.txt
+```
 
-Click **Get RLC** &gt; **Get Kovan RLC** to get some RLC.
+Congratulation you successfully executed your application on iExec!
 
-![](../.gitbook/assets/get-kovan-rlc.png)
+## Publish your app on iExec marketplace
 
-You will receive 200 nRLC \(1 nRLC = 10^\(-9\) RLC\).
+Your application is deployed on iExec and you completed an execution on iExec. For now, only you can request an execution of your application. Next step is to make it available for anyone.
 
-### Top up your iExec account
+As owner of this application you define the conditions to use your application.
 
-The iExec platform actors deposit their RLC on their **iExec Account** to allow payments through the iExec Proof-of-Contribution \(PoCo\) protocol \(read more about [PoCo](../key-concepts/proof-of-contribution.md)\).
+{% hint style="info" %}
+iExec uses orders signed by the resource owner's wallet to ensure resources governance.
 
-Click **Deposit RLC** and follow the steps to deposit your Kovan RLC from your wallet to your account.
+The conditions to use an app are defined in the **apporder**.
+{% endhint %}
 
-![](../.gitbook/assets/deposit-kovan-rlc.png)
+Initialize a new apporder
 
-Your RLC moved from your Wallet to your Account, you can now use them to buy a computation on iExec!
+```text
+iexec order init --app --chain goerli
+```
 
-### Buy computation on the Marketplace
+The SDK prepares the default apporder configuration in `iexec.json`.
 
-Close the iExec Wallet Manager. Fill the **Fill Market Order** form as follow:
-
-| **field** | **description** |
+| **key** | **description** |
 | :--- | :--- |
-| Order Hash | best workerpoolorder \(prefilled\) |
-| Dapp Address | paste here your app address \(the apporder will be automatically fetched\) |
-| Work Param | here are the input params for the app \(see [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)\) |
+| app | ethereum address of the deployed app |
+| appprice | application price per run |
+| volume | number of execution allowed each execution decrease the remaining volume |
 
-![](../.gitbook/assets/buy-kovan-computation.png)
+{% hint style="info" %}
+You will learn more about orders management later, keep the apporder default values for now.
+{% endhint %}
 
-Click **Buy computation at market price** and complete the buy process
+Sign the apporder with your wallet to make it valid on the blockchain
 
-* confirm the trade
-* sign your **requestorder**
-* send a transaction to create the deal on iExec
+```text
+iexec order sign --app --chain goerli
+```
 
-When the deal is registered, a new line is added to **My Trades**
+{% hint style="success" %}
+The signed apporder is stored locally in `orders.json` .
 
-![](../.gitbook/assets/buy-kovan-my-trades.png)
+Orders remains private until their publication on the marketplace. Once published, anyone matching the order condition can execute an application!
+{% endhint %}
 
-### Follow the execution and get the result
+Publish the apporder on iExec marketplace to share it with others
 
-Click on the line of your deal on **My Trades** to follow the execution in the [iExec Explorer](https://explorer.iex.ec) The Deal page summaries the parameters of the deal. The **Bag of tasks** table show all the tasks running for this deal \(only one in this case\)
+```text
+iexec order publish --app --chain goerli
+```
 
-![](../.gitbook/assets/buy-kovan-check-deal.png)
+Your application is now available for everyone on iExec marketplace on the conditions defined in apporder.
 
-Click on the task to follow your task execution.
+You can check the published apporders for your app
 
-![](../.gitbook/assets/buy-kovan-check-task.png)
+```text
+iexec orderbook app <your app address> --chain goerli
+```
 
-When the task status is COMPLETED you can download the result from the explorer \(requires to login\).
+Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized infrastructure.
+
+* With the iexec SDK cli `iexec app run <app address> --chain goerli`
+* On iExec marketplace
 
 ## What's next?
 
-You now familiar with the iExec key concepts for the developpers:
+You are now familiar with the iExec key concepts for the developers:
 
-* wallet
-* account
-* app deployment
-* orders
+* your wallet is your onchain ID and blockchain account
+* you can deploy decentralized applications on iExec
+* anyone can run tasks against RLC on iExec
+* payments are processed by the decentralized platform between iExec users accounts
+* resources governance is managed by orders
 
 Continue with these articles:
 
 * [Learn how to build your fisrt application running on iExec](your-first-app.md)
-* [Learn how to manage your apporders](manage-your-apporders.md)
+* [Learn how to manage your apporders](advanced/manage-your-apporders.md)
 

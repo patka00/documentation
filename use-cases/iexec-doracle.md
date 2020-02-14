@@ -2,7 +2,7 @@
 description: A flexible and secure Oracle Solution
 ---
 
-# iExec D'Oracle
+# iExec DOracle
 
 ## Why do we need Oracles?
 
