@@ -1,5 +1,9 @@
 # Manage your apporders
 
+Orders enables setting custom governance for resources.
+
+Here you will learn how to manage your application's rules.
+
 ## Publish a custom apporder
 
 Initialize an apporder
@@ -8,7 +12,7 @@ Initialize an apporder
 iexec order init --app
 ```
 
-Edit the apporder part in iexec.json to set the conditions to use your app
+Edit the apporder part in `iexec.json` to set the conditions to use your app
 
 | key | description |
 | :--- | :--- |
