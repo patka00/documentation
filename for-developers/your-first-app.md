@@ -6,6 +6,17 @@ description: >-
 
 # Your first application
 
+{% hint style="success" %}
+**Prerequisities**
+
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
+* [Dockerhub](https://hub.docker.com/) account.
+* [Nodejs](https://nodejs.org) 8.0.0 or higher.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
+* [Quick start](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
+* Ethereum wallet charged with Goerli ETH an RLC
+{% endhint %}
+
 In this tutorial we will prepare an iExec app based on an existing docker image and we will run it on iExec decentralized infrastructure.
 
 **Tutorial Steps :**
@@ -17,15 +28,6 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 * [Test your app on iExec](your-first-app.md#test-your-app-on-iexec)
 * [Publish your app on iExec marketplace](your-first-app.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](your-first-app.md#whats-next)
-
-{% hint style="success" %}
-**Prerequisities**
-
-* [Quick start](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
-* Ethereum wallet charged with Goerli ETH an RLC
-* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client
-* [Dockerhub](https://hub.docker.com/) account
-{% endhint %}
 
 ## Understand what is an iExec decentralized application?
 

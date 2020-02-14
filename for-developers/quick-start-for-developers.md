@@ -6,6 +6,12 @@ description: >-
 
 # Quick start
 
+{% hint style="success" %}
+**Prerequisite**
+
+* [Nodejs](https://nodejs.org) 8.0.0 or higher
+{% endhint %}
+
 iExec enables decentralized docker app deployment and monetization on the blockchain.
 
 In this tutorial we will use the iExec SDK command line to deploy an iExec app on a test blockchain.
@@ -18,12 +24,6 @@ In this tutorial we will use the iExec SDK command line to deploy an iExec app o
 * [Run your app on iExec](quick-start-for-developers.md#run-your-app-on-iexec)
 * [Publish your app on iExec marketplace](quick-start-for-developers.md#publish-your-app-on-iexec-marketplace)
 * [What's next?](quick-start-for-developers.md#whats-next)
-
-{% hint style="success" %}
-**Prerequisite**
-
-* [Nodejs](https://nodejs.org) 8.0.0 or higher
-{% endhint %}
 
 ## Create your identity on the blockchain
 
