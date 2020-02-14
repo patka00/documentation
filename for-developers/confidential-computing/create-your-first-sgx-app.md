@@ -19,7 +19,7 @@ In this tutorial, we will be using Python as the programming language, but suppo
 * [Deploy & test on iExec.](create-your-first-sgx-app.md#deploy-the-application-on-iexec)
 * [Download the result.](create-your-first-sgx-app.md#download-the-result)
 
-For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/confidential-computing-tutorials.git) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Let's open up a terminal and jump inside the `~/iexec-projects` folder that we already created earlier in the [quick start](../quick-start-for-developers.md) tutorial. Start by cloning the repository and `cd` into it:
+For simplicity sake, a [Github repository](https://github.com/iExecBlockchainComputing/scone-hello-world-app) is provided. You will find all the code and file templates used in this tutorial. You can, also, use it as a starter to create your own applications. Let's open up a terminal and jump inside the `~/iexec-projects` folder that we already created earlier in the [quick start](../quick-start-for-developers.md) tutorial. Start by cloning the repository and `cd` into it:
 
 ```text
 cd ~/iexec-projects
