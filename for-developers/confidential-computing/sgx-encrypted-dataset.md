@@ -170,7 +170,7 @@ if __name__ == "__main__":
 Note that the result files should be written in the **/scone** folder.
 {% endhint %}
 
-Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md#prepare-the-application) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
+Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
 
 ## Next step?
 
