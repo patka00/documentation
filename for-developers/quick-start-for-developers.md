@@ -319,7 +319,7 @@ You are now familiar with the following key iExec concepts for developers:
 * Your wallet is your onchain ID and blockchain account
 * You can deploy decentralized applications on iExec
 * Anyone can run tasks against payment in RLC on iExec
-  * Payments are processed by the decentralized platform between users' iExec Accounts
+* Payments are processed by the decentralized platform between users' iExec Accounts
 * Resource governance is managed by orders
 
 Continue with these guides:
