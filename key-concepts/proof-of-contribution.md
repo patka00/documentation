@@ -6,7 +6,7 @@ description: >-
 
 # Proof of Contribution
 
-The iExec platform provides a network where application provider, workers, and users can gather and work together. The fully decentralized nature of iExec implies that no single agent is trusted by default, and that those agents require incentives to contribute correctly.
+rThe iExec platform provides a network where application provider, workers, and users can gather and work together. The fully decentralized nature of iExec implies that no single agent is trusted by default, and that those agents require incentives to contribute correctly.
 
 In this context, Proof-of-Contribution \(PoCo\) is the protocol used by iExec for consensus over off-chain computing.
 
@@ -49,7 +49,7 @@ PoCo describes the succession of contributions that are required to achieve cons
 * [PoCo series \#1: Initial PoCo description](https://medium.com/iex-ec/about-trust-and-agents-incentives-4651c138974c)
 * [PoCo series \#3: Updated PoCo description](https://medium.com/iex-ec/poco-series-3-poco-protocole-update-a2c8f8f30126)
 
-The [nominal workflow](https://github.com/iExecBlockchainComputing/iexec-doc/raw/master/techreport/nominalworkflow-ODB.png) is also available in the [technical report section](technical-reports.md)
+The [nominal workflow](https://github.com/iExecBlockchainComputing/iexec-doc/raw/master/techreport/nominalworkflow-ODB.png) is also available in the [technical report section](../help/glossary.md)
 
 Below are the details of the implementations:
 

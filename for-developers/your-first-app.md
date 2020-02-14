@@ -4,432 +4,419 @@ description: >-
   iExec infrastructure.
 ---
 
-# Your First App
+# Your first application
 
-In the **task as a service** model, each time a task is launched through the iExec network, Developers set the price of their app. Requesters pay on a pay-per-task basis.And you can then withdraw your funds at anytime to your own wallet.
+In this tutorial we will prepare an iExec app based on an existing docker image and we will run it on iExec decentralized infrastructure.
 
-## Set up your app
+**Tutorial Steps :**
+
+* [Understand what is an iExec decentralized application?](your-first-app.md#understand-what-is-an-iexec-decentralized-application)
+* [Application I/O](your-first-app.md#application-i-o)
+* [Build your app](your-first-app.md#build-your-app)
+* [Test your app locally](your-first-app.md#test-your-app-locally)
+* [Test your app on iExec](your-first-app.md#test-your-app-on-iexec)
+* [Publish your app on iExec marketplace](your-first-app.md#publish-your-app-on-iexec-marketplace)
+* [What's next?](your-first-app.md#whats-next)
+
+{% hint style="success" %}
+**Prerequisities**
+
+* [Quick start](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
+* Ethereum wallet charged with Goerli ETH an RLC
+* [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client
+* [Dockerhub](https://hub.docker.com/) account
+{% endhint %}
+
+## Understand what is an iExec decentralized application?
+
+iExec leverage [Docker](https://www.docker.com/why-docker) containers to ensure the execution of your application on a decentralized infrastructure. iExec supports Linux-based docker images.
 
 ### Why using Docker containers?
 
-A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.Docker Engine is the most widely used container engine. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.Docker is very convenient because it simplifies the deployment process, while ensuring consistency and repeatability in builds. Different people at different times will therefore build the same binary and obtain the same application behavior.Another feature of Docker is the possibility of creating new layers that build on top of existing images. These existing images could be yours, or images proposed by the community.
+* Docker Engine is the most **widely used** container engine. 
+* A Docker container image is a **standard** unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. This allows to **run on any worker** connected to the decentralized infrastructure.
+* Docker also enable creating new layers on top of existing images. This allows to **easily build  iExec apps** on the top of existing docker images.
 
-[https://docs.docker.com/storage/storagedriver/\#images-and-layers](https://docs.docker.com/storage/storagedriver/#images-and-layers)
+### What kind of application can I build on iExec?
 
-### Build & test your Docker image
+Today you can run any application as a task. This mean services are not supported for now.
 
-We suppose your wallet is already created and charged with ETH to deploy your dapp and with RLC for testing.
+## Application I/O
 
-Firstly you need to build a Docker image that contains your application.
+This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some
 
-iExec supports linux-based Docker container.
+### Application args
 
-Your image will be launched by an iExec worker using following command. If you application manages dataset, during the set up of your application, the dataset must be placed in the DIR\_IN directory
+The requester specify the arguments to use with an application in the requestorder, theses arguments are forwarded as is to the application.
 
-```text
-docker run -v ${DIR_IN}:/iexec_in -v ${DIR_OUT}:/iexec_out ${DOCKERIMAGE} ${CMDLINE}
-```
+### Application input files
 
-Warning
+Your app may use input files, all the input files specified by the requester will be downloaded in the container directory `/iexec_in` before running your application.
 
-Use absolute path to define ${DIR\_IN} and ${DIR\_OUT} and not a relative path.
+#### Input files \(public\):
 
-| Parameter | Meaning |
-| :--- | :--- |
-| DIR\_IN | directory where datasets is downloaded during the task initialization. |
-| DIR\_OUT | put all results files here. Full directory zipped in finalisation step. The result of the application \(as well as the determinism.iexec file\) should be in the iexec folder of the container. URL of the scheduler |
-| DOCKERIMAGE | path to Docker image to run |
-| ARGS | command to execute for the application |
+Input files contain non sensitive data publicly available on the Internet. The requester may specify any number of input files in the requestorder.
 
-A list of applications with their Docker images can be found at [https://github.com/iExecBlockchainComputing/iexec-apps](https://github.com/iExecBlockchainComputing/iexec-apps)
+For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file name \(`x` is the index of the file starting with `1`\). The total number of input files is stored in the variable.
 
-### Deterministic result
+Use these variables in your application to find input files to process. \(first input file path is `/iexec_in/$IEXEC_INPUT_FILE_NAME_1`\)
 
-iExec allows requesters to ask for a result with a predefined level of trust.For the PoCo to run smoothly and verify that different workers return the same result, some determinism is needed at some point in the execution.Since it is not always easy \(or even possible\) to have exactly the same output of a job \(for example, compute 3D rendering images on 2 different machines may produce 2 slightly different images\).The PoCo will look for determinism of a file called **determinism.iexec**.This file **has to be created by the dapp and must be deterministic**.It can contain anything but the multiple runs of the job should produce exactly the same determinism.iexec file.If not, the PoCo will not find a consensus.
+#### Datasets \(confidential input files\):
 
-**Example:**Considering a application to blur faces on pictures,the content of the determinism.iexec file could simply be the coordinates of the faces in the pictures.The output of the execution \(images with blur faces\) may not be exactly the same, but the determinism.iexec file will be.blur-face: [https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/blur-face](https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/blur-face)find-face: [https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/find-face](https://github.com/iExecBlockchainComputing/iexec-apps/tree/master/find-face)
+Datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
 
-### How to manage datasets
+Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable.
 
-If the applications manages dataset, the dataset is downloaded at the initialization of the task
+### Runtime variables
 
-You can test your application before the deploiement locally.
+The runtime variables are environment variables set by the iExec worker and available for your application.
 
-Create directories iexec\_in iexec\_out and put the dataset in iexec\_in
+#### Input files variables
 
-```text
-mkdir iexec_in iexec_out
-cp nsfw_model.zip iexec_in/.
-```
+Use these variables if your app deals with input files
 
-Run and test locally your application with the following command
+| Name | Type | Content |
+| :--- | :--- | :--- |
+| IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder \(`/iexec_in/`\) |
+| IEXEC\_NB\_INPUT\_FILES | int &gt;= 0 | Total number of input files |
+| IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x \(`x` starts with `1`\) |
+| IEXEC\_DATASET\_FILENAME | string or unset | Name of the dataset file if used |
 
-```text
-docker run -e IEXEC_DATASET_FILENAME="nsfw_model.zip" -v `pwd`/iexec_in/:/iexec_in -v `pwd`/iexec_out:/iexec_out iexechub/nsfw_prediction:1.0 https://www.w3schools.com/w3css/img_lights.jpg
-```
+#### Bag of Tasks variables
 
-### Put your image in Dockerhub
+Use these variables to index tasks in parallelization use cases.
 
-You must push your image to a public repository at DockerHub. Before the execution of the task, iExec worker will pull the image from public repository.
+| Name | Type | Content |
+| :--- | :--- | :--- |
+| IEXEC\_BOT\_TASK\_INDEX | int &gt;= 0 | Index of the current task |
+| IEXEC\_BOT\_FIRST\_INDEX | int &gt;= 0 | Index of the first task in the current Deal \(Bag of task subset\) |
+| IEXEC\_BOT\_SIZE | int &gt;= 1 | Total number of parallelized tasks in a Bag of Tasks |
 
-Note
+### Application outputs
 
-Use docker tags mechanism to manage your application versioning.
-
-```text
-docker tag iexechub/nilearn iexechub/nilearn:1.0
-docker push iexechub/nilearn:1.0
-```
-
-### Deploy your app
-
-Once the application is available on Docker, you have to register your application on the blockchain and really create your decentralized and autonomous application, **a dapp**
-
-Set up a configuration file.
+An iExec app produce a `result.zip` file for the requester with the following tree:
 
 ```text
-iexec init --skip-wallet
-iexec app init
+result.zip
+  ├── iexec_out/
+  └── stdout.txt
 ```
 
-to set up the template in iexec.json and fill information for registation: name, source, …
+`stdout.txt` contains the logs of your application. This file is auto generated by the iExec worker.
 
-| Parameter | Meaning |
-| :--- | :--- |
-| owner | the wallet address of the owner |
-| name | the dapp name |
-| multiaddr | docker hub address of the application |
-| checksum | “0x” + sha256 of the digest of the docker image |
+`iexec_out` is a copy at the final state of your app container directory `/iexec_out/` final state, your application must create the following files in `/iexec_out/` :
 
-Get the digest sha256:
+* `/iexec_ou/determinism.iexec` file is the deterministic proof of execution \(given the same inputs this file should always be the same\).
+* If your app produce output files, you must copy them in `/iexec_out/` .
+
+{% hint style="warning" %}
+Your application must always create a deterministic file named `determinism.iexec` in `/iexec_out/` as a proof of execution.
+
+The `determinism.iexec`is used in the Proof of Contribution protocol to achieve a consensus on replicated tasks.
+{% endhint %}
+
+## Build your app
+
+Create the folder tree for your application in `~/iexec-projects/`.
 
 ```text
-docker pull iexechub/nilearn:1.0
-1.0: Pulling from iexechub/nilearn
-Digest: sha256:f8a48dc5125fe762e3e35b9493291b8472a68782dd19d741a7e7aa062ef73dd6
-Status: Image is up to date for iexechub/nilearn:1.0
+cd ~/iexec-projects
+mkdir iexec-hello-world-app
+cd iexec-hello-world-app
+mkdir src
+touch Dockerfile
+touch src/iexec-hello-world.sh
 ```
 
-Don’t forget the prefix “0x” for the checksum.
+### Write the app \(shell script example\)
 
-0xf8a48dc5125fe762e3e35b9493291b8472a68782dd19d741a7e7aa062ef73dd6
+**Copy the following content** in `src/iexec-hello-world.sh` .
 
-Edit iexec.json file, set up the name, the docker address and the hash of the docker image For a docker the checksum is obtained with a docker of the image
+{% tabs %}
+{% tab title="iexec-hello-world" %}
+{% code title="iexec-hello-world.sh" %}
+```bash
+#!/bin/sh
+
+echo "stdout is logged into stdout.txt";
+echo "hello world" > /iexec_out/my-app-output.txt;
+echo $@$IEXEC_NB_INPUT_FILES > /iexec_out/determinism.iexec;
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="hackable-iexec-hello-world" %}
+{% code title="iexec-hello-world.sh" %}
+```bash
+#!/bin/sh
+
+echo "APP RUNNING";
+echo;
+
+echo "INPUT DIRECTORY CONTENT";
+ls -a /iexec_in;
+echo;
+
+echo "OUTPUT DIRECTORY INITIAL CONTENT";
+ls -a /iexec_out;
+echo;
+
+echo "READING IEXEC ARGS";
+args=$@
+echo $args;
+echo;
+
+echo 'READING IEXEC RUNTIME VARIABLES';
+echo ' - IEXEC_INPUT_FILES_FOLDER='$IEXEC_INPUT_FILES_FOLDER;
+echo ' - IEXEC_NB_INPUT_FILES='$IEXEC_NB_INPUT_FILES;
+if [ "$IEXEC_NB_INPUT_FILES" -ge 1 ]; # print IEXEC_INPUT_FILE_NAME_X
+then
+    i=1;
+    while [ $i -le $IEXEC_NB_INPUT_FILES ]
+    do
+       name='IEXEC_INPUT_FILE_NAME_'$i
+       eval "value=\"\$$name\""
+       echo '     - '$name=$value
+       i=`expr $i + 1`
+    done
+fi
+echo ' - IEXEC_DATASET_FILENAME='$IEXEC_DATASET_FILENAME;
+echo ' - IEXEC_BOT_SIZE='$IEXEC_BOT_SIZE;
+echo ' - IEXEC_BOT_FIRST_INDEX='$IEXEC_BOT_FIRST_INDEX;
+echo ' - IEXEC_BOT_TASK_INDEX='$IEXEC_BOT_TASK_INDEX;
+echo;
+
+echo "CREATING OUTPUT FILES IN /iexec_out/";
+echo "hello world" > /iexec_out/my-app-output.txt && echo "done";
+echo;
+
+echo "CREATING determinism.iexec IN /iexec_out/";
+echo $args$IEXEC_DATASET_FILENAME$IEXEC_NB_INPUT_FILES > /iexec_out/determinism.iexec && echo "done";
+echo;
+
+echo "OUTPUT DIRECTORY FINAL CONTENT";
+ls -a /iexec_out;
+echo;
+
+echo "FINISH";
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+`iexec-hello-world` is the minimum shell application, learn more with `hackable-iexec-hello-world`
+{% endhint %}
+
+### Dockerize your app
+
+**Copy the following content** in `Dockerfile` .
+
+{% code title="Dockerfile" %}
+```text
+FROM alpine:latest
+COPY src/iexec-hello-world.sh /iexec-hello-world.sh
+RUN chmod +x /iexec-hello-world.sh
+ENTRYPOINT ["/iexec-hello-world.sh"]
+```
+{% endcode %}
+
+{% hint style="info" %}
+Starting from the Alpine Linux image ensure we can use `/bin/sh`.
+
+If your app requires specific dependencies, you must start from an image including these dependencies or install them.
+{% endhint %}
+
+Build the docker image.
 
 ```text
-"app": {
-  "owner": "0x47d0Ab8d36836F54FD9587e65125Bbab04958310",
-  "name": "Nilearn",
-  "type": "DOCKER",
-  "multiaddr": "registry.hub.docker.com/iexechub/nilearn:1.0",
-  "checksum": "0xf8a48dc5125fe762e3e35b9493291b8472a68782dd19d741a7e7aa062ef73dd6",
-  "mrenclave": ""
-}
+sudo docker build . --tag iexec-hello-world
 ```
 
-Then deploy the app.
+{% hint style="success" %}
+`docker build` produce an image id, using `--tag <name>` option is a convenient way to name the image to reuse it in the next steps.
+{% endhint %}
+
+Congratulation you built your first docker image for iExec!
+
+## Test your app locally
+
+### Basic test
+
+Prepare local volumes for binding.
 
 ```text
-iexec app deploy --wallet-file developper_wallet
-ℹ using chain [kovan]
-? Using wallet developper_wallet
-Please enter your password to unlock your wallet [hidden]
-✔ Deployed new app at address 0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
+mkdir ./iexec_in/
+mkdir ./iexec_out/
 ```
 
-### Publish app order
-
-Now the application registration is completed, let’s publish an order to propose the application to the market
-
-The application order will set the price, the volume and restriction. Restriction are not mandatory.
-
-* Create a order template
+Run your application locally \(container volumes bound with local volumes\).
 
 ```text
-iexec order init --app --wallet-file developper_wallet
-ℹ using chain [kovan]
-✔ Saved default apporder in "iexec.json", you can edit it:
-app:                0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
-appprice:           0
-volume:             1000000
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000
-datasetrestrict:    0x0000000000000000000000000000000000000000
-workerpoolrestrict: 0x0000000000000000000000000000000000000000
-requesterrestrict:  0x0000000000000000000000000000000000000000
+sudo docker run \
+    --volume $(pwd)/iexec_in:/iexec_in \
+    --volume $(pwd)/iexec_out:/iexec_out \
+    iexec-hello-world \
+    arg1 arg2 arg3
 ```
 
-Sign the order
+The application output files should be created in `./iexec_out/`, verify the `determinism.iexec` was created.
 
-Edit the order part in iexec.json to describe your task,
+{% hint style="success" %}
+docker run \[options\] image \[args\]
 
-| Parameter | Meaning |
-| :--- | :--- |
-| app | app address |
-| appprice | app price |
-| volume | number of order created, each usage decrease this number |
-| tag | not use |
-| datasetrestrict: | restricted to a dataset \(1\) |
-| workerpoolrestrict | restricted to a workerpool \(1\) |
-| requesterrestrict: | restricted to a requester \(1\) |
+**docker run usage:**
 
-1. the restriction is disabled by default with 0x0000000000000000000000000000000000000000
+`docker run [OPTIONS] IMAGE [COMMAND] [ARGS...]`
+
+Use `[COMMAND]` and `[ARGS...]` to simulate the requester arguments
+
+**useful options for iExec:**
+
+`--volume` : Bind mount a volume. Use it to bind `/iexec_in/` and `/iexec_out/`
+
+`--env`: Set environnement variable. Use it to simulate iExec Runtime variables
+{% endhint %}
+
+### Test with input files
+
+Starting with the basic test you can simulate input files.
+
+For each input file:
+
+* Copy it in the local volume bound to `/iexec_in/` .
+* Add `--env IEXEC_INPUT_FILE_NAME_x=NAME` to docker run options \(`x` is the index of the file starting by 1 and `NAME` is the name of the file\)
+
+Add `--env IEXEC_NB_INPUT_FILES=n` to docker run options \(`n` is the total number of input files\).
+
+Example with two inputs files:
 
 ```text
-iexec order sign --app --wallet-file developper_wallet
-ℹ using chain [kovan]
-? Using wallet developper_wallet
-Please enter your password to unlock your wallet [hidden]
-✔ apporder signed and saved in orders.json, you can share it:
-app:                0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
-appprice:           0
-volume:             1000000
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000
-datasetrestrict:    0x0000000000000000000000000000000000000000
-workerpoolrestrict: 0x0000000000000000000000000000000000000000
-requesterrestrict:  0x0000000000000000000000000000000000000000
-salt:               0xda9180521bb3eb495e5fc9723d351199324b96481cdd85e9f7004477911045f0
-sign:               0xad835e8b86ccb9b44d3704fd64166da648927adf9dc88e96931de388033fb178192ee52a8c665fefe66b99296e299226d0f047aa8fb5bd87b7b165374154e3c51c
+touch ./iexec_in/file1 && \
+touch ./iexec_in/file2 && \
+sudo docker run \
+    --volume $(pwd)/iexec_in:/iexec_in \
+    --volume $(pwd)/iexec_out:/iexec_out \
+    --env IEXEC_INPUT_FILE_NAME_1=file1 \
+    --env IEXEC_INPUT_FILE_NAME_2=file2 \
+    --env IEXEC_NB_INPUT_FILES=2 \
+    iexec-hello-world \
+    arg1 arg2 arg3
 ```
 
-Publish the order
+## Test your app on iExec
+
+### Push your app to Dockerhub
+
+Login to your Dockerhub account.
 
 ```text
-iexec order publish --app --wallet-file developper_wallet
-ℹ using chain [kovan]
-? Using wallet developper_wallet
-Please enter your password to unlock your wallet [hidden]
-? Do you want to publish the following apporder?
-app:                0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
-appprice:           0
-volume:             1000000
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000
-datasetrestrict:    0x0000000000000000000000000000000000000000
-workerpoolrestrict: 0x0000000000000000000000000000000000000000
-requesterrestrict:  0x0000000000000000000000000000000000000000
-salt:               0xda9180521bb3eb495e5fc9723d351199324b96481cdd85e9f7004477911045f0
-sign:               0xad835e8b86ccb9b44d3704fd64166da648927adf9dc88e96931de388033fb178192ee52a8c665fefe6
-6b99296e299226d0f047aa8fb5bd87b7b165374154e3c51c
- Yes
-✔ apporder successfully published with orderHash 0x2d09cc3e08e675fc290b683aa376b7038d1762f31674e97baaaa723a0e879fdc
+sudo docker login
 ```
 
-Now the application is available.
-
-Check out [http://explorer.iex.ec](http://explorer.iex.ec/)
-
-Go to the [Quick start](https://docs.iex.ec/quickstart.html) section to learn how to test your dapp .
-
-### Variables available at the runtime
-
-When a worker triggers the computation of a task, a few variables are available to the application that is running. They can be used by the application.
-
-> **General variables**
-
-Those variables are available in the container performing the computation of a task:
-
-| Variables | Meaning |
-| :--- | :--- |
-| IEXEC\_DATASET\_FILENAME | name of the dataset filename that is in the description of task |
-| IEXEC\_INPUT\_FILES\_FOLDER | name of the folder \(in the container\) where are all the input files and dataset |
-| IEXEC\_NB\_INPUT\_FILES | number of input files described in the task and that have been downloaded to IEXEC\_INPUT\_FILES\_FOLDER |
-| IEXEC\_INPUT\_FILE\_NAME\_1 | name of the first input file in the list of input files given in parameters of the task. |
-| IEXEC\_INPUT\_FILE\_NAME\_2 | name of the second input file in the list of input files given in parameters of the task. |
-| IEXEC\_INPUT\_FILE\_NAME\_n | name of the nth input file in the list of input files given in parameters of the task. |
-
-There will be as many IEXEC\_INPUT\_FILE\_NAME\_\* variables as there are input files in the parameters of the task.
-
-> **BoT variables**
-
-Some additional variables are available regarding the Bag Of Task, in order for the worker to know which part of the BoT it is processing:
-
-| Variables | Meaning |
-| :--- | :--- |
-| IEXEC\_BOT\_SIZE | Size of the BoT, which means that it is the number of Tasks contained in the BoT. |
-| IEXEC\_BOT\_FIRST\_INDEX | Index of the first task in the BoT. |
-| IEXEC\_BOT\_TASK\_INDEX | Index of the current task that is being processed. |
-
-## Provide a dataset
-
-In this section we will show you how you can propose a dataset or any valuable data over iExec infrastructure.In the **task-as-a-service** model, each time a task is launched through the iExec network,The dataset providers set the price of their datasets. Requesters pay on a pay-per-task basis.And you can then withdraw your funds at anytime to your own wallet.
-
-Whitelisting and ordering Dataset owner will manage:
-
-> * who can process the dataset
-> * which application can run the dataset
-> * make restriction for computing resources
-> * set up a cutting-edge pricing management
-
-### Deploy your dataset
-
-Zip your dataset, or model.
-
-Put the data on public data storage, the dataset must be accessible in direct download.
-
-Set up the iexec.json configuration file.
+Tag you application image to push it to your dockerhub public repository.
 
 ```text
-iexec init --skip-wallet
-iexec dataset init
+sudo docker tag iexec-hello-world <dockerusername>/iexec-hello-world:1.0.0
 ```
 
-Edit the iexec.json to describe your dataset.
+{% hint style="warning" %}
+replace `<dockerusername>` with your docker user name
+{% endhint %}
+
+Push the image to Dockerhub.
 
 ```text
- "dataset": {
-  "owner": "0x9CdDC59c3782828724f55DD4AB4920d98aA88418",
-  "name": "Neurovault_brainstatsmaps",
-  "multiaddr": "https://raw.githubusercontent.com/ericr6/nilearn/master/nilearn_data.zip",
-  "checksum": "0x0000000000000000000000000000000000000000000000000000000000000000"
-},
+sudo docker push <dockerusername>/iexec-hello-world:1.0.0
 ```
 
-Then you deploy your dataset:
+**Congratulation, you app is ready to be deployed on iExec!**
+
+### Deploy your app on iExec
+
+You already learnt how to deploy the default app on iExec in the [previous tutorial](quick-start-for-developers.md).
+
+Go back to the `iexec-project` folder.
 
 ```text
-iexec dataset deploy --wallet-file data_owner_wallet
-ℹ using chain [kovan]
-? Using wallet data_owner_wallet
-Please enter your password to unlock your wallet [hidden]
-✔ Deployed new dataset at address 0xCb781f3106E25E2A9408C4B89C47034877223D12
+cd ~/iexec-projects/
 ```
 
-### Publish a dataset order
+You will need a few configuration in `iexec.json` to deploy your app:
 
-* Create an order template
+* Replace app **name** with your application name \(display only\)
+* Replace app **multiaddr** with your app image download URI \(should looks like `registry.hub.docker.com/<dockerusername>/iexec-hello-world:1.0.0`\)
+* Replace app **checksum** with your application image checksum \(see tip below\)
+
+{% hint style="info" %}
+The checksum of your app is the sha256 digest of the docker image prefixed with `0x` , you can use the following command to get it.
 
 ```text
-iexec order init --dataset --wallet-file developper_wallet
+docker pull <dockerusername>/iexec-hello-world:1.0.0 | grep "Digest: sha256:" | sed 's/.*sha256:/0x/'
 ```
+{% endhint %}
 
-Edit the order part in iexec.json to describe the dataset.
-
-| Parameter | Meaning |
-| :--- | :--- |
-| dataset | dataset address |
-| datasetprice | dataset price |
-| volume | number of order created |
-| tag | tag for extra computational requirement \(1\) |
-| dapprestrict: | restricted to an application defined by its address \(1\) |
-| workerpoolrestrict | restricted to a workerpool defined by its address \(1\) |
-| requesterrestrict: | restricted to a requester defined by its address \(1\) |
-
-1. the restriction is disabled by default with 0x0000000000000000000000000000000000000000
-
-The volume is the total number of tasks allowed within the order created. Once all the volume is consumed, the dataset won’t be available, the dataset owner has to publish a new datasetorder:
+Deploy your app on iExec
 
 ```text
-"datasetorder": {
-  "dataset": "0xCb781f3106E25E2A9408C4B89C47034877223D12",
-  "datasetprice": 2,
-  "volume": 1000000,
-  "tag": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "apprestrict": "0x0000000000000000000000000000000000000000",
-  "workerpoolrestrict": "0x0000000000000000000000000000000000000000",
-  "requesterrestrict": "0x0000000000000000000000000000000000000000"
-}
+iexec app deploy --chain goerli
 ```
 
-Sign the order
+Verify the deployed app \(name, multiaddr, checksum, owner\)
 
 ```text
-iexec order sign --dataset --wallet-file data_owner_wallet
-ℹ using chain [kovan]
-? Using wallet data_owner_wallet
-Please enter your password to unlock your wallet [hidden]
-✔ datasetorder signed and saved in orders.json, you can share it:
-dataset:            0xCb781f3106E25E2A9408C4B89C47034877223D12
-datasetprice:       2
-volume:             1000000
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000
-apprestrict:        0x0000000000000000000000000000000000000000
-workerpoolrestrict: 0x0000000000000000000000000000000000000000
-requesterrestrict:  0x0000000000000000000000000000000000000000
-salt:               0xaaae00a749e198b9f43bc89c420aaf146f3a224c8500d327c3569075eea2c2ae
-sign:               0x87f720bb9e09762257bd62561f52b22237b2982397cb8aae19e84adf8afcb4d21f758f40dcc001a5dd018aaf48ccfd59a91f3c18adcb27c414da44436bea8c931b
+iexec app show --chain goerli
 ```
 
-Publish the order
+### Run your app on iExec
+
+Before requesting an execution make sure your account stake is charged with Goerli RLC
 
 ```text
-iexec order publish --dataset --wallet-file data_owner_wallet
-ℹ using chain [kovan]
-? Using wallet developper_wallet
-Please enter your password to unlock your wallet [hidden]
-? Do you want to publish the following apporder?
-app:                0xC97b068BffDf6Cf07C25d0Cfb01Bd079EebB134D
-appprice:           0
-volume:             1000000
-tag:                0x0000000000000000000000000000000000000000000000000000000000000000
-datasetrestrict:    0x0000000000000000000000000000000000000000
-workerpoolrestrict: 0x0000000000000000000000000000000000000000
-requesterrestrict:  0x0000000000000000000000000000000000000000
-salt:               0xda9180521bb3eb495e5fc9723d351199324b96481cdd85e9f7004477911045f0
-sign:               0xad835e8b86ccb9b44d3704fd64166da648927adf9dc88e96931de388033fb178192ee52a8c665fefe6
-6b99296e299226d0f047aa8fb5bd87b7b165374154e3c51c
- Yes
-✔ apporder successfully published with orderHash 0x2d09cc3e08e675fc290b683aa376b7038d1762f31674e97baaaa723a0e879fdc
+iexec account show --chain goerli
 ```
 
-Now the dataset is available.
-
-## Dataset encryption
-
-As a dataset provider, you might want to protect your dataset with encryption in order to monetize it. Any encrypted dataset will be decrypted on worker resources with a dataset secret key retrieved from the Secret Management Service. This dataset secret key need to be created and push by the dataset owner. At this point, the decrypted dataset will be ready to be used by the app.
-
-See the SDK tutorial for more info.
-
-First, initialize the folder structure
+Run your application on iExec
 
 ```text
-iexec dataset init --encrypted
-
-ℹ Created dataset folder tree for encryption
-✔ Saved default dataset in "iexec.json", you can edit it:
-owner:     0x62F2a967EaF91976763B96E515E4014a5526b6D3
-name:      my-dataset
-multiaddr: /ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
-checksum:  0x0000000000000000000000000000000000000000000000000000000000000000
+iexec app run --watch --chain goerli
 ```
 
-This will create the template for the dataset info in the _iexec.json_ and the following folders:
+Once the run is completed copy the taskid from `iexec app run` output to download and check the result
 
 ```text
-├── datasets
-│   ├── encrypted
-│   └── original
-└── .secrets
-    └── datasets
+iexec task show <taskid> --download my-app-result --chain goerli  \
+    && unzip my-app-result.zip -d my-app-result
 ```
 
-Copy your dataset in the _datasets/original/_ folder, then encrypt it with the SDK:
+Congratulation your app successfully ran on iExec!
 
-Generate a secret key for each file or folder in dataset/original/ and encrypt it
+## Publish your app on iExec marketplace
 
 ```text
-iexec dataset encrypt
+iexec order init --app --chain goerli
+iexec order sign --app --chain goerli
+iexec order publish --app --chain goerli
 ```
 
-It produces the secret key for decrypting the dataset
+**Congratulation your application is now available on iExec!**
 
-```text
-cat ./.secrets/dataset/myAwsomeDataset.file.secret
-```
+## Whats next?
 
-and the encrypted dataset, you must share at a public url
+In this tutorial you learnt about the key concepts for building an app on iExec:
 
-```text
-ls -lh ./datasets/encrypted/myAwsomeDataset.file.enc
-```
+* iExec app inputs and outputs
+* iExec app must produce a consensus file `determinism.iexec` 
+* using docker to package your app with all its dependencies
+* testing an iExec app locally
+* publishing on dockerhub
 
-Securely share the dataset secret key \(Encrypted datasets only\)
+Resources:
 
-Disclaimer: The secrets pushed in the Secret Management Service will be shared with the worker to process the dataset in the therms your specify in the dataset order. Make sure to always double check your selling policy in the dataset order before signing it.
+* A list of iExec applications with their Docker images can be found at [https://github.com/iExecBlockchainComputing/iexec-apps](https://github.com/iExecBlockchainComputing/iexec-apps)
 
-Push the secret in the Secret Management Service \(sms\)
+Continue with these articles:
 
-```text
-iexec dataset push-secret
-```
-
-Go to the [Quick start](quick-start-for-developers.md) section to learn how to test a dapp .
+* Confidential app
+* [Learn how to manage your apporders](advanced/manage-your-apporders.md)
 

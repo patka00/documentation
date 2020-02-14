@@ -45,7 +45,7 @@ After this you should copy the file for your app \(python scripts\) in the my-ap
 ### **Step 2: Copy and edit the Dockerfile**
 
 ```text
-cp ../Dockerfile Dockerfile
+cp ../sgx-apps/Dockerfile Dockerfile
 nano  Dockerfile
 ```
 
