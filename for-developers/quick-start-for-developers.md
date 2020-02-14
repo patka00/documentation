@@ -153,7 +153,7 @@ iexec app show --chain goerli
 
 ## Run your app on iExec
 
-iExec enables running applications on a decentralized infrastructure against RLC \(iExec coin\).
+iExec enables running applications on a decentralized infrastructure against RLC \(iExec token\).
 
 Let's get some test RLC to run your app
 
