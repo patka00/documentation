@@ -21,7 +21,7 @@ In this tutorial we will prepare an iExec app based on an existing docker image 
 {% hint style="success" %}
 **Prerequisities**
 
-* [Quick start](../quick-start-for-developers.md) tutorial completed
+* [Quick start](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
 * Ethereum wallet charged with Goerli ETH an RLC
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client
 * [Dockerhub](https://hub.docker.com/) account
@@ -418,5 +418,5 @@ Resources:
 Continue with these articles:
 
 * Confidential app
-* [Learn how to manage your apporders](../misc/manage-your-apporders.md)
+* [Learn how to manage your apporders](advanced/manage-your-apporders.md)
 
