@@ -1,6 +1,6 @@
 # Overview
 
-**Confidential Computing** \(or **Trusted Execution Environments -** **TEE**\) ensures computation confidentiality through mechanisms of memory encryption at the hardware level. Application being executed and data being processed are safeguarded against even most privileged access levels \(OS, Hypervisor...\). Only authorized code can run inside this protected area and manipulate its data.
+**Confidential Computing** \(or **Trusted Execution Environments -** **TEE**\) is the concept of protecting computation through mechanisms of memory encryption at the hardware level. Application being executed and data being processed are safeguarded against even most privileged access levels \(OS, Hypervisor...\). Only authorized code can run inside this protected area and manipulate its data.
 
 Those assurances are critical for a decentralized cloud where code is being executed on a remote machine not controlled by the requester. They are, also, required to prevent leakage while monetizing data sets.
 
@@ -17,8 +17,6 @@ In confidential computing jargon, it is called "enclave" the special memory zone
 ### Remote attestation
 
 As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
-
-
 
 ## Confidential Computing with iExec
 
