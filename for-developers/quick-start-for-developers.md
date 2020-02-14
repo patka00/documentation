@@ -34,7 +34,7 @@ Let's setup your wallet.
 Install the iExec SDK cli \(requires [Nodejs](https://nodejs.org)\)
 
 ```text
-sudo npm i -g iexec
+npm i -g iexec        # sudo <cmd> if needed
 ```
 
 Create a new Wallet file
