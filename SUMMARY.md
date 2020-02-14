@@ -8,7 +8,6 @@
 * [Your first application](for-developers/your-first-app.md)
 * [Confidential Computing](for-developers/confidential-computing/README.md)
   * [Overview](for-developers/confidential-computing/intel-sgx-technology.md)
-  * [Confidential Computing with iExec](for-developers/confidential-computing/scone-framework.md)
   * [Build trusted applications](for-developers/confidential-computing/create-your-first-sgx-app.md)
   * [Manage confidential datasets](for-developers/confidential-computing/sgx-encrypted-dataset.md)
   * [Protect result](for-developers/confidential-computing/end-to-end-encryption.md)
