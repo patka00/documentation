@@ -36,7 +36,7 @@ The [MrEnclave](https://sconedocs.github.io/MrEnclave/) is a hash value that ide
 Please note that some of SCONE's [environment variables](https://sconedocs.github.io/SCONE_ENV/) such as **SCONE\_HEAP** can affect the value of the MrEnclave.
 {% endhint %}
 
-#### FSPF \(File System Protection File\)
+#### FSPF \(File System Protection File\):
 
 In addition to identifying the code, SCONE, also, takes a snapshot of the file system state. This guarantees that we cannot alter the enclave by modifying its files' state. To do this, scone uses two parameters the [FSPF\_KEY](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file) and [FSPF\_TAG](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file).
 
