@@ -324,6 +324,6 @@ You are now familiar with the following key iExec concepts for developers:
 
 Continue with these guides:
 
-* [Learn how to build your firrt application running on iExec](your-first-app.md)
+* [Learn how to build your first application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
 
