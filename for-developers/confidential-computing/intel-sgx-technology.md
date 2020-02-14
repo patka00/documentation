@@ -6,7 +6,7 @@ Those assurances are critical for a decentralized cloud where code is being exec
 
 ## Intel® Software Guard Extension \(Intel® SGX\)
 
-[Intel® SGX](https://software.intel.com/en-us/sgx) is a technology that enables **Trusted** and **Confidential Computing**. At its core, it relies on the creation of a special zone in the memory, to which, only the CPU can have access. Neither privileged access level such as root, nor the operating system itself is capable of inspecting the content of this region. The code as well as the data inside the protected zone is totally unreadable and unalterable from the outside. Which guarantees both, non-disclosure of data and a tamper-proof execution of the code.
+[Intel® SGX](https://software.intel.com/en-us/sgx) is a technology that enables **Trusted** and **Confidential Computing**. At its core, it relies on the creation of a special zone in the memory called “enclave” which can be seen as a vault, to which, only the CPU can have access. Neither privileged access level such as root, nor the operating system itself is capable of inspecting the content of this region. The code as well as the data inside the protected zone is totally unreadable and unalterable from the outside. Which guarantees both, non-disclosure of data and a tamper-proof execution of the code.
 
 An application's code can be partitioned into "trusted" and "untrusted" parts where sensitive data is manipulated inside the protected area.
 
@@ -16,15 +16,17 @@ In confidential computing jargon, it is called "enclave" the special memory zone
 
 ### Remote attestation
 
-As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
+As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the provider and the enclave, and secrets can safely land in the latter.
 
 ## Confidential Computing with iExec
+
+At iExec we do not develop Intel® SGX frameworks but we integrate state of the art solutions developed by other specialists. Currently, the SCONE framework has been integrated in our platform and we are actively working on supporting [Graphene](https://grapheneproject.io/).
 
 ### SCONE Framework
 
 Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This is often severely limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. One solution to get around this and reduce the burden of porting your application to Intel® SGX is to rely on [SCONE](https://scontain.com/).
 
-At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You would, still, re-build it though, but this is already a huge step forward. They provide a [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of base docker images that you can use according to your requirements.
+At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You need just to prepare your application's docker image based on on of the [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of images provided by SCONE.
 
 ### Terminology
 
@@ -36,7 +38,7 @@ The [MrEnclave](https://sconedocs.github.io/MrEnclave/) is a hash value that ide
 Please note that some of SCONE's [environment variables](https://sconedocs.github.io/SCONE_ENV/) such as **SCONE\_HEAP** can affect the value of the MrEnclave.
 {% endhint %}
 
-#### FSPF \(File System Protection File\):
+#### FSPF \(File System Protection File\)
 
 In addition to identifying the code, SCONE, also, takes a snapshot of the file system state. This guarantees that we cannot alter the enclave by modifying its files' state. To do this, scone uses two parameters the [FSPF\_KEY](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file) and [FSPF\_TAG](https://sconedocs.github.io/SCONE_Fileshield/#file-system-protection-file).
 
