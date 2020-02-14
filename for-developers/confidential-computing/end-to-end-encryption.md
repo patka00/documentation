@@ -56,7 +56,7 @@ iexec app run <0x-your-app-address> \
     --chain goerli                  \
     --params "<your params>"        \
     --tag tee                       \
-    --dataset <0x-your-dataset-address> \ #optional
+    --dataset <0x-your-dataset-address or 0x0> \
     --beneficiary <0x-your-wallet-address> \
     --watch
 ```
