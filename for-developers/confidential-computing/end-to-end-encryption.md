@@ -30,14 +30,14 @@ This generates two files in `.secrets/beneficiary/`. Make sure to back up the pr
 ```text
 .secrets
 ├── beneficiary
-│   ├── <0x-you-wallet-address>_key
-│   └── <0x-you-wallet-address>_key.pub
+│   ├── <0x-you-wallet-address>_key
+│   └── <0x-you-wallet-address>_key.pub
 └── datasets
     ├── dataset.secret
     └── my-first-dataset.scone.secret
 ```
 
- Now, push the public key to the SMS:
+Now, push the public key to the SMS:
 
 ```text
 iexec result push-secret --chain goerli
