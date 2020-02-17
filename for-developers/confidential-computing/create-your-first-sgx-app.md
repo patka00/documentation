@@ -183,7 +183,7 @@ To test your application on iExec use the command below. The `--watch` option wi
 ```bash
 iexec app run <0x-your-app-address>   \
     --chain goerli                    \
-    --params "/app/app.py"            \
+    --params "python3 /app/app.py"            \
     --tag tee                         \
     --dataset 0x0000000000000000000000000000000000000000 \
     --beneficiary 0x0000000000000000000000000000000000000000 \
