@@ -25,19 +25,19 @@ Let's see how to do all of that!
 
 Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously in the [quick start](../quick-start-for-developers.md) tutorial.
 
-```text
+```bash
 cd ~/iexec-projects
 ```
 
 Init the dataset configuration.
 
-```text
+```bash
 iexec dataset init --encrypted
 ```
 
 This command will create the folders `datasets/encrypted`, `datasets/original` and `.secrets/datasets`. A new section `"dataset"` will be added to the `iexec.json` file as well.
 
-```text
+```bash
 .
 ├── chain.json
 │
@@ -56,17 +56,17 @@ This command will create the folders `datasets/encrypted`, `datasets/original` a
 
 First create your dataset folder:
 
-```text
+```bash
 mkdir datasets/original/my-first-dataset
 ```
 
 We will create a dummy file that has `"Hello, world!"` as a content inside `datasets/original/my-first-dataset`. Alternatively, you can put your own dataset file.
 
-```text
+```bash
 echo "Hello, world!" > datasets/original/my-first-dataset/hello-world.txt
 ```
 
-```text
+```bash
 datasets
 ├── encrypted
 └── original
@@ -76,11 +76,11 @@ datasets
 
 Now run the following command to encrypt the file:
 
-```text
+```bash
 iexec dataset encrypt --algorithm scone
 ```
 
-```text
+```bash
 datasets
 ├── encrypted
 │   └── my-first-dataset.zip
@@ -93,7 +93,7 @@ As you can see the command generated the file `datasets/encrypted/my-first-datas
 
 The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it has the key of the last encrypted dataset.
 
-```text
+```bash
 .secrets
 └── datasets
     ├── dataset.secret
@@ -104,10 +104,10 @@ The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key
 
 Fill in the fields of the `iexec.json` file. Choose a `name` for your dataset, put the encrypted file's URI in `multiaddr`, and fill in the `checksum`.
 
-```text
+```bash
 $ cat iexec.json
 {
-  "description": "My iExec ressource description...
+  "description": "My iExec ressource description...",
 
   ...
 
@@ -122,19 +122,19 @@ $ cat iexec.json
 
 To deploy your dataset run:
 
-```text
+```bash
 iexec dataset deploy --chain goerli
 ```
 
 You will get a hexadecimal address for you deployed dataset. Use that address to push the encryption key to the [SMS](intel-sgx-technology.md#secret-management-service-sms) so it is available for authorized applications.
 
-```text
+```bash
 iexec dataset push-secret <0x-your-dataset-address> --chain goerli
 ```
 
 Check it by doing:
 
-```text
+```bash
 iexec dataset check-secret <0x-your-dataset-address> --chain goerli
 ```
 
@@ -142,7 +142,7 @@ We saw in this section how to encrypt a dataset with [SCONE](intel-sgx-technolog
 
 Make sure you are in `~/iexec-projects` and clone the repository:
 
-```text
+```bash
 cd ~/iexec-projects && \
   git clone https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset.git && \
   cd scone-hello-world-app-with-dataset/
@@ -170,7 +170,7 @@ if __name__ == "__main__":
 Note that the result files should be written in the **/scone** folder.
 {% endhint %}
 
-Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
+Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md#prepare-the-application) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
 
 ## Next step?
 
