@@ -1,12 +1,14 @@
 # Overview
 
-**Confidential Computing** \(or **Trusted Execution Environments -** **TEE**\) is the concept of protecting computation through mechanisms of memory encryption at the hardware level. Application being executed and data being processed are safeguarded against even most privileged access levels \(OS, Hypervisor...\). Only authorized code can run inside this protected area and manipulate its data.
+**Confidential Computing** \(or **Trusted Execution Environments -** **TEE**\) ensures computation confidentiality through mechanisms of memory encryption at the hardware level. Application being executed and data being processed are safeguarded against even most privileged access levels \(OS, Hypervisor...\). Only authorized code can run inside this protected area and manipulate its data.
+
+In some cases, the need of ensuring that the code runs correctly without any third party altering the execution, is more important than hiding the computation's data. In this case the concept is called **Trusted Computing.**
 
 Those assurances are critical for a decentralized cloud where code is being executed on a remote machine not controlled by the requester. They are, also, required to prevent leakage while monetizing data sets.
 
 ## Intel® Software Guard Extension \(Intel® SGX\)
 
-[Intel® SGX](https://software.intel.com/en-us/sgx) is a technology that enables **Trusted** and **Confidential Computing**. At its core, it relies on the creation of a special zone in the memory, to which, only the CPU can have access. Neither privileged access level such as root, nor the operating system itself is capable of inspecting the content of this region. The code as well as the data inside the protected zone is totally unreadable and unalterable from the outside. Which guarantees both, non-disclosure of data and a tamper-proof execution of the code.
+[Intel® SGX](https://software.intel.com/en-us/sgx) is a technology that enables **Trusted** and **Confidential Computing**. At its core, it relies on the creation of a special zone in the memory called “enclave” which can be seen as a vault, to which, only the CPU can have access. Neither privileged access level such as root, nor the operating system itself is capable of inspecting the content of this region. The code as well as the data inside the protected zone is totally unreadable and unalterable from the outside. Which guarantees both, non-disclosure of data and a tamper-proof execution of the code.
 
 An application's code can be partitioned into "trusted" and "untrusted" parts where sensitive data is manipulated inside the protected area.
 
@@ -16,15 +18,17 @@ In confidential computing jargon, it is called "enclave" the special memory zone
 
 ### Remote attestation
 
-As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the two, and secrets can safely land in the enclave.
+As explained by [Intel](https://software.intel.com/en-us/sgx/attestation-services), the remote attestation is the process that happens before any exchange between a remote provider and an enclave. It allows the provider to verify that the expected software is running in an Intel® SGX-protected way while getting some details about the application being attested. If the attestation is successful, a secure communication channel is established between the provider and the enclave, and secrets can safely land in the latter.
 
 ## Confidential Computing with iExec
+
+At iExec we do not develop Intel® SGX frameworks but we integrate state of the art solutions developed by other specialists. Currently, the SCONE framework has been integrated in our platform and we are actively working on supporting [Graphene](https://grapheneproject.io/).
 
 ### SCONE Framework
 
 Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This is often severely limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. One solution to get around this and reduce the burden of porting your application to Intel® SGX is to rely on [SCONE](https://scontain.com/).
 
-At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You would, still, re-build it though, but this is already a huge step forward. They provide a [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of base docker images that you can use according to your requirements.
+At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You need just to prepare your application's docker image based on on of the [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of images provided by SCONE.
 
 ### Terminology
 
@@ -61,4 +65,3 @@ We explain the process of how to make your trusted application using iExec in de
 **Trusted application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push you docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and fingerprint.
 
 **Confidential dataset:** To make your dataset available on iExec, you should, first, encrypt it with the SDK, and put the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by an enclave, which means even us we cannot access it\). Only applications you authorize can get this key.
-

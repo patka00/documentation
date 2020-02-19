@@ -4,7 +4,7 @@
 
 ## For Developers
 
-* [Quick start](for-developers/quick-start-for-developers.md)
+* [Quick Start](for-developers/quick-start-for-developers.md)
 * [Your first application](for-developers/your-first-app.md)
 * [Confidential Computing](for-developers/confidential-computing/README.md)
   * [Overview](for-developers/confidential-computing/intel-sgx-technology.md)
