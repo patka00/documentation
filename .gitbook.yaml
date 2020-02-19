@@ -5,6 +5,6 @@ redirects:
     pocosrc/poco-protocol: ./key-concepts/proof-of-contribution.md
     release: ./README.md # TODO
     stackdescription: ./README.md # TODO
-    tee: ./for-developers/confidential-computing.md
+    tee: ./for-developers/confidential-computing
     wallet: ./README.md # TODO
     worker: ./for-workers.md
