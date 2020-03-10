@@ -1,6 +1,6 @@
 # Overview
 
-**Confidential Computing** \(or **Trusted Execution Environments -** **TEE**\) ensures computation confidentiality through mechanisms of memory encryption at the hardware level. Application being executed and data being processed are safeguarded against even most privileged access levels \(OS, Hypervisor...\). Only authorized code can run inside this protected area and manipulate its data.
+**Confidential Computing** \(or **Trusted Execution Environments -** **'TEE'**\) ensures computation confidentiality through mechanisms of memory encryption at the hardware level. Application being executed and data being processed are safeguarded against even most privileged access levels \(OS, Hypervisor...\). Only authorized code can run inside this protected area and manipulate its data.
 
 In some cases, the need of ensuring that the code runs correctly without any third party altering the execution, is more important than hiding the computation's data. In this case the concept is called **Trusted Computing.**
 
@@ -26,13 +26,13 @@ At iExec we do not develop Intel® SGX frameworks but we integrate state of the 
 
 ### SCONE Framework
 
-Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This is often severely limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. One solution to get around this and reduce the burden of porting your application to Intel® SGX is to rely on [SCONE](https://scontain.com/).
+Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This can be severely limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. One solution to get around this and reduce the burden of porting your application to Intel® SGX is to use [SCONE](https://scontain.com/).
 
 At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You need just to prepare your application's docker image based on on of the [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of images provided by SCONE.
 
 ### Terminology
 
-#### MrEnclave: \(TLDR; It is the id of an enclave\)
+#### MrEnclave: \(In short; It is the id of an enclave\)
 
 The [MrEnclave](https://sconedocs.github.io/MrEnclave/) is a hash value that identifies every enclave. It is obtained from the content of memory pages and access rights. After you build your SCONE app, you will get its fingerprint, the MrEnclave is the last part of that fingerprint.
 
@@ -46,7 +46,7 @@ In addition to identifying the code, SCONE, also, takes a snapshot of the file s
 
 #### Application's fingerprint
 
-It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG seperated by a "\|". You should use this when deploying your application on the Blockchain. The SMS uses this as a reference to evaluate the state of client enclaves and whether they should get secrets or not.
+It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG separated by a "\|". You should use this when deploying your application on the Blockchain. The SMS uses this as a reference to evaluate the state of client enclaves and whether they should get secrets or not.
 
 ### Secret Management Service \(SMS\)
 
@@ -54,7 +54,7 @@ With the integration of SCONE in iExec, you do not need to worry about [remote a
 
 Unquestionably, the SMS is a critical component. That's why its runs inside an enclave.
 
-### How it works?
+### How does it work?
 
 {% hint style="info" %}
 For more information about SCONE, please refer to their documentation at [https://sconedocs.github.io](https://sconedocs.github.io/).
