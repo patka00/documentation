@@ -10,9 +10,9 @@
 * Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](intel-sgx-technology.md#scone-framework) framework.
 {% endhint %}
 
-After understanding the fundamentals of Confidential Computing and explaining technologies behind it, it is time to roll up our sleeves and start playing with [enclaves](intel-sgx-technology.md#enclave).
+After understanding the fundamentals of Confidential Computing and explaining the technologies behind it, it is time to roll up our sleeves and get hands-on with [enclaves](intel-sgx-technology.md#enclave).
 
-In this tutorial, we will be using Python as the programming language, but support of other languages is coming soon. Three major sections are presented:
+In this tutorial, we will be using Python as the programming language, but support of other languages is coming soon. Three main sections are presented:
 
 * [Prepare and "sconify" an application.](create-your-first-sgx-app.md#prepare-the-application)
 * [Build your application.](create-your-first-sgx-app.md#build-the-application)
@@ -130,7 +130,7 @@ docker image push <username>/scone-hello-world-app:0.0.1
 
 ## Deploy & test on iExec
 
-We explained in details the steps to deploy an application on iExec earlier in the documentation. We will directly use the commands here assuming you are already familiar with them. If not please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
+Earlier in the documentation, we explained the steps to deploy an application on iExec. Now, we will  use these previously detailed commands, assuming you are already familiar with them. If not, please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
 First things first, go back to the `~/iexec-projects` folder where we initialized our environment:
 
@@ -196,7 +196,7 @@ If everything goes well you should see this:
 ℹ using chain [goerli]
 ? Using wallet UTC...
 Please enter your password to unlock your wallet [hidden]
-? Do you want to spend 0 nRLC to execute the following request: 
+? Do you want to spend 0 nRLC to execute the following request:
 app:         <0x-your-app-address>                      (0 nRLC)
 workerpool:  0x706bB37Fb0545aD82f02721cDe7B8F9d351390Ec (0 nRLC)
 params:      python3 /app/app.py
@@ -211,7 +211,7 @@ beneficiary: 0x0000000000000000000000000000000000000000
 ✔ 1 tasks COMPLETED with dealid 0x29f85a881f72f7040ff3fe8b9218ee2b8cc3541167bc8815c027a8c48a128b27
 ```
 
-You can get all information about your tasks in the iExec [explorer](https://explorer.iex.ec/goerli). If the execution fails or takes longer than it should be, you can check the debug enclave logs at [https://graylog.iex.ec/goerli-tee](https://graylog.iex.ec/goerli-tee). Use the search box to filter logs by **task id.**
+You can get all information about your tasks in the iExec [explorer](https://explorer.iex.ec/goerli). If the execution fails or takes longer than it should, you can check the debug enclave logs at [https://graylog.iex.ec/goerli-tee](https://graylog.iex.ec/goerli-tee). Use the search box to filter logs by **task id.**
 
 {% hint style="info" %}
 Please request access here: [https://cutt.ly/grGXZNY](https://cutt.ly/grGXZNY).
@@ -219,7 +219,7 @@ Please request access here: [https://cutt.ly/grGXZNY](https://cutt.ly/grGXZNY).
 
 ## Download the result
 
-After the execution is finished \(the status is `COMPLETED`\) download the result of your task. This command provides also a resume of the execution:
+After the execution is finished \(the status is `COMPLETED`\) download the result of your task. This command also provides a summary of the execution:
 
 ```bash
 iexec task show 0x3d77255d4c1061aaa12fb0be79... --download --chain goerli
@@ -233,7 +233,7 @@ Note that you should use the **task id** not the deal id.
 ℹ using chain [goerli]
 ? Using wallet UTC...
 Please enter your password to unlock your wallet [hidden]
-✔ Task 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b details: 
+✔ Task 0x3d77255d4c1061aaa12fb0be79d4bc5cb613fc66ce143162ef8a4ee2383cdf1b details:
 status:               3
 dealid:               0x29f85a881f72f7040ff3fe8b9218ee2b8cc3541167bc8815c027a8c48a128b27
 idx:                  0
@@ -244,7 +244,7 @@ finalDeadline:        1581610152
 consensusValue:       0x79aa3a2408de8f0a3c53720eaf45d723a25ec94eca600bb6acff058f930037ba
 revealCounter:        1
 winnerCounter:        1
-contributors: 
+contributors:
   0: 0x1cb25226FeCeE496f246DDd1D735276B2E168B5a
 resultDigest:         0x96b341807bafa4ce791572b4cb3ee42ed0960a5d571af6ef704bf8df861ab794
 results:              /ipfs/QmWqHs8Q4dwPJvQZnz1CZYscMZ3NdPs5oAjt6LWun7ZfqX
@@ -277,10 +277,10 @@ result/
 └── stdout.txt
 ```
 
-As you can see, we have an `stdout.txt` file that contains you application's logs and the well known `iexec_out/` folder. In `iexec_out` resides our result file `my-result.txt` . You can verify the content of those files:
+As you can see, we have an `stdout.txt` file that contains you application's logs and the well known `iexec_out/` folder. In `iexec_out` we find our result file `my-result.txt` . You can verify the content of these files:
 
 ```bash
-$ grep -n "Hello from inside the enclave!" result/stdout.txt 
+$ grep -n "Hello from inside the enclave!" result/stdout.txt
 39:Hello from inside the enclave!
 
 $ cat result/iexec_out/my-result.txt
@@ -291,9 +291,8 @@ It's dark over here!
 The folder "iexec\_out" contains other metadata files: **enclaveSig.iexec** - signature of the enclave used for verification, **public.key** \(of the requester\) and **volume.fspf** files are both used in the case of an encrypted result \(see this [chapter](end-to-end-encryption.md)\).
 {% endhint %}
 
-That's it, you deployed you confidential computing app on iExec and ran your enclave-protected execution successfully.
+That's it, you have successfully deployed your confidential computing app on iExec and ran your enclave-protected execution successfully.
 
 ## Next step?
 
 In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. Check out next chapter to see how.
-
