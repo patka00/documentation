@@ -45,11 +45,11 @@ Today you can run any application as a task. This mean services are not supporte
 
 ## Application I/O
 
-This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some
+This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app, just pick what you need.
 
 ### Application args
 
-The requester specify the arguments to use with an application in the requestorder, theses arguments are forwarded as is to the application.
+The requester may specify the arguments to use with an application in the requestorder, theses arguments are forwarded as is to the application.
 
 ### Application input files
 
@@ -67,7 +67,7 @@ Use these variables in your application to find input files to process. \(first 
 
 Datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
 
-Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable.
+Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable. A single dataset file is currently supported.
 
 ### Runtime variables
 
@@ -86,7 +86,7 @@ Use these variables if your app deals with input files
 
 #### Bag of Tasks variables
 
-Use these variables to index tasks in parallelization use cases.
+The requester may request multiple tasks in a single transaction \(Bag of Tasks\), each task of the bag is given a unique index. If you intend to support running Bag of Tasks in your app, you can use the following variables to index tasks in parallelization use cases.
 
 | Name | Type | Content |
 | :--- | :--- | :--- |
@@ -114,7 +114,10 @@ result.zip
 {% hint style="warning" %}
 Your application must always create a deterministic file named `determinism.iexec` in `/iexec_out/` as a proof of execution.
 
-The `determinism.iexec`is used in the Proof of Contribution protocol to achieve a consensus on replicated tasks.
+The `determinism.iexec` file is compared across replicated tasks in the [Proof of Contribution protocol](../key-concepts/proof-of-contribution.md) to achieve a consensus on workers.
+
+* `determinism.iexec` may contain a digest of the application deterministic result.
+* in case of a non-deterministic result consider producing a custom deterministic proof of the execution.
 {% endhint %}
 
 ## Build your app
@@ -419,6 +422,6 @@ Resources:
 
 Continue with these articles:
 
-* Confidential app
+* [Confidential app](confidential-computing/)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
 

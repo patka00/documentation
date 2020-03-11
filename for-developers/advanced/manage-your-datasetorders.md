@@ -4,7 +4,6 @@ Orders enables setting custom governance for resources.
 
 Here you will learn how to manage your dataset's rules.
 
-
 ## Publish a custom datasetorder
 
 Initialize an datasetorder
@@ -54,3 +53,4 @@ An unpublished order is still valid on the blockchain, to invalidate it use the 
 ```text
 iexec order cancel --dataset <orderHash>
 ```
+
