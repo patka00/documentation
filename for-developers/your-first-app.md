@@ -45,11 +45,11 @@ Today you can run any application as a task. This mean services are not supporte
 
 ## Application I/O
 
-This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app but you will find some
+This is an overview of an iExec application inputs and expected outputs. You probably don't have to deeply understand every part of this section to build your app, just pick what you need.
 
 ### Application args
 
-The requester specify the arguments to use with an application in the requestorder, theses arguments are forwarded as is to the application.
+The requester may specify the arguments to use with an application in the requestorder, theses arguments are forwarded as is to the application.
 
 ### Application input files
 
@@ -67,7 +67,7 @@ Use these variables in your application to find input files to process. \(first 
 
 Datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
 
-Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable.
+Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable. A single dataset file is currently supported.
 
 ### Runtime variables
 

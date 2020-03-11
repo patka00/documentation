@@ -122,6 +122,7 @@ The iExec SDK writes the minimum app configuration in `iexec.json`
 | type | type of application \("DOCKER" for docker container\) |
 | multiaddr | download URI of the application \(a public docker registry\) |
 | checksum | checksum of the app \("0x" + docker image digest\) |
+| mrenclave | app fingerprint used for confidential computing use cases \(default empty\) |
 
 {% hint style="info" %}
 The default app is the public docker image [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)
@@ -174,7 +175,7 @@ Congratulation you own RLC on Goerli testnet!
 Next step is to top up your **iExec Account** and use your credit to run your application.
 
 {% hint style="info" %}
-Your iExec account is your credit ready to use to pay for computation, it is managed by  smart contracts \(and not owned by iExec\).
+Your iExec account is your credit ready to use to pay for computation, it is managed by smart contracts \(and not owned by iExec\).
 
 When you request an execution the price for the task is locked from your account's stake then transferred to the workers contributing to the task \(read more about [Proof of Contribution](../key-concepts/proof-of-contribution.md) protocol\).
 
@@ -307,7 +308,7 @@ You can check the published apporders for your app
 iexec orderbook app <your app address> --chain goerli
 ```
 
-Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized  infrastructure.
+Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized infrastructure.
 
 * With the iexec SDK cli `iexec app run <app address> --chain goerli`
 * On iExec marketplace
@@ -326,3 +327,4 @@ Continue with these guides:
 
 * [Learn how to build your first application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
+
