@@ -105,7 +105,7 @@ Please note that the base docker image is an alpine 3.10 and the version of the 
 
 ## Build the application's docker image:
 
-Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command in the terminal:
+Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command in the terminal \(replace all occurrences of `<username>` with your Dockerhub username\):
 
 ```bash
 docker image build -t <username>/scone-hello-world-app:0.0.1 .
@@ -130,7 +130,7 @@ docker image push <username>/scone-hello-world-app:0.0.1
 
 ## Deploy & test on iExec
 
-Earlier in the documentation, we explained the steps to deploy an application on iExec. Now, we will  use these previously detailed commands, assuming you are already familiar with them. If not, please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
+Earlier in the documentation, we explained the steps to deploy an application on iExec. Now, we will use these previously detailed commands, assuming you are already familiar with them. If not, please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
 First things first, go back to the `~/iexec-projects` folder where we initialized our environment:
 
@@ -287,6 +287,17 @@ $ cat result/iexec_out/my-result.txt
 It's dark over here!
 ```
 
+Don't worry if sometimes you see this error message in the `stdout.txt` file, it shouldn't affect the execution or the result.
+
+```bash
+Traceback (most recent call last):
+  File "/signer/signer.py", line 40, in GetPublicKey
+    pubKeyObj = RSA.importKey(key.read())
+  File "/usr/lib/python3.7/site-packages/Crypto/PublicKey/RSA.py", line 785, in import_key
+    raise ValueError("RSA key format is not supported")
+ValueError: RSA key format is not supported
+```
+
 {% hint style="info" %}
 The folder "iexec\_out" contains other metadata files: **enclaveSig.iexec** - signature of the enclave used for verification, **public.key** \(of the requester\) and **volume.fspf** files are both used in the case of an encrypted result \(see this [chapter](end-to-end-encryption.md)\).
 {% endhint %}
@@ -296,3 +307,4 @@ That's it, you have successfully deployed your confidential computing app on iEx
 ## Next step?
 
 In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. Check out next chapter to see how.
+
