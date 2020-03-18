@@ -104,3 +104,4 @@ Hello, world!
 Voilà! By finishing this part, you should be able to use confidential computing on iExec like a Ninja. All parts of the workflow are protected: your execution, your dataset and your result.
 
 You can go to the advanced section and learn more about managing orders on the iExec to effectively monetize you applications and datasets.
+

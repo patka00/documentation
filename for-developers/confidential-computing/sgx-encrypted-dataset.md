@@ -11,7 +11,7 @@
 * [Build trusted applications](create-your-first-sgx-app.md) tutorial.
 {% endhint %}
 
-Trusted Execution Environments provide a huge advantage from a security perspective. They guarantee that the behavior of an execution does not change even when launched on an untrusted remote machine. The data inside this type of environments is also protected, which allows its monetization while preventing leakage.
+Trusted Execution Environments offer a huge advantage from a security perspective. They guarantee that the behavior of an execution does not change even when launched on an untrusted remote machine. The data inside this type of environments is also protected, which allows its monetization while preventing leakage.
 
 With iExec, it is possible to authorize only applications you trust to use your datasets and get paid for it. Data is encrypted using standard encryption mechanisms and the plain version never leaves your machine. The encrypted version is made available for usage and the encryption key is pushed into the [SMS](intel-sgx-technology.md#secret-management-service-sms) which runs inside a secure [enclave](intel-sgx-technology.md#enclave). After you deploy the dataset on iExec it is you, and only you, who decides which application is allowed to get the secret to decrypt it.
 
@@ -23,7 +23,7 @@ Let's see how to do all of that!
 
 ## Encrypt the dataset
 
-Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously in the [quick start](../quick-start-for-developers.md) tutorial.
+Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously, during the [quick start](../quick-start-for-developers.md) tutorial.
 
 ```bash
 cd ~/iexec-projects
@@ -175,4 +175,3 @@ Now follow the exact same steps that we saw when [building our first trusted app
 ## Next step?
 
 Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result also. See in the next chapter how to make your execution result encrypted so you are the only one who can read it.
-
