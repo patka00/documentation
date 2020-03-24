@@ -89,7 +89,11 @@ datasets
         └── hello-world.txt
 ```
 
-As you can see the command generated the file `datasets/encrypted/my-first-dataset.zip`. That file is the encrypted version of your dataset so you can push it somewhere accessible and use its URI.
+As you can see, the command generated the file `datasets/encrypted/my-first-dataset.zip`. That file is the encrypted version of your dataset, you should push it somewhere accessible because the worker will download it during the execution process. You will enter this file's URI in the `iexec.json`file \(`multiaddr` attribute\) when you will deploy your dataset. Make sure that the URI is a **DIRECT** download link \(not a link of a web page for example\).
+
+{% hint style="info" %}
+You can use Github for example to publish the file but you should add **/raw/** to the URI like this: **https://github.com/&lt;username&gt;/&lt;repo&gt;/raw/master/my-first-dataset.zip**
+{% endhint %}
 
 The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it has the key of the last encrypted dataset.
 
@@ -102,7 +106,7 @@ The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key
 
 ## Deploy the dataset
 
-Fill in the fields of the `iexec.json` file. Choose a `name` for your dataset, put the encrypted file's URI in `multiaddr`, and fill in the `checksum`.
+Fill in the fields of the `iexec.json` file. Choose a `name` for your dataset, put the encrypted file's URI in `multiaddr`\(the URI you got after publishing the file\), and add the `checksum` \(you can get it by running `sha256sum datasets/encrypted/my-first-dataset.zip`\)
 
 ```bash
 $ cat iexec.json
@@ -138,7 +142,7 @@ Check it by doing:
 iexec dataset check-secret <0x-your-dataset-address> --chain goerli
 ```
 
-We saw in this section how to encrypt a dataset with [SCONE](intel-sgx-technology.md#scone-framework) and deploy it on iExec. We learned also how to push the encryption secret to the [SMS](intel-sgx-technology.md#secret-management-service-sms). Now we need to build the application that is going to consume this dataset. To do that you can use our [template from Github](https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset).
+We saw in this section how to encrypt a dataset with [SCONE](intel-sgx-technology.md#scone-framework) and deploy it on iExec. In addition, we learned how to push the encryption secret to the [SMS](intel-sgx-technology.md#secret-management-service-sms). Now we need to build the application that is going to consume this dataset. To do that you can use our [template from Github](https://github.com/iExecBlockchainComputing/scone-hello-world-app-with-dataset).
 
 Make sure you are in `~/iexec-projects` and clone the repository:
 
@@ -172,6 +176,9 @@ Note that the result files should be written in the **/scone** folder.
 
 Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md#prepare-the-application) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
 
+At the end, when you download the result, unlike the last tutorial, you won't see any relevant logs in `stdout.txt` but you will find the content of the plain dataset inside `iexec_out/result.zip/my-result.txt`.
+
 ## Next step?
 
-Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result also. See in the next chapter how to make your execution result encrypted so you are the only one who can read it.
+Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result too. See in the next chapter how to make your execution result encrypted so that you are the only one who can read it.
+
