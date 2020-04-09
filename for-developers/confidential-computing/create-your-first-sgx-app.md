@@ -130,7 +130,7 @@ docker image push <username>/scone-hello-world-app:0.0.1
 
 ## Deploy & test on iExec
 
-Earlier in the documentation, we explained the steps to deploy an application on iExec. Now, we will  use these previously detailed commands, assuming you are already familiar with them. If not, please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
+Earlier in the documentation, we explained the steps to deploy an application on iExec. Now, we will use these previously detailed commands, assuming you are already familiar with them. If not, please refer to the [quick start](../quick-start-for-developers.md) to get a deeper understanding of those steps.
 
 First things first, go back to the `~/iexec-projects` folder where we initialized our environment:
 
@@ -296,3 +296,4 @@ That's it, you have successfully deployed your confidential computing app on iEx
 ## Next step?
 
 In this tutorial you learned how to leverage your application with the power of Trusted Execution Environments using iExec. But according to your use case, you may need to use some confidential data to get the full potential of the **Confidential Computing** paradigm. Check out next chapter to see how.
+

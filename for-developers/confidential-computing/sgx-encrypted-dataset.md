@@ -175,3 +175,4 @@ Now follow the exact same steps that we saw when [building our first trusted app
 ## Next step?
 
 Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result also. See in the next chapter how to make your execution result encrypted so you are the only one who can read it.
+
