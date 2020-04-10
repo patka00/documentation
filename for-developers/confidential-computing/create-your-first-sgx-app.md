@@ -105,7 +105,7 @@ Please note that the base docker image is an alpine 3.10 and the version of the 
 
 ## Build the application's docker image:
 
-Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command in the terminal:
+Once the `Dockerfile` is ready we proceed to building the image. Make sure you are inside the right directory and run the following command in the terminal \(replace all occurrences of `<username>` with your Dockerhub username\):
 
 ```bash
 docker image build -t <username>/scone-hello-world-app:0.0.1 .
@@ -285,6 +285,17 @@ $ grep -n "Hello from inside the enclave!" result/stdout.txt
 
 $ cat result/iexec_out/my-result.txt
 It's dark over here!
+```
+
+Don't worry if sometimes you see this error message in the `stdout.txt` file, it shouldn't affect the execution or the result.
+
+```bash
+Traceback (most recent call last):
+  File "/signer/signer.py", line 40, in GetPublicKey
+    pubKeyObj = RSA.importKey(key.read())
+  File "/usr/lib/python3.7/site-packages/Crypto/PublicKey/RSA.py", line 785, in import_key
+    raise ValueError("RSA key format is not supported")
+ValueError: RSA key format is not supported
 ```
 
 {% hint style="info" %}
