@@ -181,4 +181,3 @@ At the end, when you download the result, unlike the last tutorial, you won't se
 ## Next step?
 
 Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result too. See in the next chapter how to make your execution result encrypted so that you are the only one who can read it.
-
