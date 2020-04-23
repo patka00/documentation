@@ -212,6 +212,8 @@ iexec app run --params "beef" --watch --chain goerli
 Useful options:
 
 * `--params <params>`  specify the app execution params
+  * `--params` accepts a json configuration for the iExec worker, you will learn more in a next chapter. 
+  * `--params "arg1 arg2"` is an alias for `--params '{"iexec_args":"arg1 arg2"}'`
 * `--watch`  watch execution status changes
 
 Discover more option with `iexec app run --help`

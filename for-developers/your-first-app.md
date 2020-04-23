@@ -387,6 +387,25 @@ Run your application on iExec
 iexec app run --watch --chain goerli
 ```
 
+{% hint style="info" %}
+You can pass params to the app with `--params <params>` option
+
+**app arguments:** 
+
+with `--params '{"iexec_args":"dostuff --with-option"}'` the app will receive `["dostuff", "--with-option"]` as process args.
+
+**app input files:** 
+
+with `-params '{"iexec_input_files":["https://example.com/file-A.txt","https://example.com/file-B.zip"]}'`  the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
+
+* `file-A.txt` as`IEXEC_INPUT_FILE_NAME_1`
+* `file-B.zip` as`IEXEC_INPUT_FILE_NAME_2`
+
+**use both:** 
+
+`--params '{"iexec_args":"dostuff --with-option","iexec_input_files":["https://example.com/my-file.zip"]}'`
+{% endhint %}
+
 Once the run is completed copy the taskid from `iexec app run` output to download and check the result
 
 ```text
