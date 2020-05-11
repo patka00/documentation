@@ -26,7 +26,7 @@ At iExec we do not develop Intel® SGX frameworks, but rather we integrate state
 
 ### SCONE Framework
 
-Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This can be limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. To resolve this, and reduce the burden of porting your application to Intel® SGX,  we can use use the [SCONE](https://scontain.com/) framework.
+Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This can be limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. To resolve this, and reduce the burden of porting your application to Intel® SGX, we can use use the [SCONE](https://scontain.com/) framework.
 
 At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You need just to prepare your application's docker image based on one of the [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of images provided by SCONE.
 

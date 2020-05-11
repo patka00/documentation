@@ -29,14 +29,16 @@ cd scone-hello-world-app
 
 Our application's source code is a python script that echos "hello world" to illustrate a simple run inside an enclave.
 
-{% code title="src/app.py" %}
+{% code title="app.py" %}
 ```python
-# print to stdout
-print("Hello from inside the enclave!")
+with open("/scone/iexec_out/my-result.txt", "w+") as fout:
+    message = "Hello from inside the enclave, it's dark over here!"
 
-# produce a result file in /scone
-with open("/scone/my-result.txt", "w+") as result_file:
-    result_file.write("It's dark over here!")
+    # print to stdout
+    print(message)
+
+    # write result file in /scone/iexec_out
+    fout.write(message)
 ```
 {% endcode %}
 
@@ -50,17 +52,10 @@ If you `tree` the content of the directory you will find this structure:
 
 ```bash
 .
+├── app.py
 ├── Dockerfile
-├── src
-│   └── app.py
-└── utils
-    ├── protect-fs.sh
-    └── signer.py
+└── protect-fs.sh
 ```
-
-{% hint style="warning" %}
-The file **utils/signer.py** is just a temporary workaround and it will be removed in the next release. But, for now, it is mandatory that's why we copy it inside the Dockerfile. It is called during the execution time by the worker.
-{% endhint %}
 
 The `Dockerfile` is a ready-to-go template where you just need to add your system packages and application's dependencies in the dedicated block.
 
@@ -76,7 +71,7 @@ RUN apk add --no-cache bash build-base gcc libgcc
 RUN SCONE_MODE=sim pip3 install attrdict python-gnupg web3
 
 ### copy your code inside the image
-COPY ./src /app
+COPY app.py /app.py
 
 ################################
 ...
@@ -89,7 +84,7 @@ That should be enough for this tutorial, but if you have other specifications yo
 
 The base docker image `iexechub/sconecuratedimages-iexec:python-3.7.3-alpine-3.10` contains a python interpreter that runs inside an enclave. When started, it will read the application's code and execute it. The question here is: **how would the enclave verify the integrity of the code?**
 
-Well that's where the file `utils/protect-fs.sh` comes in place. If you inspect the content of this script, you can see that we use the famous [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE. We use SCONE's [CLI](https://sconedocs.github.io/SCONE_CLI/) to authenticate the file system directories that can be used by the application \(/bin, /lib...\) as well as the code itself, and take a snapshot of their state. This snapshot will be later shared with the enclave \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it is a possible attack.
+Well that's where the file `protect-fs.sh` comes in place. If you inspect the content of this script, you can see that we use the famous [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE. We use SCONE's [CLI](https://sconedocs.github.io/SCONE_CLI/) to authenticate the file system directories that can be used by the application \(/bin, /lib...\) as well as the code itself, and take a snapshot of their state. This snapshot will be later shared with the enclave \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it is a possible attack.
 
 {% hint style="warning" %}
 It is important to carefully choose files to authenticate. It can be tricky to consider including enough files to protect the application without being more general than we should. For example if we authenticate the entire /etc directory the enclave will fail to start because the content of /etc/hosts is modified at runtime by Docker.

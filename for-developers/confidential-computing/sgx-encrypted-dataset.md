@@ -92,7 +92,7 @@ datasets
 As you can see, the command generated the file `datasets/encrypted/my-first-dataset.zip`. That file is the encrypted version of your dataset, you should push it somewhere accessible because the worker will download it during the execution process. You will enter this file's URI in the `iexec.json`file \(`multiaddr` attribute\) when you will deploy your dataset. Make sure that the URI is a **DIRECT** download link \(not a link of a web page for example\).
 
 {% hint style="info" %}
-You can use Github for example to publish the file but you should add **/raw/** to the URI like this: **https://github.com/&lt;username&gt;/&lt;repo&gt;/raw/master/my-first-dataset.zip**
+You can use Github for example to publish the file but you should add **/raw/** to the URI like this: [https://github.com/&lt;username&gt;/&lt;repo&gt;/raw/master/my-first-dataset.zip](https://github.com/<username>/<repo>/raw/master/my-first-dataset.zip)
 {% endhint %}
 
 The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it has the key of the last encrypted dataset.
@@ -154,19 +154,13 @@ cd ~/iexec-projects && \
 
 This python application will read your dataset and write its content to a result file:
 
-{% code title="src/app.py" %}
+{% code title="app.py" %}
 ```python
-def read_file(filepath):
-    with open(filepath, "r") as f:
-        return f.read()
-
-def write_file(path, data):
-    with open(path, "w+") as f:
-        f.write(data)
-
-if __name__ == "__main__":
-    data = read_file("/iexec_in/hello-world.txt")
-    write_file("/scone/my-result.txt", data)
+with open("/iexec_in/hello-world.txt") as fin:
+    with open("/scone/iexec_out/my-result.txt", "w+") as fout:
+        data = fin.read()
+        print(data)
+        fout.write(data)
 ```
 {% endcode %}
 
@@ -181,3 +175,4 @@ At the end, when you download the result, unlike the last tutorial, you won't se
 ## Next step?
 
 Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result too. See in the next chapter how to make your execution result encrypted so that you are the only one who can read it.
+
