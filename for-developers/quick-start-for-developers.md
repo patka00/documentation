@@ -87,6 +87,8 @@ iexec wallet show --chain goerli
 
 For now your wallet is empty.
 
+### Get some test ETH
+
 Go to [Goerli Faucet](https://goerli-faucet.slock.it/) and paste your wallet address to ask some test ETH.
 
 Check your wallet to see if you received the Goerli ETH funds in your wallet:
@@ -99,6 +101,22 @@ iexec wallet show --chain goerli
 The ETH in your wallet will allow you to pay for Ethereum blockchain transaction fees. Every time you write on the blockchain \(ie: you make a transaction\) a small amount of ETH is taken from your wallet to reward the people operating the blockchain, this mechanism protects public blockchain against spam.
 
 [Read more about transaction fees](https://bitfalls.com/2017/12/05/ethereum-gas-and-transaction-fees-explained/)
+{% endhint %}
+
+### Initialize your remote storage
+
+iExec enable running apps producing output files, you will need a place for storing your apps outputs.
+
+Initialize your default remote storage:
+
+```text
+iexec storage init --chain goerli
+```
+
+{% hint style="info" %}
+iExec provides a default storage solution based on [IPFS](https://ipfs.io/). This solution ensure your result to be publicly accessible through a decentralized network.
+
+As you may don't want all your business to be exposed to the world, iExec enables both optional **RSA result encryption** and pushing results to **private storage providers**.
 {% endhint %}
 
 ## Deploy your app on iExec
