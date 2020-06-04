@@ -9,7 +9,7 @@ description: >-
 {% hint style="success" %}
 **Prerequisite**
 
-* [Nodejs](https://nodejs.org) 8.0.0 or higher
+* [Nodejs](https://nodejs.org) 10.12.0 or higher
 {% endhint %}
 
 iExec enables decentralized docker app deployment and monetization on the blockchain.
@@ -221,7 +221,7 @@ iexec wallet show --chain goerli
 Your application is deployed, you have some RLC in your iExec Account, everything is now ready to run your application!
 
 ```text
-iexec app run --params "beef" --watch --chain goerli
+iexec app run --args "beef" --watch --chain goerli
 ```
 
 {% hint style="info" %}
@@ -229,9 +229,7 @@ iexec app run --params "beef" --watch --chain goerli
 
 Useful options:
 
-* `--params <params>`  specify the app execution params
-  * `--params` accepts a json configuration for the iExec worker, you will learn more in a next chapter. 
-  * `--params "arg1 arg2"` is an alias for `--params '{"iexec_args":"arg1 arg2"}'`
+* `--args <args>`  specify the app execution arguments
 * `--watch`  watch execution status changes
 
 Discover more option with `iexec app run --help`
@@ -284,41 +282,17 @@ iExec uses orders signed by the resource owner's wallet to ensure resources gove
 The conditions to use an app are defined in the **apporder**.
 {% endhint %}
 
-Initialize a new apporder
+Publish a new apporder for your application.
 
 ```text
-iexec order init --app --chain goerli
+iexec app publish --chain goerli
 ```
 
-The SDK prepares the default apporder configuration in `iexec.json`.
-
-| **key** | **description** |
-| :--- | :--- |
-| app | ethereum address of the deployed app |
-| appprice | application price per run |
-| volume | number of execution allowed each execution decrease the remaining volume |
-
 {% hint style="info" %}
+`iexec app publish` options allows to define custom access rules to the app (run `iexec app publish --help` to discover all the possibilities)
 You will learn more about orders management later, keep the apporder default values for now.
 {% endhint %}
 
-Sign the apporder with your wallet to make it valid on the blockchain
-
-```text
-iexec order sign --app --chain goerli
-```
-
-{% hint style="success" %}
-The signed apporder is stored locally in `orders.json` .
-
-Orders remains private until their publication on the iExec Marketplace. Once published, anyone matching the order condition can execute an application!
-{% endhint %}
-
-Publish the apporder on iExec marketplace to share it with others
-
-```text
-iexec order publish --app --chain goerli
-```
 
 Your application is now available for everyone on iExec marketplace on the conditions defined in apporder.
 
