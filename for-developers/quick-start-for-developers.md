@@ -105,7 +105,7 @@ The ETH in your wallet will allow you to pay for Ethereum blockchain transaction
 
 ### Initialize your remote storage
 
-iExec enable running apps producing output files, you will need a place for storing your apps outputs.
+iExec enables running apps producing output files, you will need a place for storing your apps outputs.
 
 Initialize your default remote storage:
 
@@ -114,7 +114,7 @@ iexec storage init --chain goerli
 ```
 
 {% hint style="info" %}
-iExec provides a default storage solution based on [IPFS](https://ipfs.io/). This solution ensure your result to be publicly accessible through a decentralized network.
+iExec provides a default storage solution based on [IPFS](https://ipfs.io/). This solution ensures your result to be publicly accessible through a decentralized network.
 
 As you may don't want all your business to be exposed to the world, iExec enables both optional **RSA result encryption** and pushing results to **private storage providers**.
 {% endhint %}
@@ -321,4 +321,3 @@ Continue with these guides:
 
 * [Learn how to build your first application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
-
