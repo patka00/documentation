@@ -6,13 +6,15 @@
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 8.0.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
-* [Quick start](../quick-start-for-developers.md) tutorial.
+* [Quickstart](../quick-start-for-developers.md) tutorial.
 * Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](intel-sgx-technology.md#scone-framework) framework.
 {% endhint %}
 
-After understanding the fundamentals of Confidential Computing and explaining the technologies behind it, it is time to roll up our sleeves and get hands-on with [enclaves](intel-sgx-technology.md#enclave).
+{% hint style="warning" %}
+Please make sure you have already checked the [quickstart](../your-first-app.md) tutorial before doing the following.
+{% endhint %}
 
-In this tutorial, we will be using Python as the programming language, but support of other languages is coming soon. Three main sections are presented:
+After understanding the fundamentals of Confidential Computing and explaining the technologies behind it, it is time to roll up our sleeves and get hands-on with [enclaves](intel-sgx-technology.md#enclave). Three main sections are presented:
 
 * [Prepare and "sconify" an application.](create-your-first-sgx-app.md#prepare-the-application)
 * [Build your application.](create-your-first-sgx-app.md#build-the-application)
