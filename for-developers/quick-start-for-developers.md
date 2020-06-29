@@ -289,10 +289,8 @@ iexec app publish --chain goerli
 ```
 
 {% hint style="info" %}
-`iexec app publish` options allows to define custom access rules to the app (run `iexec app publish --help` to discover all the possibilities)
-You will learn more about orders management later, keep the apporder default values for now.
+`iexec app publish` options allows to define custom access rules to the app \(run `iexec app publish --help` to discover all the possibilities\) You will learn more about orders management later, keep the apporder default values for now.
 {% endhint %}
-
 
 Your application is now available for everyone on iExec marketplace on the conditions defined in apporder.
 
@@ -321,3 +319,4 @@ Continue with these guides:
 
 * [Learn how to build your first application running on iExec](your-first-app.md)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
+
