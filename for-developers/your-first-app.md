@@ -139,7 +139,7 @@ Following examples only feature Javascript and Python use cases for simplicity c
 {% tabs %}
 {% tab title="JavaScript" %}
 {% code title="src/app.js" %}
-```shell
+```javascript
 const fs = require('fs');
 
 const iexec_in = process.env.IEXEC_IN
@@ -173,7 +173,7 @@ fs.writeFile(iexec_out + "/computed.json", JSON.stringify(computedJsonObj), {fla
 
 {% tab title="Python" %}
 {% code title="src/app.py" %}
-```shell
+```python
 import os
 import sys
 import json
