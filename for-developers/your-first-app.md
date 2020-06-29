@@ -398,7 +398,7 @@ With `--args "dostuff --with-option"` the app will receive `["dostuff", "--with-
 
 You can pass input files to the app using `--input-files <list of URL>` option.
 
-With `--input-files https://example.com/file-A.txt,https://example.com/file-B.zip`  the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
+With `--input-files https://example.com/file-A.txt,https://example.com/file-B.zip` the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
 
 * `file-A.txt` as`IEXEC_INPUT_FILE_NAME_1`
 * `file-B.zip` as`IEXEC_INPUT_FILE_NAME_2`
