@@ -14,7 +14,9 @@
 Please make sure you have already checked the [quickstart](../your-first-app.md) tutorial before doing the following.
 {% endhint %}
 
-After understanding the fundamentals of Confidential Computing and explaining the technologies behind it, it is time to roll up our sleeves and get hands-on with [enclaves](intel-sgx-technology.md#enclave). Three main sections are presented:
+After understanding the fundamentals of Confidential Computing and explaining the technologies behind it, it is time to roll up our sleeves and get hands-on with [enclaves](intel-sgx-technology.md#enclave). In this guide, we will focus on protecting an application - that is already compatible with the iExec platform - using SGX, and without changing the source code.
+
+Three main sections are presented:
 
 * [Prepare and "sconify" an application.](create-your-first-sgx-app.md#prepare-the-application)
 * [Build your application.](create-your-first-sgx-app.md#build-the-application)
