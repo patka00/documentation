@@ -115,6 +115,7 @@ result.zip
 Your application must always create a `computed.json` file in `/iexec_out` as a proof of execution which could looks like `{ "deterministic-output-path" : "/iexec_out/result.txt" }`
 
 The `computed.json` file is compared across replicated tasks in the [Proof of Contribution protocol](../key-concepts/proof-of-contribution.md) to achieve a consensus on workers.
+
 {% endhint %}
 
 ## Build your app
@@ -198,6 +199,7 @@ with open(iexec_out + '/computed.json', 'w+') as f:
 {% endtab %}
 {% endtabs %}
 
+
 ### Dockerize your app
 
 **Copy the following content** in `Dockerfile` .
@@ -205,7 +207,7 @@ with open(iexec_out + '/computed.json', 'w+') as f:
 {% tabs %}
 {% tab title="JavaScript" %}
 {% code title="Dockerfile" %}
-```text
+```shell
 FROM node:8.9.4
 ### install your dependencies if you have some
 RUN mkdir /app && cd /app && npm install figlet
@@ -217,7 +219,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 {% code title="Dockerfile" %}
-```text
+```shell
 FROM python:3.7.3-alpine3.10
 ### install python dependencies if you have some
 RUN pip3 install pyfiglet
@@ -412,7 +414,7 @@ With `--args "dostuff --with-option"` the app will receive `["dostuff", "--with-
 
 You can pass input files to the app using `--input-files <list of URL>` option.
 
-With `--input-files https://example.com/file-A.txt,https://example.com/file-B.zip` the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
+With `--input-files https://example.com/file-A.txt,https://example.com/file-B.zip`  the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
 
 * `file-A.txt` as`IEXEC_INPUT_FILE_NAME_1`
 * `file-B.zip` as`IEXEC_INPUT_FILE_NAME_2`
@@ -440,7 +442,7 @@ iexec app publish --chain goerli
 In this tutorial you learnt about the key concepts for building an app on iExec:
 
 * iExec app inputs and outputs
-* iExec app must produce a `computed.json` file \(required for the proof of execution\)
+* iExec app must produce a `computed.json` file (required for the proof of execution)
 * using docker to package your app with all its dependencies
 * testing an iExec app locally
 * publishing on dockerhub
