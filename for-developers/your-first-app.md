@@ -139,7 +139,7 @@ Following examples only feature Javascript and Python use cases for simplicity c
 {% tabs %}
 {% tab title="JavaScript" %}
 {% code title="src/app.js" %}
-```shell script
+```shell
 const fs = require('fs');
 
 const iexec_in = process.env.IEXEC_IN
@@ -173,7 +173,7 @@ fs.writeFile(iexec_out + "/computed.json", JSON.stringify(computedJsonObj), {fla
 
 {% tab title="Python" %}
 {% code title="src/app.py" %}
-```shell script
+```shell
 import os
 import sys
 import json
@@ -207,7 +207,7 @@ with open(iexec_out + '/computed.json', 'w+') as f:
 {% tabs %}
 {% tab title="JavaScript" %}
 {% code title="Dockerfile" %}
-```shell script
+```shell
 FROM node:8.9.4
 ### install your dependencies if you have some
 RUN mkdir /app && cd /app && npm install figlet
@@ -219,7 +219,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 {% code title="Dockerfile" %}
-```shell script
+```shell
 FROM python:3.7.3-alpine3.10
 ### install python dependencies if you have some
 RUN pip3 install pyfiglet
@@ -248,7 +248,7 @@ Congratulation you built your first docker image for iExec!
 
 Prepare local volumes for binding.
 
-```shell script
+```text
 mkdir -p /tmp/iexec_in
 mkdir -p /tmp/iexec_out
 ```
@@ -279,7 +279,7 @@ find $IEXEC_OUT
 
 Run it locally
 
-```shell script
+```text
 ./run arg1 arg2 arg3
 ```
 
