@@ -112,7 +112,7 @@ result.zip
 * If your app produce output files, you must copy them in `/iexec_out/` .
 
 {% hint style="warning" %}
-Your application must always create a `computed.json` file in `/iexec_out` as a proof of execution which could looks like `{ "deterministic-output-path" : "/iexec_out/result.txt" }`
+Your application must always create a `computed.json` file in `/iexec_out` as a proof of execution which could look like `{ "deterministic-output-path" : "/iexec_out/result.txt" }`
 
 The `computed.json` file is compared across replicated tasks in the [Proof of Contribution protocol](../key-concepts/proof-of-contribution.md) to achieve a consensus on workers.
 {% endhint %}
