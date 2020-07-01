@@ -60,7 +60,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 {% code title="Dockefile" %}
-```text
+```bash
 FROM sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0
 
 ### install python3 dependencies you need

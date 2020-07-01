@@ -43,7 +43,7 @@ Now, push the public key to the SMS:
 iexec result push-encryption-key --chain goerli
 ```
 
-And check that everything is good with:
+And check it using:
 
 ```bash
 iexec result check-encryption-key --chain goerli
