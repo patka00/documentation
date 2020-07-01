@@ -4,19 +4,21 @@
 **Prerequisities**
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
-* [Nodejs](https://nodejs.org) 8.0.0 or higher.
+* [Nodejs](https://nodejs.org) 10.12.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
-* [Quick start](../quick-start-for-developers.md) tutorial.
 * Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](intel-sgx-technology.md#scone-framework) framework.
-* [Build trusted applications](create-your-first-sgx-app.md) tutorial.
 {% endhint %}
 
-Trusted Execution Environments offer a huge advantage from a security perspective. They guarantee that the behavior of an execution does not change even when launched on an untrusted remote machine. The data inside this type of environments is also protected, which allows its monetization while preventing leakage.
+{% hint style="warning" %}
+Please make sure you have already checked the [Quickstart](../your-first-app.md), [Your first application](../your-first-app.md) and [Build trusted applications](create-your-first-sgx-app.md) tutorials before learning how to manage confidential datasets.
+{% endhint %}
+
+Trusted Execution Environments offer a huge advantage from a security perspective. They guarantee that the behavior of execution does not change even when launched on an untrusted remote machine. The data inside this type of environment is also protected, which allows its monetization while preventing leakage.
 
 With iExec, it is possible to authorize only applications you trust to use your datasets and get paid for it. Data is encrypted using standard encryption mechanisms and the plain version never leaves your machine. The encrypted version is made available for usage and the encryption key is pushed into the [SMS](intel-sgx-technology.md#secret-management-service-sms) which runs inside a secure [enclave](intel-sgx-technology.md#enclave). After you deploy the dataset on iExec it is you, and only you, who decides which application is allowed to get the secret to decrypt it.
 
 {% hint style="warning" %}
-Datasets are only decrypted inside authorized [enclaves](intel-sgx-technology.md#enclave) and never leave them. Same thing for secrets.
+Datasets are only decrypted inside authorized [enclaves](intel-sgx-technology.md#enclave) and never leave them. The same thing applies to secrets.
 {% endhint %}
 
 Let's see how to do all of that!
@@ -39,28 +41,21 @@ This command will create the folders `datasets/encrypted`, `datasets/original` a
 
 ```bash
 .
-├── chain.json
-│
 ├── datasets
 │   ├── encrypted
 │   └── original
-│
-├── deployed.json
-├── iexec.json
-└── scone-hello-world-app
-│   └── ...
-│
 └── .secrets
-    └── datasets
+│    └── datasets
+...
 ```
 
-First create your dataset folder:
+First, create your dataset folder:
 
 ```bash
 mkdir datasets/original/my-first-dataset
 ```
 
-We will create a dummy file that has `"Hello, world!"` as a content inside `datasets/original/my-first-dataset`. Alternatively, you can put your own dataset file.
+We will create a dummy file that has `"Hello, world!"` as content inside `datasets/original/my-first-dataset`. Alternatively, you can put your own dataset file.
 
 ```bash
 echo "Hello, world!" > datasets/original/my-first-dataset/hello-world.txt
@@ -89,13 +84,13 @@ datasets
         └── hello-world.txt
 ```
 
-As you can see, the command generated the file `datasets/encrypted/my-first-dataset.zip`. That file is the encrypted version of your dataset, you should push it somewhere accessible because the worker will download it during the execution process. You will enter this file's URI in the `iexec.json`file \(`multiaddr` attribute\) when you will deploy your dataset. Make sure that the URI is a **DIRECT** download link \(not a link of a web page for example\).
+As you can see, the command generated the file `datasets/encrypted/my-first-dataset.zip`. That file is the encrypted version of your dataset, you should push it somewhere accessible because the worker will download it during the execution process. You will enter this file's URI in the `iexec.json`file \(`multiaddr` attribute\) when you will deploy your dataset. Make sure that the URI is a **DIRECT** download link \(not a link to a web page for example\).
 
 {% hint style="info" %}
 You can use Github for example to publish the file but you should add **/raw/** to the URI like this: [https://github.com/&lt;username&gt;/&lt;repo&gt;/raw/master/my-first-dataset.zip](https://github.com/<username>/<repo>/raw/master/my-first-dataset.zip)
 {% endhint %}
 
-The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it has the key of the last encrypted dataset.
+The file `.secrets/datasets/my-first-dataset.scone.secret` is the encryption key, make sure to back it up securely. The file `.secrets/datasets/dataset.secret` is just an "alias" in the sense that it is the key of the last encrypted dataset.
 
 ```bash
 .secrets
@@ -130,7 +125,7 @@ To deploy your dataset run:
 iexec dataset deploy --chain goerli
 ```
 
-You will get a hexadecimal address for you deployed dataset. Use that address to push the encryption key to the [SMS](intel-sgx-technology.md#secret-management-service-sms) so it is available for authorized applications.
+You will get a hexadecimal address for your deployed dataset. Use that address to push the encryption key to the [SMS](intel-sgx-technology.md#secret-management-service-sms) so it is available for authorized applications.
 
 ```bash
 iexec dataset push-secret <0x-your-dataset-address> --chain goerli
