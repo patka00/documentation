@@ -59,6 +59,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 {% endtab %}
 
 {% tab title="Python" %}
+{% code title="Dockefile" %}
 ```
 FROM sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0
 
@@ -73,6 +74,7 @@ RUN sh /build/protect-fs.sh /app
 
 ENTRYPOINT ["python", "/app/app.py"]
 ```
+{% endcode %}
 {% endtab %}
 {% endtabs %}
 
