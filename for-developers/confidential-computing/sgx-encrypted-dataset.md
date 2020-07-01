@@ -220,7 +220,6 @@ with open(iexec_out + '/result.txt', 'w+') as fout:
 # Declare everything is computed
 with open(iexec_out + '/computed.json', 'w+') as f:
     json.dump({ "deterministic-output-path" : iexec_out + '/result.txt' }, f)
-
 ```
 {% endcode %}
 {% endtab %}
@@ -342,7 +341,6 @@ printf "%s\n" "\"app\": { " " \"owner\" : ... " " \"name\": ... " "  ..." " \"mr
 printf "#####################################################################\n"
 printf "Hint: Replace 'mrenclave' before doing 'iexec app deploy' step.\n"
 printf "\n\n"
-
 ```
 {% endcode %}
 
@@ -369,7 +367,6 @@ iexec.json:
 }
 #####################################################################
 Hint: Replace 'mrenclave' before doing 'iexec app deploy' step.
-
 ```
 
 That alphanumeric string is the [fingerprint](intel-sgx-technology.md#applications-fingerprint) of your application. It allows the verification of its integrity.

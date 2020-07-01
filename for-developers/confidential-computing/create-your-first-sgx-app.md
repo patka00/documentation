@@ -60,7 +60,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 {% code title="Dockefile" %}
-```
+```text
 FROM sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0
 
 ### install python3 dependencies you need
@@ -151,7 +151,6 @@ printf "%s\n" "\"app\": { " " \"owner\" : ... " " \"name\": ... " "  ..." " \"mr
 printf "#####################################################################\n"
 printf "Hint: Replace 'mrenclave' before doing 'iexec app deploy' step.\n"
 printf "\n\n"
-
 ```
 {% endcode %}
 
@@ -200,7 +199,6 @@ iexec.json:
 }
 #####################################################################
 Hint: Replace 'mrenclave' before doing 'iexec app deploy' step.
-
 ```
 
 That alphanumeric string is the [fingerprint](intel-sgx-technology.md#applications-fingerprint) of your application. It allows the verification of its integrity.
