@@ -66,10 +66,11 @@ Wait for the task to be `COMPLETED` and download the result:
 iexec task show <0x-your-task-id> --download --chain goerli
 ```
 
-If you extract the the obtained zip and try to read the content of the file `iexec_out/result.zip.aes` you will find it encrypted:
+If you extract the obtained zip and try to read the content of the file `iexec_out/result.zip.aes` you will find it encrypted:
 
 ```bash
-mkdir /tmp/trash && unzip <0x-your-task-id.zip> -d /tmp/trash && \
+mkdir /tmp/trash && \
+    unzip <0x-your-task-id>.zip -d /tmp/trash && \
     cat /tmp/trash/iexec_out/result.zip.aes
 ```
 
@@ -87,7 +88,7 @@ Now you should decrypt the result by running:
 iexec result decrypt <0x-your-task-id.zip>
 ```
 
-A new zip file appears in the current folder under the name `results.zip`. Eventually unzip it:
+A new zip file appears in the current folder under the name `results.zip`. Eventually, unzip it:
 
 ```bash
 unzip results.zip -d my-decrypted-result
@@ -100,7 +101,7 @@ $ cat my-decrypted-result/my-result.txt
 Hello, world!
 ```
 
-Voilà! By finishing this part, you should be able to use confidential computing on iExec like a Ninja. All parts of the workflow are protected: your execution, your dataset and your result.
+Voilà! By finishing this part, you should be able to use confidential computing on iExec like a Ninja. All parts of the workflow are protected: the execution, the dataset, and the result.
 
-You can go to the advanced section and learn more about managing orders on the iExec to effectively monetize you applications and datasets.
+You can go to the advanced section and learn more about managing orders on the iExec to effectively monetize your applications and datasets.
 
