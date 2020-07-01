@@ -56,7 +56,6 @@ iexec app run <0x-your-app-address> \
     --chain goerli                  \
     --tag tee                       \
     --encrypt-result \
-    --beneficiary <0x-your-wallet-address> \
     --watch
 ```
 
