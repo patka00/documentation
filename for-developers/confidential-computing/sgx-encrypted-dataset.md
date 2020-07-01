@@ -165,8 +165,7 @@ var figlet = require('figlet');
 
 const iexecOut = process.env.IEXEC_OUT;
 const iexecIn = process.env.IEXEC_IN;
-const datasetFilename = process.env.IEXEC_DATASET_FILENAME
-const datasetFilepath = iexecIn + "/" + datasetFilename;
+const datasetFilepath = iexecIn + "/" + process.env.IEXEC_DATASET_FILENAME;
 
 var text = "";
 
