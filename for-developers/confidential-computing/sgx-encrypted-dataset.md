@@ -163,19 +163,21 @@ In `app.js` \(or `app.py`\), we read the content of the dataset and write it in 
 const fs = require('fs');
 var figlet = require('figlet');
 
-const iexec_out = process.env.IEXEC_OUT;
-const iexec_in = process.env.IEXEC_IN;
+const iexecOut = process.env.IEXEC_OUT;
+const iexecIn = process.env.IEXEC_IN;
+const datasetFilename = process.env.IEXEC_DATASET_FILENAME
+const datasetFilepath = iexecIn + "/" + datasetFilename;
 
 var text = "";
 
 // Eventually use some confidential assets
-if (fs.existsSync(iexec_in + '/dataset.txt')) {
-  var dataset = fs.readFileSync(iexec_in + '/dataset.txt');
+if (fs.existsSync(datasetFilepath)) {
+  var dataset = fs.readFileSync(datasetFilepath);
   text = figlet.textSync(dataset);
 }
 
 // Append some results
-fs.writeFileSync(iexec_out + "/result.txt", text, {flag: 'w+'}, (err) => {
+fs.writeFileSync(iexecOut + "/result.txt", text, {flag: 'w+'}, (err) => {
   if(err) {
       throw err;
   }
@@ -183,8 +185,8 @@ fs.writeFileSync(iexec_out + "/result.txt", text, {flag: 'w+'}, (err) => {
 console.log(text);
 
 // Declare everything is computed
-var computedJsonObj = { "deterministic-output-path" : iexec_out + "/result.txt" }
-fs.writeFile(iexec_out + "/computed.json", JSON.stringify(computedJsonObj), {flag: 'w+'}, (err) => {
+var computedJsonObj = { "deterministic-output-path" : iexecOut + "/result.txt" }
+fs.writeFile(iexecOut + "/computed.json", JSON.stringify(computedJsonObj), {flag: 'w+'}, (err) => {
   if(err) {
       throw err;
   }
@@ -204,12 +206,13 @@ from pyfiglet import Figlet
 
 iexec_out = os.environ['IEXEC_OUT']
 iexec_in = os.environ['IEXEC_IN']
+dataset_filepath = iexec_in + '/' + os.environ['IEXEC_DATASET_FILENAME']
 
 text = ""
 
 # Eventually use some confidential assets
-if os.path.exists(iexec_in + '/dataset.txt'):
-    with open(iexec_in + '/dataset.txt', 'r') as dataset:
+if os.path.exists(dataset_filepath):
+    with open(dataset_filepath, 'r') as dataset:
         text = Figlet().renderText(dataset.read())
         print(text)
 
