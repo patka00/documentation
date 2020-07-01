@@ -29,7 +29,7 @@ touch protect-fs.sh
 
 In the folder `src/` create the file `app.js` \(or `app.py` if you want to use Python\) then copy [this](../your-first-app.md#write-the-app-shell-script-example) code inside.
 
-As we mentioned earlier, the advantage of using **SCONE** is the ability to make the application **Intel SGX-enabled** without changing the source code. The only thing we are going to modify is the `Dockerfile`. First, we need to change the base image from the official `node (or python)` to the one provided by SCONE: `sconecuratedimages/apps:node-8.9.4-alpine-scone3.0`or `sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0`. Those base docker images contain a `nodejs/python` interpreters that run inside enclaves.
+As we mentioned earlier, the advantage of using **SCONE** is the ability to make the application **Intel® SGX-enabled** without changing the source code. The only thing we are going to modify is the `Dockerfile`. First, we need to change the base image from the official `node` \(or `python`\) to the one provided by SCONE: `sconecuratedimages/apps:node-8.9.4-alpine-scone3.0`or `sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0`. Those base docker images contain a `nodejs` / `python` interpreters that run inside enclaves.
 
 {% tabs %}
 {% tab title="Javascript" %}
