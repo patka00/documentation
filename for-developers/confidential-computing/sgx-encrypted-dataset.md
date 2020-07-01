@@ -25,7 +25,7 @@ Let's see how to do all of that!
 
 ## Encrypt the dataset
 
-Before starting let's make sure we are inside the `~/iexec-projects` folder that we created previously, during the [quick start](../quick-start-for-developers.md) tutorial.
+Before starting let's make sure we are inside the folder `~/iexec-projects` that we created previously, during the [quick start](../quick-start-for-developers.md) tutorial.
 
 ```bash
 cd ~/iexec-projects
@@ -165,7 +165,7 @@ Note that the result files should be written in the **/scone** folder.
 
 Now follow the exact same steps that we saw when [building our first trusted application](create-your-first-sgx-app.md#prepare-the-application) to build and deploy this new app. Don't forget to change the name of the docker image \(to `scone-hello-world-app-with-dataset` for example\) and use your dataset address instead of `0x0` with the `--dataset` option when running `iexec app run`.
 
-At the end, when you download the result, unlike the last tutorial, you won't see any relevant logs in `stdout.txt` but you will find the content of the plain dataset inside `iexec_out/result.zip/my-result.txt`.
+In the end, when you download the result, unlike the last tutorial, you won't see any relevant logs in `stdout.txt` but you will find the content of the plain dataset inside `iexec_out/result.zip/my-result.txt`.
 
 ## Next step?
 
