@@ -204,7 +204,7 @@ with open(iexec_out + '/computed.json', 'w+') as f:
 {% tabs %}
 {% tab title="JavaScript" %}
 {% code title="Dockerfile" %}
-```text
+```bash
 FROM node:8.9.4
 ### install your dependencies if you have some
 RUN mkdir /app && cd /app && npm install figlet
@@ -216,7 +216,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 {% code title="Dockerfile" %}
-```text
+```bash
 FROM python:3.7.3-alpine3.10
 ### install python dependencies if you have some
 RUN pip3 install pyfiglet
@@ -243,41 +243,15 @@ Congratulation you built your first docker image for iExec!
 
 ### Basic test
 
-Prepare local volumes for binding.
+Run your application locally \(container volumes bound with local volumes\).
 
-```text
-mkdir -p /tmp/iexec_in
-mkdir -p /tmp/iexec_out
-```
-
-Prepare to run your application locally \(container volumes bound with local volumes\).
-
-{% code title="run" %}
-```text
-#!/bin/sh
-cd $(dirname $0)
-
-IEXEC_IN=/tmp/iexec_in
-IEXEC_OUT=/tmp/iexec_out
-rm -rf $IEXEC_OUT
-mkdir -p $IEXEC_OUT
-
-sudo docker run --rm \
-    -e IEXEC_IN=/iexec_in \
-    -e IEXEC_OUT=/iexec_out \
+```bash
+docker run --rm \
     -v /tmp/iexec_in:/iexec_in \
     -v /tmp/iexec_out:/iexec_out \
-    my-hello-world $@
-
-echo
-find $IEXEC_OUT
-```
-{% endcode %}
-
-Run it locally
-
-```text
-./run arg1 arg2 arg3
+    -e IEXEC_IN=/iexec_in \
+    -e IEXEC_OUT=/iexec_out \
+    my-hello-world arg1 arg2 arg3
 ```
 
 {% hint style="success" %}

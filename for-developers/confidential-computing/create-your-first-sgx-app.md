@@ -78,7 +78,7 @@ ENTRYPOINT ["python", "/app/app.py"]
 {% endtab %}
 {% endtabs %}
 
-In the above [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/), we copy some needed SCONE CLI binaries from the image `sconecuratedimages/sconecli:alpine3.7-scone3.0` \(we do not do that for the python image since it already has those files\) then we install the dependencies of the application \(`L1-11`\). The section `L16-17` is the answer to the legitimate question: **how would the enclave verify the integrity of the code?**
+In the above [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/), we copy some needed SCONE CLI binaries from the image `sconecuratedimages/sconecli:alpine3.7-scone3.0` \(we do not do that for the python image since it already has those files\) then we install the dependencies of the application. The last section is the answer to the legitimate question: **how would the enclave verify the integrity of the code?**
 
 The short answer is: the application is protected by taking a snapshot of the file system's state. The script `protect-fs.sh` uses the famous [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE to authenticate the file system directories that would be used by the application \(/bin, /lib...\) as well as the code itself. It takes a snapshot of their state that will be later shared with the worker \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it considers it as a possible attack.
 
