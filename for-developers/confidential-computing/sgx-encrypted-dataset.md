@@ -164,37 +164,39 @@ In `app.js` \(or `app.py`\), we read the content of the dataset and write it in 
 {% tab title="Javascript" %}
 {% code title="src/app.js" %}
 ```javascript
-const fs = require('fs');
-var figlet = require('figlet');
+const fsPromises = require('fs').promises;
+const figlet = require('figlet');
 
-const iexecOut = process.env.IEXEC_OUT;
-const iexecIn = process.env.IEXEC_IN;
-const datasetFilepath = iexecIn + "/" + process.env.IEXEC_DATASET_FILENAME;
+(async () => {
+  try {
+    const iexecOut = process.env.IEXEC_OUT;
+    const iexecIn = process.env.IEXEC_IN;
+    const datasetFilepath = `${iexecIn}/${process.env.IEXEC_DATASET_FILENAME}`;
 
-var text = "";
-
-// Eventually use some confidential assets
-if (fs.existsSync(datasetFilepath)) {
-  var dataset = fs.readFileSync(datasetFilepath);
-  text = figlet.textSync(dataset);
-}
-
-// Append some results
-fs.writeFileSync(iexecOut + "/result.txt", text, {flag: 'w+'}, (err) => {
-  if(err) {
-      throw err;
+    // Eventually use some confidential assets
+    let text = '';
+    try {
+      const dataset = await fsPromises.readFile(datasetFilepath);
+      text = figlet.textSync(dataset);
+    } catch (e) {
+      console.warn('dataset does not exists');
+    }
+    // Append some results
+    await fsPromises.writeFile(`${iexecOut}/result.txt`, text);
+    console.log(text);
+    // Declare everything is computed
+    const computedJsonObj = {
+      'deterministic-output-path': `${iexecOut}/result.txt`,
+    };
+    await fsPromises.writeFile(
+      `${iexecOut}/computed.json`,
+      JSON.stringify(computedJsonObj),
+    );
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
   }
-});
-console.log(text);
-
-// Declare everything is computed
-var computedJsonObj = { "deterministic-output-path" : iexecOut + "/result.txt" }
-fs.writeFile(iexecOut + "/computed.json", JSON.stringify(computedJsonObj), {flag: 'w+'}, (err) => {
-  if(err) {
-      throw err;
-  }
-  process.exit(0)
-});
+})();
 ```
 {% endcode %}
 {% endtab %}
@@ -239,7 +241,7 @@ The Dockerfile is the same as the one we saw [previously](create-your-first-sgx-
 ```bash
 FROM sconecuratedimages/sconecli:alpine3.7-scone3.0 AS scone
 
-FROM sconecuratedimages/apps:node-8.9.4-alpine-scone3.0
+FROM sconecuratedimages/apps:node-10.14-alpine
 
 COPY --from=scone   /opt/scone/scone-cli    /opt/scone/scone-cli
 COPY --from=scone   /usr/local/bin/scone    /usr/local/bin/scone

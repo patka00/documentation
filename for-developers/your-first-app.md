@@ -139,32 +139,32 @@ The following examples only feature Javascript and Python use cases for simplici
 {% tab title="JavaScript" %}
 {% code title="src/app.js" %}
 ```javascript
-const fs = require('fs');
+const fsPromises = require('fs').promises;
 const figlet = require('figlet');
 
-const iexec_in = process.env.IEXEC_IN
-const iexec_out = process.env.IEXEC_OUT
+(async () => {
+  try {
+    const iexecOut = process.env.IEXEC_OUT;
+    // Do whatever you want (let's write hello world here)
+    const message = process.argv.length > 2 ? process.argv[2] : 'World';
 
-// Do whatever you want (let's write hello world here)
-var message = process.argv.length > 2 ? process.argv[2] : "World"
-var text = figlet.textSync(`Hello, ${message}!`) // Let's add some art for e.g.
-console.log(text);
-
-// Append some results in /iexec_out/
-fs.writeFileSync(iexec_out + "/result.txt", text, {flag: 'w+'}, (err) => {
-  if(err) {
-      throw err;
+    const text = figlet.textSync(`Hello, ${message}!`); // Let's add some art for e.g.
+    console.log(text);
+    // Append some results in /iexec_out/
+    await fsPromises.writeFile(`${iexecOut}/result.txt`, text);
+    // Declare everything is computed
+    const computedJsonObj = {
+      'deterministic-output-path': `${iexecOut}/result.txt`,
+    };
+    await fsPromises.writeFile(
+      `${iexecOut}/computed.json`,
+      JSON.stringify(computedJsonObj),
+    );
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
   }
-});
-
-// Declare everything is computed
-var computedJsonObj = { "deterministic-output-path" : iexec_out + "/result.txt" }
-fs.writeFile(iexec_out + "/computed.json", JSON.stringify(computedJsonObj), {flag: 'w+'}, (err) => {
-  if(err) {
-      throw err;
-  }
-  process.exit(0)
-});
+})();
 ```
 {% endcode %}
 {% endtab %}
@@ -205,9 +205,9 @@ with open(iexec_out + '/computed.json', 'w+') as f:
 {% tab title="JavaScript" %}
 {% code title="Dockerfile" %}
 ```bash
-FROM node:8.9.4
+FROM node:10
 ### install your dependencies if you have some
-RUN mkdir /app && cd /app && npm install figlet
+RUN mkdir /app && cd /app && npm install figlet@1.x
 COPY ./src /app
 ENTRYPOINT [ "node", "/app/app.js"]
 ```
