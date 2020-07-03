@@ -13,7 +13,7 @@ description: >-
 * [Dockerhub](https://hub.docker.com/) account.
 * [Nodejs](https://nodejs.org) 10.12.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 5.0.0 or higher.
-* [Quick start](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
+* [Quickstart](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
 * Ethereum wallet charged with Goerli ETH an RLC
 {% endhint %}
 
@@ -131,7 +131,7 @@ touch Dockerfile
 
 ### Write the app \(JavaScript script example\)
 
-Following examples only feature Javascript and Python use cases for simplicity concerns, but remember that you can run on iExec anything which is Dockerizable.
+The following examples only feature Javascript and Python use cases for simplicity concerns but remember that you can run on iExec anything which is Dockerizable.
 
 **Copy the following content** in `src/` .
 
@@ -140,15 +140,15 @@ Following examples only feature Javascript and Python use cases for simplicity c
 {% code title="src/app.js" %}
 ```javascript
 const fs = require('fs');
+const figlet = require('figlet');
 
 const iexec_in = process.env.IEXEC_IN
 const iexec_out = process.env.IEXEC_OUT
 
 // Do whatever you want (let's write hello world here)
-var text = "Hello, World!"
-if (process.argv.length > 2){
-  text = 'Hello, ' + process.argv[2] + '!'
-}
+var message = process.argv.length > 2 ? process.argv[2] : "World"
+var text = figlet.textSync(`Hello, ${message}!`) // Let's add some art for e.g.
+console.log(text);
 
 // Append some results in /iexec_out/
 fs.writeFileSync(iexec_out + "/result.txt", text, {flag: 'w+'}, (err) => {
@@ -156,7 +156,6 @@ fs.writeFileSync(iexec_out + "/result.txt", text, {flag: 'w+'}, (err) => {
       throw err;
   }
 });
-console.log(text);
 
 // Declare everything is computed
 var computedJsonObj = { "deterministic-output-path" : iexec_out + "/result.txt" }
@@ -176,19 +175,19 @@ fs.writeFile(iexec_out + "/computed.json", JSON.stringify(computedJsonObj), {fla
 import os
 import sys
 import json
+from pyfiglet import Figlet
 
 iexec_in = os.environ['IEXEC_IN']
 iexec_out = os.environ['IEXEC_OUT']
 
 # Do whatever you want (let's write hello world here)
-text = "Hello, World!"
-if len(sys.argv) > 1:
-    text = 'Hello, {}!'.format(sys.argv[1])
+text = 'Hello, {}!'.format(sys.argv[1] if len(sys.argv) > 1 else "World")
+text = Figlet().renderText(text) # Let's add some art for e.g.
+print(text)
 
 # Append some results in /iexec_out/
 with open(iexec_out + '/result.txt', 'w+') as fout:
     fout.write(text)
-    print(text)
 
 # Declare everything is computed
 with open(iexec_out + '/computed.json', 'w+') as f:
@@ -453,3 +452,4 @@ Continue with these articles:
 
 * [Confidential app](confidential-computing/)
 * [Learn how to manage your apporders](advanced/manage-your-apporders.md)
+
