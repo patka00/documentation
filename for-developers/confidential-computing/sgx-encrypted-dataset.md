@@ -22,7 +22,8 @@ Datasets are only decrypted inside authorized [enclaves](intel-sgx-technology.md
 {% endhint %}
 
 {% hint style="info" %}
-Our goal with the SMS is to run it entirely inside an enclave.
+Your secrets are securely transferred with the SDK from your machine to the SMS over a TLS channel. Internally, your secrets are encrypted with standard AES encryption before been written to disk.
+Next releases will feature a SMS running entirely inside a trusted enclave.
 {% endhint %}
 
 Let's see how to do all of that!
@@ -391,4 +392,3 @@ Please go ahead and follow [these steps](../your-first-app.md#test-your-app-on-i
 ## Next step?
 
 Thanks to the explained confidential computing workflow, it is possible to use an encrypted dataset with a trusted application. We can go another step further and protect the result too. See in the next chapter how to make your execution result encrypted so that you are the only one who can read it.
-
