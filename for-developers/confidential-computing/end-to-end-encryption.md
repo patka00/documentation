@@ -4,25 +4,27 @@
 **Prerequisities**
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
-* [Nodejs](https://nodejs.org) 8.0.0 or higher.
-* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
-* [Quick start](../quick-start-for-developers.md) tutorial.
+* [Nodejs](https://nodejs.org) 10.12.0 or higher.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 5.0.0 or higher.
 * Familiarity with the basic concepts of [Intel® SGX](intel-sgx-technology.md#intel-r-software-guard-extension-intel-r-sgx) and [SCONE](intel-sgx-technology.md#scone-framework) framework.
-* [Build trusted applications](create-your-first-sgx-app.md) tutorial.
 {% endhint %}
 
-In previous tutorials, we saw how to build trusted applications that run securely inside [enclaves](intel-sgx-technology.md#enclave) and combine them with confidential datasets to get the most out of confidential computing advantages. In this chapter, we will push thing further to protect the workflow in an end to end mode. That means the next step would be encrypting results.
+{% hint style="warning" %}
+Please make sure you have already checked the [Quickstart](../your-first-app.md), [Your first application](../your-first-app.md) and [Build trusted applications](create-your-first-sgx-app.md) tutorials before learning how to protect the result of your task.
+{% endhint %}
 
-Assuming your application is deployed \(also your dataset if you use one\), before triggering an execution you need to tell the [Secret Management Service](intel-sgx-technology.md#secret-management-service-sms) that you want your results to be encrypted. To do that you should generate a public/private AES key-pair and push the public part to the SMS. The latter will provide it, at runtime, to the enclave running your trusted application.
+In previous tutorials, we saw how to build trusted applications that run securely inside [enclaves](intel-sgx-technology.md#enclave) and combine them with confidential datasets to get the most out of confidential computing advantages. In this chapter, we will push things further to protect the workflow in an end to end mode. That means the next step would be encrypting results.
 
 {% hint style="info" %}
-you don't need to change your applications code to implement the encryption, it is already in there. You only need to make sure that the results are produced in the **/scone** folder.
+You don't need to change your application's code or redeploy it to add this feature.
 {% endhint %}
 
-To generate the key-pair, got to `~/iexec-projects` and use the following SDK command:
+Assuming your application is deployed \(if not please check how to do it [here](../your-first-app.md#deploy-your-app-on-iexec)\), before triggering an execution you need to generate a public/private AES key-pair and push the public part to the [Secret Management Service](intel-sgx-technology.md#secret-management-service-sms). The latter, in turn, will provide it, at runtime, to the enclave running your trusted application.
+
+To generate the key-pair, go to `~/iexec-projects` and use the following SDK command:
 
 ```bash
-iexec result generate-keys
+iexec result generate-encryption-keypair
 ```
 
 This generates two files in `.secrets/beneficiary/`. Make sure to back up the private key in the file `<0x-your-wallet-address>_key`.
@@ -32,21 +34,19 @@ This generates two files in `.secrets/beneficiary/`. Make sure to back up the pr
 ├── beneficiary
 │   ├── <0x-you-wallet-address>_key
 │   └── <0x-you-wallet-address>_key.pub
-└── datasets
-    ├── dataset.secret
-    └── my-first-dataset.scone.secret
+...
 ```
 
 Now, push the public key to the SMS:
 
 ```bash
-iexec result push-secret --chain goerli
+iexec result push-encryption-key --chain goerli
 ```
 
 And check it using:
 
 ```bash
-iexec result check-secret --chain goerli
+iexec result check-encryption-key --chain goerli
 ```
 
 Now to see that in action, you'd need to trigger a task and specify yourself as the beneficiary in the command:
@@ -54,10 +54,8 @@ Now to see that in action, you'd need to trigger a task and specify yourself as 
 ```bash
 iexec app run <0x-your-app-address> \
     --chain goerli                  \
-    --params "<your params>"        \
     --tag tee                       \
-    --dataset <0x-your-dataset-address or 0x0> \
-    --beneficiary <0x-your-wallet-address> \
+    --encrypt-result \
     --watch
 ```
 
@@ -67,10 +65,11 @@ Wait for the task to be `COMPLETED` and download the result:
 iexec task show <0x-your-task-id> --download --chain goerli
 ```
 
-If you extract the the obtained zip and try to read the content of the file `iexec_out/result.zip.aes` you will find it encrypted:
+If you extract the obtained zip and try to read the content of the file `iexec_out/result.zip.aes` you will find it encrypted:
 
 ```bash
-mkdir /tmp/trash && unzip <0x-your-task-id.zip> -d /tmp/trash && \
+mkdir /tmp/trash && \
+    unzip <0x-your-task-id>.zip -d /tmp/trash && \
     cat /tmp/trash/iexec_out/result.zip.aes
 ```
 
@@ -88,7 +87,7 @@ Now you should decrypt the result by running:
 iexec result decrypt <0x-your-task-id.zip>
 ```
 
-A new zip file appears in the current folder under the name `results.zip`. Eventually unzip it:
+A new zip file appears in the current folder under the name `results.zip`. Eventually, unzip it:
 
 ```bash
 unzip results.zip -d my-decrypted-result
@@ -101,7 +100,7 @@ $ cat my-decrypted-result/my-result.txt
 Hello, world!
 ```
 
-Voilà! By finishing this part, you should be able to use confidential computing on iExec like a Ninja. All parts of the workflow are protected: your execution, your dataset and your result.
+Voilà! By finishing this part, you should be able to use confidential computing on iExec like a Ninja. All parts of the workflow are protected: the execution, the dataset, and the result.
 
-You can go to the advanced section and learn more about managing orders on the iExec to effectively monetize you applications and datasets.
+You can go to the advanced section and learn more about managing orders on the iExec to effectively monetize your applications and datasets.
 

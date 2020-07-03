@@ -15,10 +15,14 @@ Please make sure you have already checked the [Quickstart](../your-first-app.md)
 
 Trusted Execution Environments offer a huge advantage from a security perspective. They guarantee that the behavior of execution does not change even when launched on an untrusted remote machine. The data inside this type of environment is also protected, which allows its monetization while preventing leakage.
 
-With iExec, it is possible to authorize only applications you trust to use your datasets and get paid for it. Data is encrypted using standard encryption mechanisms and the plain version never leaves your machine. The encrypted version is made available for usage and the encryption key is pushed into the [SMS](intel-sgx-technology.md#secret-management-service-sms) which runs inside a secure [enclave](intel-sgx-technology.md#enclave). After you deploy the dataset on iExec it is you, and only you, who decides which application is allowed to get the secret to decrypt it.
+With iExec, it is possible to authorize only applications you trust to use your datasets and get paid for it. Data is encrypted using standard encryption mechanisms and the plain version never leaves your machine. The encrypted version is made available for usage and the encryption key is pushed into the [SMS](intel-sgx-technology.md#secret-management-service-sms). After you deploy the dataset on iExec it is you, and only you, who decides which application is allowed to get the secret to decrypt it.
 
 {% hint style="warning" %}
 Datasets are only decrypted inside authorized [enclaves](intel-sgx-technology.md#enclave) and never leave them. The same thing applies to secrets.
+{% endhint %}
+
+{% hint style="info" %}
+Your secrets are securely transferred with the SDK from your machine to the SMS over a TLS channel. Internally, your secrets are encrypted with standard AES encryption before being written to disk. Next releases will feature a, SMS running entirely inside a trusted enclave.
 {% endhint %}
 
 Let's see how to do all of that!
@@ -222,7 +226,6 @@ with open(iexec_out + '/result.txt', 'w+') as fout:
 # Declare everything is computed
 with open(iexec_out + '/computed.json', 'w+') as f:
     json.dump({ "deterministic-output-path" : iexec_out + '/result.txt' }, f)
-
 ```
 {% endcode %}
 {% endtab %}
@@ -344,7 +347,6 @@ printf "%s\n" "\"app\": { " " \"owner\" : ... " " \"name\": ... " "  ..." " \"mr
 printf "#####################################################################\n"
 printf "Hint: Replace 'mrenclave' before doing 'iexec app deploy' step.\n"
 printf "\n\n"
-
 ```
 {% endcode %}
 
@@ -371,7 +373,6 @@ iexec.json:
 }
 #####################################################################
 Hint: Replace 'mrenclave' before doing 'iexec app deploy' step.
-
 ```
 
 That alphanumeric string is the [fingerprint](intel-sgx-technology.md#applications-fingerprint) of your application. It allows the verification of its integrity.
