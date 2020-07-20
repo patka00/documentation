@@ -63,11 +63,11 @@ For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file n
 
 Use these variables in your application to find input files to process. \(first input file path is `/iexec_in/$IEXEC_INPUT_FILE_NAME_1`\)
 
-#### Datasets \(confidential input files\):
+#### Confidential input files \(datasets\):
 
-Datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
+Confidential datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
 
-Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable. A single dataset file is currently supported.
+A single dataset file is currently supported.
 
 ### Runtime variables
 
@@ -82,7 +82,6 @@ Use these variables if your app deals with input files
 | IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder \(`/iexec_in/`\) |
 | IEXEC\_NB\_INPUT\_FILES | int &gt;= 0 | Total number of input files |
 | IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x \(`x` starts with `1`\) |
-| IEXEC\_DATASET\_FILENAME | string or unset | Name of the dataset file if used |
 
 #### Bag of Tasks variables
 

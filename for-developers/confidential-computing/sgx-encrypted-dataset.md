@@ -1,4 +1,4 @@
-# Manage confidential datasets
+# Use confidential assets
 
 {% hint style="success" %}
 **Prerequisities**
@@ -171,15 +171,14 @@ const figlet = require('figlet');
   try {
     const iexecOut = process.env.IEXEC_OUT;
     const iexecIn = process.env.IEXEC_IN;
-    const datasetFilepath = `${iexecIn}/${process.env.IEXEC_DATASET_FILENAME}`;
 
-    // Eventually use some confidential assets
+    // Use some confidential assets
     let text = '';
     try {
-      const dataset = await fsPromises.readFile(datasetFilepath);
-      text = figlet.textSync(dataset);
+      const confidentialFile = await fsPromises.readFile(`${iexecIn}/confidential-asset.txt`);
+      text = figlet.textSync(confidentialFile);
     } catch (e) {
-      console.warn('dataset does not exists');
+      console.warn('confidential file does not exists');
     }
     // Append some results
     await fsPromises.writeFile(`${iexecOut}/result.txt`, text);
@@ -211,19 +210,17 @@ from pyfiglet import Figlet
 
 iexec_out = os.environ['IEXEC_OUT']
 iexec_in = os.environ['IEXEC_IN']
-dataset_filepath = iexec_in + '/' + os.environ['IEXEC_DATASET_FILENAME']
 
 text = ""
 
-# Eventually use some confidential assets
-if os.path.exists(dataset_filepath):
-    with open(dataset_filepath, 'r') as dataset:
-        text = Figlet().renderText(dataset.read())
-        print(text)
+# Use some confidential assets
+if os.path.exists(iexec_in + '/confidential-asset.txt'):
+    with open(iexec_in + '/confidential-asset.txt', 'r') as f:
+        text = Figlet().renderText(f.read())
 
 # Append some results
-with open(iexec_out + '/result.txt', 'w+') as fout:
-    fout.write(text)
+with open(iexec_out + '/result.txt', 'w+') as f:
+    f.write(text)
 
 # Declare everything is computed
 with open(iexec_out + '/computed.json', 'w+') as f:
