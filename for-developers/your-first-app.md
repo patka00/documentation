@@ -229,7 +229,7 @@ ENTRYPOINT ["python", "/app/app.py"]
 Build the docker image.
 
 ```text
-sudo docker build . --tag my-hello-world
+docker build . --tag my-hello-world
 ```
 
 {% hint style="success" %}
@@ -285,9 +285,11 @@ Example with two inputs files:
 ```text
 touch /tmp/iexec_in/file1 && \
 touch /tmp/iexec_in/file2 && \
-sudo docker run \
+docker run \
     -v /tmp/iexec_in:/iexec_in \
     -v /tmp/iexec_out:/iexec_out \
+    -e IEXEC_IN=/iexec_in \
+    -e IEXEC_OUT=/iexec_out \
     -e IEXEC_INPUT_FILE_NAME_1=file1 \
     -e IEXEC_INPUT_FILE_NAME_2=file2 \
     -e IEXEC_NB_INPUT_FILES=2 \
@@ -302,13 +304,13 @@ sudo docker run \
 Login to your Dockerhub account.
 
 ```text
-sudo docker login
+docker login
 ```
 
 Tag you application image to push it to your dockerhub public repository.
 
 ```text
-sudo docker tag my-hello-world <dockerusername>/my-hello-world:1.0.0
+docker tag my-hello-world <dockerusername>/my-hello-world:1.0.0
 ```
 
 {% hint style="warning" %}
@@ -318,7 +320,7 @@ replace `<dockerusername>` with your docker user name
 Push the image to Dockerhub.
 
 ```text
-sudo docker push <dockerusername>/my-hello-world:1.0.0
+docker push <dockerusername>/my-hello-world:1.0.0
 ```
 
 **Congratulation, you app is ready to be deployed on iExec!**
