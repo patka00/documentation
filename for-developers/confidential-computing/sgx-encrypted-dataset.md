@@ -239,13 +239,7 @@ The Dockerfile is the same as the one we saw [previously](create-your-first-sgx-
 {% tab title="Javascript" %}
 {% code title="Dockerfile" %}
 ```bash
-FROM sconecuratedimages/sconecli:alpine3.7-scone3.0 AS scone
-
-FROM sconecuratedimages/apps:node-10.14-alpine
-
-COPY --from=scone   /opt/scone/scone-cli    /opt/scone/scone-cli
-COPY --from=scone   /usr/local/bin/scone    /usr/local/bin/scone
-COPY --from=scone   /opt/scone/bin          /opt/scone/bin
+FROM sconecuratedimages/public-apps:node-10-alpine-scone3.0
 
 ### install dependencies you need
 RUN apk add bash nodejs-npm
@@ -264,7 +258,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 ```bash
-FROM sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0
+FROM sconecuratedimages/public-apps:python-3.7.3-alpine3.10-scone3.0
 
 ### install python3 dependencies you need
 RUN SCONE_MODE=sim pip3 install pyfiglet
@@ -307,8 +301,8 @@ then
     exit 1
 fi
 
-INTERPRETER=$(awk '{print $1}' ./entrypoint) # python
-ENTRYPOINT=$(cat ./entrypoint) # /python /app/app.py
+INTERPRETER=$(awk '{print $1}' ./entrypoint) # node or python
+ENTRYPOINT=$(cat ./entrypoint) # `node /app/app.js` or `python /app/app.py`
 
 export SCONE_MODE=sim
 export SCONE_HEAP=1G
