@@ -1,4 +1,4 @@
-# Manage confidential datasets
+# Use confidential assets
 
 {% hint style="success" %}
 **Prerequisities**
@@ -171,15 +171,14 @@ const figlet = require('figlet');
   try {
     const iexecOut = process.env.IEXEC_OUT;
     const iexecIn = process.env.IEXEC_IN;
-    const datasetFilepath = `${iexecIn}/${process.env.IEXEC_DATASET_FILENAME}`;
 
-    // Eventually use some confidential assets
+    // Use some confidential assets
     let text = '';
     try {
-      const dataset = await fsPromises.readFile(datasetFilepath);
-      text = figlet.textSync(dataset);
+      const confidentialFile = await fsPromises.readFile(`${iexecIn}/confidential-asset.txt`);
+      text = figlet.textSync(confidentialFile);
     } catch (e) {
-      console.warn('dataset does not exists');
+      console.warn('confidential file does not exists');
     }
     // Append some results
     await fsPromises.writeFile(`${iexecOut}/result.txt`, text);
@@ -211,19 +210,17 @@ from pyfiglet import Figlet
 
 iexec_out = os.environ['IEXEC_OUT']
 iexec_in = os.environ['IEXEC_IN']
-dataset_filepath = iexec_in + '/' + os.environ['IEXEC_DATASET_FILENAME']
 
 text = ""
 
-# Eventually use some confidential assets
-if os.path.exists(dataset_filepath):
-    with open(dataset_filepath, 'r') as dataset:
-        text = Figlet().renderText(dataset.read())
-        print(text)
+# Use some confidential assets
+if os.path.exists(iexec_in + '/confidential-asset.txt'):
+    with open(iexec_in + '/confidential-asset.txt', 'r') as f:
+        text = Figlet().renderText(f.read())
 
 # Append some results
-with open(iexec_out + '/result.txt', 'w+') as fout:
-    fout.write(text)
+with open(iexec_out + '/result.txt', 'w+') as f:
+    f.write(text)
 
 # Declare everything is computed
 with open(iexec_out + '/computed.json', 'w+') as f:
@@ -239,13 +236,7 @@ The Dockerfile is the same as the one we saw [previously](create-your-first-sgx-
 {% tab title="Javascript" %}
 {% code title="Dockerfile" %}
 ```bash
-FROM sconecuratedimages/sconecli:alpine3.7-scone3.0 AS scone
-
-FROM sconecuratedimages/apps:node-10.14-alpine
-
-COPY --from=scone   /opt/scone/scone-cli    /opt/scone/scone-cli
-COPY --from=scone   /usr/local/bin/scone    /usr/local/bin/scone
-COPY --from=scone   /opt/scone/bin          /opt/scone/bin
+FROM sconecuratedimages/public-apps:node-10-alpine-scone3.0
 
 ### install dependencies you need
 RUN apk add bash nodejs-npm
@@ -264,7 +255,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 
 {% tab title="Python" %}
 ```bash
-FROM sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0
+FROM sconecuratedimages/public-apps:python-3.7.3-alpine3.10-scone3.0
 
 ### install python3 dependencies you need
 RUN SCONE_MODE=sim pip3 install pyfiglet
@@ -307,8 +298,8 @@ then
     exit 1
 fi
 
-INTERPRETER=$(awk '{print $1}' ./entrypoint) # python
-ENTRYPOINT=$(cat ./entrypoint) # /python /app/app.py
+INTERPRETER=$(awk '{print $1}' ./entrypoint) # node or python
+ENTRYPOINT=$(cat ./entrypoint) # `node /app/app.js` or `python /app/app.py`
 
 export SCONE_MODE=sim
 export SCONE_HEAP=1G

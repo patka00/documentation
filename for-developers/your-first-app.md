@@ -63,11 +63,11 @@ For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file n
 
 Use these variables in your application to find input files to process. \(first input file path is `/iexec_in/$IEXEC_INPUT_FILE_NAME_1`\)
 
-#### Datasets \(confidential input files\):
+#### Confidential input files \(datasets\):
 
-Datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
+Confidential datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
 
-Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable. A single dataset file is currently supported.
+A single dataset file is currently supported.
 
 ### Runtime variables
 
@@ -82,7 +82,6 @@ Use these variables if your app deals with input files
 | IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder \(`/iexec_in/`\) |
 | IEXEC\_NB\_INPUT\_FILES | int &gt;= 0 | Total number of input files |
 | IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x \(`x` starts with `1`\) |
-| IEXEC\_DATASET\_FILENAME | string or unset | Name of the dataset file if used |
 
 #### Bag of Tasks variables
 
@@ -230,7 +229,7 @@ ENTRYPOINT ["python", "/app/app.py"]
 Build the docker image.
 
 ```text
-sudo docker build . --tag my-hello-world
+docker build . --tag my-hello-world
 ```
 
 {% hint style="success" %}
@@ -286,9 +285,11 @@ Example with two inputs files:
 ```text
 touch /tmp/iexec_in/file1 && \
 touch /tmp/iexec_in/file2 && \
-sudo docker run \
+docker run \
     -v /tmp/iexec_in:/iexec_in \
     -v /tmp/iexec_out:/iexec_out \
+    -e IEXEC_IN=/iexec_in \
+    -e IEXEC_OUT=/iexec_out \
     -e IEXEC_INPUT_FILE_NAME_1=file1 \
     -e IEXEC_INPUT_FILE_NAME_2=file2 \
     -e IEXEC_NB_INPUT_FILES=2 \
@@ -303,13 +304,13 @@ sudo docker run \
 Login to your Dockerhub account.
 
 ```text
-sudo docker login
+docker login
 ```
 
 Tag you application image to push it to your dockerhub public repository.
 
 ```text
-sudo docker tag my-hello-world <dockerusername>/my-hello-world:1.0.0
+docker tag my-hello-world <dockerusername>/my-hello-world:1.0.0
 ```
 
 {% hint style="warning" %}
@@ -319,7 +320,7 @@ replace `<dockerusername>` with your docker user name
 Push the image to Dockerhub.
 
 ```text
-sudo docker push <dockerusername>/my-hello-world:1.0.0
+docker push <dockerusername>/my-hello-world:1.0.0
 ```
 
 **Congratulation, you app is ready to be deployed on iExec!**

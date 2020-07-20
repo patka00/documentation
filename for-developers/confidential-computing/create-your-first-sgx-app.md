@@ -29,19 +29,13 @@ touch protect-fs.sh
 
 In the folder `src/` create the file `app.js` \(or `app.py` if you want to use Python\) then copy [this](../your-first-app.md#write-the-app-shell-script-example) code inside.
 
-As we mentioned earlier, the advantage of using **SCONE** is the ability to make the application **Intel® SGX-enabled** without changing the source code. The only thing we are going to modify is the `Dockerfile`. First, we need to change the base image from the official `node` \(or `python`\) to the one provided by SCONE: `sconecuratedimages/apps:node-8.9.4-alpine-scone3.0`or `sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0`. Those base docker images contain a `nodejs` / `python` interpreters that run inside enclaves.
+As we mentioned earlier, the advantage of using **SCONE** is the ability to make the application **Intel® SGX-enabled** without changing the source code. The only thing we are going to modify is the `Dockerfile`. First, we need to change the base image from the official `node` \(or `python`\) to the one provided by SCONE: `sconecuratedimages/public-apps:node-10-alpine-scone3.0`or `sconecuratedimages/public-apps:python-3.7.3-alpine3.10-scone3.0`. Those base docker images contain a `node` / `python` interpreters that run inside enclaves.
 
 {% tabs %}
 {% tab title="Javascript" %}
 {% code title="Dockerfile" %}
 ```bash
-FROM sconecuratedimages/sconecli:alpine3.7-scone3.0 AS scone
-
-FROM sconecuratedimages/apps:node-10.14-alpine
-
-COPY --from=scone   /opt/scone/scone-cli    /opt/scone/scone-cli
-COPY --from=scone   /usr/local/bin/scone    /usr/local/bin/scone
-COPY --from=scone   /opt/scone/bin          /opt/scone/bin
+FROM sconecuratedimages/public-apps:node-10-alpine-scone3.0
 
 ### install dependencies you need
 RUN apk add bash nodejs-npm
@@ -61,7 +55,7 @@ ENTRYPOINT [ "node", "/app/app.js"]
 {% tab title="Python" %}
 {% code title="Dockefile" %}
 ```bash
-FROM sconecuratedimages/apps:python-3.7.3-alpine3.10-scone3.0
+FROM sconecuratedimages/public-apps:python-3.7.3-alpine3.10-scone3.0
 
 ### install python3 dependencies you need
 RUN SCONE_MODE=sim pip3 install pyfiglet
@@ -78,9 +72,9 @@ ENTRYPOINT ["python", "/app/app.py"]
 {% endtab %}
 {% endtabs %}
 
-In the above [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/), we copy some needed SCONE CLI binaries from the image `sconecuratedimages/sconecli:alpine3.7-scone3.0` \(we do not do that for the python image since it already has those files\) then we install the dependencies of the application. The last section is the answer to the legitimate question: **how would the enclave verify the integrity of the code?**
+**How would the enclave verify the integrity of the code?**
 
-The short answer is: the application is protected by taking a snapshot of the file system's state. The script `protect-fs.sh` uses the famous [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE to authenticate the file system directories that would be used by the application \(/bin, /lib...\) as well as the code itself. It takes a snapshot of their state that will be later shared with the worker \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it considers it as a possible attack.
+The short answer is: the application is protected by taking a snapshot of the file system's state. The script `protect-fs.sh` uses the [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE to authenticate the file system directories that would be used by the application \(/bin, /lib...\) as well as the code itself. It takes a snapshot of their state that will be later shared with the worker \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it considers it as a possible attack.
 
 The content of `protect-fs.sh` should look like this:
 
@@ -109,8 +103,8 @@ then
     exit 1
 fi
 
-INTERPRETER=$(awk '{print $1}' ./entrypoint) # python
-ENTRYPOINT=$(cat ./entrypoint) # /python /app/app.py
+INTERPRETER=$(awk '{print $1}' ./entrypoint) # node or python
+ENTRYPOINT=$(cat ./entrypoint) # `node /app/app.js` or `python /app/app.py`
 
 export SCONE_MODE=sim
 export SCONE_HEAP=1G
