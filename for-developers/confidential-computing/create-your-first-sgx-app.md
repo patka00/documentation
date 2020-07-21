@@ -1,7 +1,7 @@
 # Build trusted applications
 
 {% hint style="success" %}
-**Prerequisities**
+**Prerequisites**
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 10.12.0 or higher.

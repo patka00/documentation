@@ -43,7 +43,7 @@ Create a new Wallet file
 iexec wallet create
 ```
 
-You will be asked to choose a password to protect your wallet, don't forget it since there is no way to recover it. The SDK creates a wallet file that contains a random generated private key encrypted by the chosen password and the derived public address. Make sure to backup the wallet file in a safe place and write down your address.
+You will be asked to choose a password to protect your wallet, don't forget it since there is no way to recover it. The SDK creates a wallet file that contains a randomly generated private key encrypted by the chosen password and the derived public address. Make sure to back up the wallet file in a safe place and write down your address.
 
 {% hint style="success" %}
 Your wallet is stored in the ethereum keystore, the location depends on your OS:
@@ -172,7 +172,7 @@ iexec app show --chain goerli
 
 ## Run your app on iExec
 
-iExec allows to run applications on a decentralized infrastructure with payment in **RLC** tokens \(the native cryptocurrency of iExec\).
+iExec allows you to run applications on a decentralized infrastructure with payment in **RLC** tokens \(the native cryptocurrency of iExec\).
 
 Let's get some test RLC to run your app
 
@@ -272,7 +272,7 @@ Congratulations! You successfully executed your application on iExec!
 
 ## Publish your app on the iExec Marketplace
 
-Your application is deployed on iExec and you completed an execution on iExec. For now, only you can request an execution of your application. The next step is to publish it on the iExec Marketplace, making it available for anyone to use .
+Your application is deployed on iExec and you completed an execution on iExec. For now, only you can request an execution of your application. The next step is to publish it on the iExec Marketplace, making it available for anyone to use.
 
 As the owner of this application, you can define the conditions under which it can be used
 
@@ -302,14 +302,14 @@ iexec orderbook app <your app address> --chain goerli
 
 Congratulation you just created a decentralized application! Anyone can now trigger an execution of your application on the iExec decentralized infrastructure.
 
-* With the iexec SDK cli `iexec app run <app address> --chain goerli`
+* With the iexec SDK CLI `iexec app run <app address> --chain goerli`
 * On iExec marketplace
 
 ## What's next?
 
 You are now familiar with the following key iExec concepts for developers:
 
-* Your wallet is your onchain ID and blockchain account
+* Your wallet is your on-chain ID and blockchain account
 * You can deploy decentralized applications on iExec
 * Anyone can run tasks against payment in RLC on iExec
 * Payments are processed by the decentralized platform between users' iExec Accounts

@@ -64,5 +64,5 @@ We explain the process of how to make your trusted application using iExec in de
 
 **Trusted application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build your image. Push your docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and fingerprint.
 
-**Confidential dataset:** To make your dataset available on iExec, you should first encrypt it using the SDK, before making the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by an enclave, which means even we, the root-privilege user, cannot access it\). Only applications you have authorised can get this key.
+**Confidential dataset:** To make your dataset available on iExec, you should first encrypt it using the SDK, before making the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by an enclave, which means even we, the root-privilege user, cannot access it\). Only applications you have authorized can get this key.
 
