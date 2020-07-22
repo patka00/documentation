@@ -1,7 +1,7 @@
 # Build trusted applications
 
 {% hint style="success" %}
-**Prerequisities**
+**Prerequisites**
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 10.12.0 or higher.
@@ -76,7 +76,7 @@ ENTRYPOINT ["python", "/app/app.py"]
 
 The short answer is: the application is protected by taking a snapshot of the file system's state. The script `protect-fs.sh` uses the [fspf](intel-sgx-technology.md#fspf-file-system-protection-file) feature of SCONE to authenticate the file system directories that would be used by the application \(/bin, /lib...\) as well as the code itself. It takes a snapshot of their state that will be later shared with the worker \(via the Blockchain\) to make sure everything is under control. If we change one bit of one of the authenticated files, the file system's state changes completely and the enclave will refuse to boot since it considers it as a possible attack.
 
-The content of `protect-fs.sh` should look like this:
+The contents of `protect-fs.sh` should look like this:
 
 {% code title="protect-fs.sh" %}
 ```bash

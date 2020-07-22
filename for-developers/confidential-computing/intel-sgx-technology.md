@@ -28,7 +28,7 @@ At iExec we do not develop Intel® SGX frameworks, but rather we integrate state
 
 Kernel services and system calls are not available from an Intel® SGX enclave as the OS is not a part of the trusted computing base \(TCB\) in Intel® SGX. This can be limiting as your application will not be able to use sockets or the file system directly from code running inside the enclave. To resolve this, and reduce the burden of porting your application to Intel® SGX, we can use use the [SCONE](https://scontain.com/) framework.
 
-At a high level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You need just to prepare your application's docker image based on one of the [curated list](https://sconedocs.github.io/SCONE_Curated_Images/) of images provided by SCONE.
+At a high-level SCONE provides a C standard library interface to container processes. System calls are executed outside of the enclave, but they are shielded by transparently encrypting/decrypting application data: files stored outside of the enclave are therefore encrypted, and network communication is protected by transport layer security \(TLS\). With SCONE you can make your application compatible with Intel® SGX without modifying the source code. You need just to prepare your application's docker image based on one of the [curated list](https://sconedocs.github.io/SCONE_Curated_Images/)s of images provided by SCONE.
 
 {% hint style="info" %}
 For more information about SCONE, please refer to their documentation at [https://sconedocs.github.io](https://sconedocs.github.io/).
@@ -54,15 +54,15 @@ It is the concatenation of the MrEncalve, the FSPF\_KEY and the FSPF\_TAG separa
 
 ### Secret Management Service \(SMS\)
 
-With the integration of SCONE in iExec, you do not need to worry about [remote attestation](intel-sgx-technology.md#remote-attestation). We do that for you, we guarantee that the code is running inside an enclave. But that is not all, we also verify that the enclave asking for secrets is authorized to do so. Hence, we implemented a component to handle the permission management for those secrets. You guessed it, it is the SMS! The SMS queries the blockchain an determines, for each task, the required secrets and provisions them on the fly.
+With the integration of SCONE in iExec, you do not need to worry about [remote attestation](intel-sgx-technology.md#remote-attestation). We do that for you, we guarantee that the code is running inside an enclave. But that is not all, we also verify that the enclave asking for secrets is authorized to do so. Hence, we implemented a component to handle the permission management for those secrets. You guessed it, it is the SMS! The SMS queries the blockchain and determines, for each task, the required secrets and provisions them on the fly.
 
-Unquestionably, the SMS is a critical component. That's why its runs inside an enclave.
+Unquestionably, the SMS is a critical component. That's why it runs inside an enclave.
 
 ### How does it work?
 
 We explain the process of how to make your trusted application using iExec in details in the [next chapter](create-your-first-sgx-app.md). Here is a quick general overview:
 
-**Trusted application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build you image. Push your docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and fingerprint.
+**Trusted application:** First things first, choose a base docker image for your use case. We provide a template Dockerfile so you would, just, add your specific requirements and dependencies, then build your image. Push your docker image somewhere accessible and deploy your application on the blockchain with the correct image URI and fingerprint.
 
-**Confidential dataset:** To make your dataset available on iExec, you should first encrypt it using the SDK, before making the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by an enclave, which means even us we cannot access it\). Only applications you have authorised can get this key.
+**Confidential dataset:** To make your dataset available on iExec, you should first encrypt it using the SDK, before making the encrypted file publicly available. Deploy your dataset on the blockchain, then, push the encryption key into the SMS where it is securely saved \(protected by an enclave, which means even we, the root-privilege user, cannot access it\). Only applications you have authorized can get this key.
 

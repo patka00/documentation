@@ -1,7 +1,7 @@
 # Use confidential assets
 
 {% hint style="success" %}
-**Prerequisities**
+**Prerequisites**
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Nodejs](https://nodejs.org) 10.12.0 or higher.
@@ -29,7 +29,7 @@ Let's see how to do all of that!
 
 ## Encrypt the dataset
 
-Before starting let's make sure we are inside the folder `~/iexec-projects` that we created previously, during the [quick start](../quick-start-for-developers.md) tutorial.
+Before starting, let's make sure we are inside the folder `~/iexec-projects` - created previously, during the [quick start](../quick-start-for-developers.md) tutorial.
 
 ```bash
 cd ~/iexec-projects
