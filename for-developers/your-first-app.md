@@ -7,17 +7,17 @@ description: >-
 # Your first application
 
 {% hint style="success" %}
-**Prerequisities**
+**Prerequisites**
 
 * [Docker](https://docs.docker.com/install/) 17.05 or higher on the daemon and client.
 * [Dockerhub](https://hub.docker.com/) account.
-* [Nodejs](https://nodejs.org) 8.0.0 or higher.
-* [iExec SDK](https://www.npmjs.com/package/iexec) 4.0.2 or higher.
-* [Quick start](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
+* [Nodejs](https://nodejs.org) 10.12.0 or higher.
+* [iExec SDK](https://www.npmjs.com/package/iexec) 5.0.0 or higher.
+* [Quickstart](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
 * Ethereum wallet charged with Goerli ETH an RLC
 {% endhint %}
 
-In this tutorial we will prepare an iExec app based on an existing docker image and we will run it on iExec decentralized infrastructure.
+In this guide, we will prepare an iExec app based on an existing docker image and we will run it on iExec decentralized infrastructure.
 
 **Tutorial Steps :**
 
@@ -36,12 +36,12 @@ iExec leverage [Docker](https://www.docker.com/why-docker) containers to ensure 
 ### Why using Docker containers?
 
 * Docker Engine is the most **widely used** container engine. 
-* A Docker container image is a **standard** unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. This allows to **run on any worker** connected to the decentralized infrastructure.
-* Docker also enable creating new layers on top of existing images. This allows to **easily build  iExec apps** on the top of existing docker images.
+* A Docker container image is a **standard** unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. This allows for computations to be **run on any worker** connected to the decentralized infrastructure.
+* Docker also enables the creation of new layers on top of existing images. This allows for any iExec **apps to be easily built on top of existing docker images**.
 
 ### What kind of application can I build on iExec?
 
-Today you can run any application as a task. This mean services are not supported for now.
+Today you can run any application as a task. This means services are not supported for now.
 
 ## Application I/O
 
@@ -49,7 +49,7 @@ This is an overview of an iExec application inputs and expected outputs. You pro
 
 ### Application args
 
-The requester may specify the arguments to use with an application in the requestorder, theses arguments are forwarded as is to the application.
+The requester may specify the arguments to use with an application in the requestorder, these arguments are forwarded as they are, straight to the application.
 
 ### Application input files
 
@@ -57,17 +57,17 @@ Your app may use input files, all the input files specified by the requester wil
 
 #### Input files \(public\):
 
-Input files contain non sensitive data publicly available on the Internet. The requester may specify any number of input files in the requestorder.
+Input files contain non-sensitive data publicly available on the Internet. The requester may specify any number of input files in the requestorder.
 
 For each input file, the variable `IEXEC_INPUT_FILE_NAME_x` is set to the file name \(`x` is the index of the file starting with `1`\). The total number of input files is stored in the variable.
 
 Use these variables in your application to find input files to process. \(first input file path is `/iexec_in/$IEXEC_INPUT_FILE_NAME_1`\)
 
-#### Datasets \(confidential input files\):
+#### Confidential input files \(datasets\):
 
-Datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). Your will learn how to deal with datasets in the next tutorial.
+Confidential datasets are encrypted files available only in a Trusted Execution Environment \(TEE\). You will learn how to deal with datasets in the next tutorial.
 
-Similarly to input files, the dataset name is stored in `IEXEC_DATASET` variable. A single dataset file is currently supported.
+A single dataset file is currently supported.
 
 ### Runtime variables
 
@@ -82,7 +82,6 @@ Use these variables if your app deals with input files
 | IEXEC\_INPUT\_FILES\_FOLDER | path | Absolute path of iexec input folder \(`/iexec_in/`\) |
 | IEXEC\_NB\_INPUT\_FILES | int &gt;= 0 | Total number of input files |
 | IEXEC\_INPUT\_FILE\_NAME\_x | string or unset | Name of the input file indexed by x \(`x` starts with `1`\) |
-| IEXEC\_DATASET\_FILENAME | string or unset | Name of the dataset file if used |
 
 #### Bag of Tasks variables
 
@@ -96,7 +95,7 @@ The requester may request multiple tasks in a single transaction \(Bag of Tasks\
 
 ### Application outputs
 
-An iExec app produce a `result.zip` file for the requester with the following tree:
+An iExec app produces a `result.zip` file for the requester with the following tree:
 
 ```text
 result.zip
@@ -104,20 +103,17 @@ result.zip
   └── stdout.txt
 ```
 
-`stdout.txt` contains the logs of your application. This file is auto generated by the iExec worker.
+`stdout.txt` contains the logs of your application. This file is automatically generated by the iExec worker.
 
 `iexec_out` is a copy at the final state of your app container directory `/iexec_out/` final state, your application must create the following files in `/iexec_out/` :
 
-* `/iexec_ou/determinism.iexec` file is the deterministic proof of execution \(given the same inputs this file should always be the same\).
-* If your app produce output files, you must copy them in `/iexec_out/` .
+* `/iexec_ou/computed.json` file should be created when your computing is over. It contains at least a field `deterministic-output-path` which is the path of the deterministic portion of your results. It should be either a file or a non-empty folder. It is required for the proof of execution \(given the same inputs this file should always be the same\).
+* If your app produces output files, you must copy them in `/iexec_out/` .
 
 {% hint style="warning" %}
-Your application must always create a deterministic file named `determinism.iexec` in `/iexec_out/` as a proof of execution.
+Your application must always create a `computed.json` file in `/iexec_out` as a proof of execution which could look like `{ "deterministic-output-path" : "/iexec_out/result.txt" }`
 
-The `determinism.iexec` file is compared across replicated tasks in the [Proof of Contribution protocol](../key-concepts/proof-of-contribution.md) to achieve a consensus on workers.
-
-* `determinism.iexec` may contain a digest of the application deterministic result.
-* in case of a non-deterministic result consider producing a custom deterministic proof of the execution.
+The `computed.json`file is compared across replicated tasks in the [Proof of Contribution protocol](../key-concepts/proof-of-contribution.md) to achieve a consensus on workers.
 {% endhint %}
 
 ## Build your app
@@ -126,116 +122,114 @@ Create the folder tree for your application in `~/iexec-projects/`.
 
 ```text
 cd ~/iexec-projects
-mkdir iexec-hello-world-app
-cd iexec-hello-world-app
+mkdir my-hello-world-app
+cd my-hello-world-app
 mkdir src
 touch Dockerfile
-touch src/iexec-hello-world.sh
 ```
 
-### Write the app \(shell script example\)
+### Write the app \(JavaScript script example\)
 
-**Copy the following content** in `src/iexec-hello-world.sh` .
+The following examples only feature Javascript and Python use cases for simplicity concerns but remember that you can run on iExec anything which is Dockerizable.
+
+**Copy the following content** in `src/` .
 
 {% tabs %}
-{% tab title="iexec-hello-world" %}
-{% code title="iexec-hello-world.sh" %}
-```bash
-#!/bin/sh
+{% tab title="JavaScript" %}
+{% code title="src/app.js" %}
+```javascript
+const fsPromises = require('fs').promises;
+const figlet = require('figlet');
 
-echo "stdout is logged into stdout.txt";
-echo "hello world" > /iexec_out/my-app-output.txt;
-echo $@$IEXEC_NB_INPUT_FILES > /iexec_out/determinism.iexec;
+(async () => {
+  try {
+    const iexecOut = process.env.IEXEC_OUT;
+    // Do whatever you want (let's write hello world here)
+    const message = process.argv.length > 2 ? process.argv[2] : 'World';
+
+    const text = figlet.textSync(`Hello, ${message}!`); // Let's add some art for e.g.
+    console.log(text);
+    // Append some results in /iexec_out/
+    await fsPromises.writeFile(`${iexecOut}/result.txt`, text);
+    // Declare everything is computed
+    const computedJsonObj = {
+      'deterministic-output-path': `${iexecOut}/result.txt`,
+    };
+    await fsPromises.writeFile(
+      `${iexecOut}/computed.json`,
+      JSON.stringify(computedJsonObj),
+    );
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+})();
 ```
 {% endcode %}
 {% endtab %}
 
-{% tab title="hackable-iexec-hello-world" %}
-{% code title="iexec-hello-world.sh" %}
-```bash
-#!/bin/sh
+{% tab title="Python" %}
+{% code title="src/app.py" %}
+```python
+import os
+import sys
+import json
+from pyfiglet import Figlet
 
-echo "APP RUNNING";
-echo;
+iexec_in = os.environ['IEXEC_IN']
+iexec_out = os.environ['IEXEC_OUT']
 
-echo "INPUT DIRECTORY CONTENT";
-ls -a /iexec_in;
-echo;
+# Do whatever you want (let's write hello world here)
+text = 'Hello, {}!'.format(sys.argv[1] if len(sys.argv) > 1 else "World")
+text = Figlet().renderText(text) # Let's add some art for e.g.
+print(text)
 
-echo "OUTPUT DIRECTORY INITIAL CONTENT";
-ls -a /iexec_out;
-echo;
+# Append some results in /iexec_out/
+with open(iexec_out + '/result.txt', 'w+') as fout:
+    fout.write(text)
 
-echo "READING IEXEC ARGS";
-args=$@
-echo $args;
-echo;
-
-echo 'READING IEXEC RUNTIME VARIABLES';
-echo ' - IEXEC_INPUT_FILES_FOLDER='$IEXEC_INPUT_FILES_FOLDER;
-echo ' - IEXEC_NB_INPUT_FILES='$IEXEC_NB_INPUT_FILES;
-if [ "$IEXEC_NB_INPUT_FILES" -ge 1 ]; # print IEXEC_INPUT_FILE_NAME_X
-then
-    i=1;
-    while [ $i -le $IEXEC_NB_INPUT_FILES ]
-    do
-       name='IEXEC_INPUT_FILE_NAME_'$i
-       eval "value=\"\$$name\""
-       echo '     - '$name=$value
-       i=`expr $i + 1`
-    done
-fi
-echo ' - IEXEC_DATASET_FILENAME='$IEXEC_DATASET_FILENAME;
-echo ' - IEXEC_BOT_SIZE='$IEXEC_BOT_SIZE;
-echo ' - IEXEC_BOT_FIRST_INDEX='$IEXEC_BOT_FIRST_INDEX;
-echo ' - IEXEC_BOT_TASK_INDEX='$IEXEC_BOT_TASK_INDEX;
-echo;
-
-echo "CREATING OUTPUT FILES IN /iexec_out/";
-echo "hello world" > /iexec_out/my-app-output.txt && echo "done";
-echo;
-
-echo "CREATING determinism.iexec IN /iexec_out/";
-echo $args$IEXEC_DATASET_FILENAME$IEXEC_NB_INPUT_FILES > /iexec_out/determinism.iexec && echo "done";
-echo;
-
-echo "OUTPUT DIRECTORY FINAL CONTENT";
-ls -a /iexec_out;
-echo;
-
-echo "FINISH";
+# Declare everything is computed
+with open(iexec_out + '/computed.json', 'w+') as f:
+    json.dump({ "deterministic-output-path" : iexec_out + '/result.txt' }, f)
 ```
 {% endcode %}
 {% endtab %}
 {% endtabs %}
 
-{% hint style="info" %}
-`iexec-hello-world` is the minimum shell application, learn more with `hackable-iexec-hello-world`
-{% endhint %}
-
 ### Dockerize your app
 
 **Copy the following content** in `Dockerfile` .
 
+{% tabs %}
+{% tab title="JavaScript" %}
 {% code title="Dockerfile" %}
-```text
-FROM alpine:latest
-COPY src/iexec-hello-world.sh /iexec-hello-world.sh
-RUN chmod +x /iexec-hello-world.sh
-ENTRYPOINT ["/iexec-hello-world.sh"]
+```bash
+FROM node:10
+### install your dependencies if you have some
+RUN mkdir /app && cd /app && npm install figlet@1.x
+COPY ./src /app
+ENTRYPOINT [ "node", "/app/app.js"]
 ```
 {% endcode %}
+{% endtab %}
 
-{% hint style="info" %}
-Starting from the Alpine Linux image ensure we can use `/bin/sh`.
-
-If your app requires specific dependencies, you must start from an image including these dependencies or install them.
-{% endhint %}
+{% tab title="Python" %}
+{% code title="Dockerfile" %}
+```bash
+FROM python:3.7.3-alpine3.10
+### install python dependencies if you have some
+RUN pip3 install pyfiglet
+COPY ./src /app
+ENTRYPOINT ["python", "/app/app.py"]
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 Build the docker image.
 
 ```text
-sudo docker build . --tag iexec-hello-world
+docker build . --tag my-hello-world
 ```
 
 {% hint style="success" %}
@@ -248,24 +242,16 @@ Congratulation you built your first docker image for iExec!
 
 ### Basic test
 
-Prepare local volumes for binding.
-
-```text
-mkdir ./iexec_in/
-mkdir ./iexec_out/
-```
-
 Run your application locally \(container volumes bound with local volumes\).
 
-```text
-sudo docker run \
-    --volume $(pwd)/iexec_in:/iexec_in \
-    --volume $(pwd)/iexec_out:/iexec_out \
-    iexec-hello-world \
-    arg1 arg2 arg3
+```bash
+docker run --rm \
+    -v /tmp/iexec_in:/iexec_in \
+    -v /tmp/iexec_out:/iexec_out \
+    -e IEXEC_IN=/iexec_in \
+    -e IEXEC_OUT=/iexec_out \
+    my-hello-world arg1 arg2 arg3
 ```
-
-The application output files should be created in `./iexec_out/`, verify the `determinism.iexec` was created.
 
 {% hint style="success" %}
 docker run \[options\] image \[args\]
@@ -278,9 +264,9 @@ Use `[COMMAND]` and `[ARGS...]` to simulate the requester arguments
 
 **useful options for iExec:**
 
-`--volume` : Bind mount a volume. Use it to bind `/iexec_in/` and `/iexec_out/`
+`-v` : Bind mount a volume. Use it to bind `/iexec_in` and `/iexec_out`
 
-`--env`: Set environnement variable. Use it to simulate iExec Runtime variables
+`-e`: Set environnement variable. Use it to simulate iExec Runtime variables
 {% endhint %}
 
 ### Test with input files
@@ -289,23 +275,25 @@ Starting with the basic test you can simulate input files.
 
 For each input file:
 
-* Copy it in the local volume bound to `/iexec_in/` .
-* Add `--env IEXEC_INPUT_FILE_NAME_x=NAME` to docker run options \(`x` is the index of the file starting by 1 and `NAME` is the name of the file\)
+* Copy it in the local volume bound to `/iexec_in` .
+* Add `-e IEXEC_INPUT_FILE_NAME_x=NAME` to docker run options \(`x` is the index of the file starting by 1 and `NAME` is the name of the file\)
 
-Add `--env IEXEC_NB_INPUT_FILES=n` to docker run options \(`n` is the total number of input files\).
+Add `-e IEXEC_NB_INPUT_FILES=n` to docker run options \(`n` is the total number of input files\).
 
 Example with two inputs files:
 
 ```text
-touch ./iexec_in/file1 && \
-touch ./iexec_in/file2 && \
-sudo docker run \
-    --volume $(pwd)/iexec_in:/iexec_in \
-    --volume $(pwd)/iexec_out:/iexec_out \
-    --env IEXEC_INPUT_FILE_NAME_1=file1 \
-    --env IEXEC_INPUT_FILE_NAME_2=file2 \
-    --env IEXEC_NB_INPUT_FILES=2 \
-    iexec-hello-world \
+touch /tmp/iexec_in/file1 && \
+touch /tmp/iexec_in/file2 && \
+docker run \
+    -v /tmp/iexec_in:/iexec_in \
+    -v /tmp/iexec_out:/iexec_out \
+    -e IEXEC_IN=/iexec_in \
+    -e IEXEC_OUT=/iexec_out \
+    -e IEXEC_INPUT_FILE_NAME_1=file1 \
+    -e IEXEC_INPUT_FILE_NAME_2=file2 \
+    -e IEXEC_NB_INPUT_FILES=2 \
+    my-hello-world \
     arg1 arg2 arg3
 ```
 
@@ -316,13 +304,13 @@ sudo docker run \
 Login to your Dockerhub account.
 
 ```text
-sudo docker login
+docker login
 ```
 
-Tag you application image to push it to your dockerhub public repository.
+Tag your application image to push it to your dockerhub public repository.
 
 ```text
-sudo docker tag iexec-hello-world <dockerusername>/iexec-hello-world:1.0.0
+docker tag my-hello-world <dockerusername>/my-hello-world:1.0.0
 ```
 
 {% hint style="warning" %}
@@ -332,14 +320,14 @@ replace `<dockerusername>` with your docker user name
 Push the image to Dockerhub.
 
 ```text
-sudo docker push <dockerusername>/iexec-hello-world:1.0.0
+docker push <dockerusername>/my-hello-world:1.0.0
 ```
 
 **Congratulation, you app is ready to be deployed on iExec!**
 
 ### Deploy your app on iExec
 
-You already learnt how to deploy the default app on iExec in the [previous tutorial](quick-start-for-developers.md).
+You already learned how to deploy the default app on iExec in the [previous tutorial](quick-start-for-developers.md).
 
 Go back to the `iexec-project` folder.
 
@@ -347,17 +335,17 @@ Go back to the `iexec-project` folder.
 cd ~/iexec-projects/
 ```
 
-You will need a few configuration in `iexec.json` to deploy your app:
+You will need a few configurations in `iexec.json` to deploy your app:
 
 * Replace app **name** with your application name \(display only\)
-* Replace app **multiaddr** with your app image download URI \(should looks like `registry.hub.docker.com/<dockerusername>/iexec-hello-world:1.0.0`\)
+* Replace app **multiaddr** with your app image download URI \(should looks like `registry.hub.docker.com/<dockerusername>/my-hello-world:1.0.0`\)
 * Replace app **checksum** with your application image checksum \(see tip below\)
 
 {% hint style="info" %}
 The checksum of your app is the sha256 digest of the docker image prefixed with `0x` , you can use the following command to get it.
 
 ```text
-docker pull <dockerusername>/iexec-hello-world:1.0.0 | grep "Digest: sha256:" | sed 's/.*sha256:/0x/'
+docker pull <dockerusername>/my-hello-world:1.0.0 | grep "Digest: sha256:" | sed 's/.*sha256:/0x/'
 ```
 {% endhint %}
 
@@ -388,22 +376,20 @@ iexec app run --watch --chain goerli
 ```
 
 {% hint style="info" %}
-You can pass params to the app with `--params <params>` option
+**Using arguments:**
 
-**app arguments:** 
+You can pass arguments to the app using `--args <args>` option.
 
-with `--params '{"iexec_args":"dostuff --with-option"}'` the app will receive `["dostuff", "--with-option"]` as process args.
+With `--args "dostuff --with-option"` the app will receive `["dostuff", "--with-option"]` as process args.
 
-**app input files:** 
+**Using input files:**
 
-with `-params '{"iexec_input_files":["https://example.com/file-A.txt","https://example.com/file-B.zip"]}'`  the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
+You can pass input files to the app using `--input-files <list of URL>` option.
+
+With `--input-files https://example.com/file-A.txt,https://example.com/file-B.zip` the iExec worker will download the files before running the app in `IEXEC_INPUT_FILES_FOLDER`, and let the app access them throug variables:
 
 * `file-A.txt` as`IEXEC_INPUT_FILE_NAME_1`
 * `file-B.zip` as`IEXEC_INPUT_FILE_NAME_2`
-
-**use both:** 
-
-`--params '{"iexec_args":"dostuff --with-option","iexec_input_files":["https://example.com/my-file.zip"]}'`
 {% endhint %}
 
 Once the run is completed copy the taskid from `iexec app run` output to download and check the result
@@ -418,19 +404,17 @@ Congratulation your app successfully ran on iExec!
 ## Publish your app on iExec marketplace
 
 ```text
-iexec order init --app --chain goerli
-iexec order sign --app --chain goerli
-iexec order publish --app --chain goerli
+iexec app publish --chain goerli
 ```
 
 **Congratulation your application is now available on iExec!**
 
-## Whats next?
+## What's next?
 
-In this tutorial you learnt about the key concepts for building an app on iExec:
+In this tutorial you learned about the key concepts for building an app on iExec:
 
 * iExec app inputs and outputs
-* iExec app must produce a consensus file `determinism.iexec` 
+* iExec app must produce a `computed.json` file \(required for the proof of execution\)
 * using docker to package your app with all its dependencies
 * testing an iExec app locally
 * publishing on dockerhub

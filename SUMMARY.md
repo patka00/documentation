@@ -9,7 +9,7 @@
 * [Confidential Computing](for-developers/confidential-computing/README.md)
   * [Overview](for-developers/confidential-computing/intel-sgx-technology.md)
   * [Build trusted applications](for-developers/confidential-computing/create-your-first-sgx-app.md)
-  * [Manage confidential datasets](for-developers/confidential-computing/sgx-encrypted-dataset.md)
+  * [Use confidential assets](for-developers/confidential-computing/sgx-encrypted-dataset.md)
   * [Protect result](for-developers/confidential-computing/end-to-end-encryption.md)
 * [Advanced](for-developers/advanced/README.md)
   * [Manage your apporders](for-developers/advanced/manage-your-apporders.md)
