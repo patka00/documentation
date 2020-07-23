@@ -143,11 +143,8 @@ The iExec SDK writes the minimum app configuration in `iexec.json`
 | mrenclave | app fingerprint used for confidential computing use cases \(default empty\) |
 
 {% hint style="info" %}
-The default app is the public docker image [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth)
-
-This application allows to generate an ethereum with a specific address starting pattern by generating thousands of random wallets. This process requiring high computation power is enabled by running the app on iExec.
-
-Disclaimer: Don't use this app output wallet to store any value as output may be accessed by an untrusted actor. You will learn how to protect data in a next chapter.
+The default app is the public docker image [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world)
+Given an input string, the application generates an ASCII art greeting.
 {% endhint %}
 
 You can deploy this application on iExec, it will run out of the box. Where you are confident with iExec concept, you can read [Your first app](your-first-app.md) and learn how to setup your own app on iExec.
@@ -221,7 +218,7 @@ iexec wallet show --chain goerli
 Your application is deployed, you have some RLC in your iExec Account, everything is now ready to run your application!
 
 ```text
-iexec app run --args "beef" --watch --chain goerli
+iexec app run --args <your-name-here> --watch --chain goerli
 ```
 
 {% hint style="info" %}
@@ -236,7 +233,8 @@ Discover more option with `iexec app run --help`
 {% endhint %}
 
 {% hint style="success" %}
-Congratulation you requested the execution of [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) with the parameters `"beef"`. This should compute an Ethereum address starting with `0xbeef` .
+Congratulation you requested the execution of [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world).
+This will generate an ASCII art greeting with your name.
 {% endhint %}
 
 Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\). 
@@ -248,24 +246,16 @@ iexec task show <taskid> --download my-result --chain goerli
 ```
 
 {% hint style="info" %}
-A task result is a zip file with tree
-
-```text
-result.zip
-  ├── iexec_out/
-  └── stdout.txt
-```
-
-* `stdout.txt` always contains the application logs.
-* `iexec_out/` content is application specific
+A task result is a zip file containing the output files of the application.
 {% endhint %}
 
-[iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) produce an Ethereun keypair in `iexec_out/keypair.txt` . Let's discover the result of the computation.
+[iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world) produce an text file in `result.txt`.
+
+Let's discover the result of the computation.
 
 ```text
 unzip my-result.zip -d my-result
-cat my-result/stdout.txt
-cat my-result/iexec_out/keypair.txt
+cat my-result/result.txt
 ```
 
 Congratulations! You successfully executed your application on iExec!
