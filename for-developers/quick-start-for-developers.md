@@ -234,7 +234,7 @@ Discover more option with `iexec app run --help`
 {% endhint %}
 
 {% hint style="success" %}
-Congratulation you requested the execution of [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world). 
+Congratulation you requested the execution of [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world).
 
 This will generate an ASCII art greeting with your name.
 {% endhint %}
