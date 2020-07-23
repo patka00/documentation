@@ -29,7 +29,7 @@ In this guide, we will use the iExec SDK command-line interface to deploy an iEx
 
 On the blockchain, your identity is defined by your **wallet,** constisting of cryptochraphically encrypted **private key** and **public address.** What you own on the blockchain is associated with your address. The applications you deploy on iExec are associated with your wallet.
 
-Let's set up your wallet. 
+Let's set up your wallet.
 
 Install the iExec SDK cli \(requires [Nodejs](https://nodejs.org)\)
 
@@ -239,7 +239,7 @@ Discover more option with `iexec app run --help`
 Congratulation you requested the execution of [iexechub/vanityeth](https://hub.docker.com/r/iexechub/vanityeth) with the parameters `"beef"`. This should compute an Ethereum address starting with `0xbeef` .
 {% endhint %}
 
-Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\). 
+Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\).
 
 Download the result of your task
 
