@@ -29,7 +29,7 @@ In this guide, we will use the iExec SDK command-line interface to deploy an iEx
 
 On the blockchain, your identity is defined by your **wallet,** constisting of cryptochraphically encrypted **private key** and **public address.** What you own on the blockchain is associated with your address. The applications you deploy on iExec are associated with your wallet.
 
-Let's set up your wallet. 
+Let's set up your wallet.
 
 Install the iExec SDK cli \(requires [Nodejs](https://nodejs.org)\)
 
@@ -143,7 +143,8 @@ The iExec SDK writes the minimum app configuration in `iexec.json`
 | mrenclave | app fingerprint used for confidential computing use cases \(default empty\) |
 
 {% hint style="info" %}
-The default app is the public docker image [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world)
+The default app is the public docker image [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world).
+
 Given an input string, the application generates an ASCII art greeting.
 {% endhint %}
 
@@ -197,7 +198,7 @@ When you request an execution the price for the task is locked from your account
 At any time you can:
 
 * deposit RLC from your wallet to your iExec Account
-* withdraw RLC from your iExec account to your wallet \(only stake can be withdrawed\)
+* withdraw RLC from your iExec account to your wallet \(only stake can be withdrawn\)
 {% endhint %}
 
 Top up your iExec Account
@@ -233,11 +234,12 @@ Discover more option with `iexec app run --help`
 {% endhint %}
 
 {% hint style="success" %}
-Congratulation you requested the execution of [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world).
+Congratulation you requested the execution of [iexechub/python-hello-world](https://hub.docker.com/repository/docker/iexechub/python-hello-world). 
+
 This will generate an ASCII art greeting with your name.
 {% endhint %}
 
-Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\). 
+Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\).
 
 Download the result of your task
 
@@ -279,7 +281,9 @@ iexec app publish --chain goerli
 ```
 
 {% hint style="info" %}
-`iexec app publish` options allows to define custom access rules to the app \(run `iexec app publish --help` to discover all the possibilities\) You will learn more about orders management later, keep the apporder default values for now.
+`iexec app publish` options allows to define custom access rules to the app \(run `iexec app publish --help` to discover all the possibilities\).
+
+You will learn more about orders management later, keep the apporder default values for now.
 {% endhint %}
 
 Your application is now available for everyone on iExec marketplace on the conditions defined in apporder.
