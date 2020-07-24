@@ -263,7 +263,7 @@ RUN SCONE_MODE=sim pip3 install pyfiglet
 COPY ./src /app
 
 ###  protect file system with Scone
-COPY ./tee/protect-fs.sh ./tee/Dockerfile /build/
+COPY ./protect-fs.sh ./Dockerfile /build/
 RUN sh /build/protect-fs.sh /app
 
 ENTRYPOINT ["python", "/app/app.py"]
