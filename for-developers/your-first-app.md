@@ -13,7 +13,7 @@ description: >-
 * [Dockerhub](https://hub.docker.com/) account.
 * [Nodejs](https://nodejs.org) 10.12.0 or higher.
 * [iExec SDK](https://www.npmjs.com/package/iexec) 5.0.0 or higher.
-* [Quickstart](https://github.com/iExecBlockchainComputing/documentation/tree/651ca324fe3b9baf7e88a87401f74168e519ee83/quick-start-for-developers.md) tutorial completed
+* [Quickstart](quick-start-for-developers.md) tutorial completed
 * Ethereum wallet charged with Goerli ETH an RLC
 {% endhint %}
 
