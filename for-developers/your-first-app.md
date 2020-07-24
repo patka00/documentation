@@ -107,7 +107,7 @@ result.zip
 
 `iexec_out` is a copy at the final state of your app container directory `/iexec_out/` final state, your application must create the following files in `/iexec_out/` :
 
-* `/iexec_ou/computed.json` file should be created when your computing is over. It contains at least a field `deterministic-output-path` which is the path of the deterministic portion of your results. It should be either a file or a non-empty folder. It is required for the proof of execution \(given the same inputs this file should always be the same\).
+* `/iexec_out/computed.json` file should be created when your computing is over. It contains at least a field `deterministic-output-path` which is the path of the deterministic portion of your results. It should be either a file or a non-empty folder. It is required for the proof of execution \(given the same inputs this file should always be the same\).
 * If your app produces output files, you must copy them in `/iexec_out/` .
 
 {% hint style="warning" %}
