@@ -239,12 +239,17 @@ Congratulation you requested the execution of [iexechub/python-hello-world](http
 This will generate an ASCII art greeting with your name.
 {% endhint %}
 
-Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\).
+Once the task is completed copy the taskid from `iexec app run` output \(taskid is a 32Bytes hexadecimal string\) while running, once finished you will find the deal id.
 
 Download the result of your task
 
 ```text
 iexec task show <taskid> --download my-result --chain goerli
+```
+You can get your taskid with the command:
+
+```text
+iexec deal show <deal-id>
 ```
 
 {% hint style="info" %}
