@@ -249,7 +249,7 @@ iexec task show <taskid> --download my-result --chain goerli
 You can get your taskid with the command:
 
 ```text
-iexec deal show <deal-id>
+iexec deal show <dealid>
 ```
 
 {% hint style="info" %}
